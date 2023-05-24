@@ -1,0 +1,106 @@
+a { 
+    color: inherit;
+    text-decoration: underline;
+}
+
+body {
+    background-color:#ABCDEF;
+}
+
+.signUpForm {
+    max-width: 500px;
+}
+
+.verifyForm {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.left {
+    color: #FFFFFF44;
+    padding-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 100px;
+    font-family: 'Source Code Pro', monospace;
+    line-height: 0.9em;
+}
+
+.right {
+    min-height: 200px;
+}
+
+@media only screen and (min-width: 992px) {
+    .row {
+        height: 100vh;
+    }
+
+    .left {
+        display: flex;
+        justify-content: center;
+        font-size: 200px;
+    }
+} 
+
+.header {
+    color: #345678ff;
+}
+
+.no-validation-border:focus {
+    box-shadow: 0px 0px 0px 4px #007bff44 !important;
+}
+
+.no-validation-border {
+    border-style: none !important;
+}
+
+.link-button {
+    /* Source: https://stackoverflow.com/questions/1367409/how-to-make-button-look-like-a-link */
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link-button:hover {
+    color: #0056b3;
+}
+
+.memo {
+    display: inline-block;
+    width: 500px;
+}
+  
+/* The typing effect */
+@keyframes typing {
+    from { width: 0px; }
+    to { width: 7760px; } /* 28.014px per character */
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #00226633; }
+}
+
+.typewriter-test {
+    width: 0%;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .12em solid #00226633; /* The typwriter cursor */
+    color: #FFFFFF99;
+    font-size: 40px;
+    font-weight: bold;
+    font-family:'Source Code Pro', monospace;
+    letter-spacing: .1em; /* Adjust as needed */
+    margin-left: -10000px;
+    animation: 
+      typing 40s steps(277, end) 1s,
+      blink-caret 1.25s step-end infinite;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #aaaaaaff !important;
+    opacity: 1; /* Firefox */
+  }

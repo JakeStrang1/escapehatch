@@ -1,0 +1,6 @@
+Sign In to SaaS Template
+
+Click here to sign in to your account: {{.VerifyLink}}
+Or type this phrase into your browser: {{.Secret}}
+
+Not you? Click here to let us know: {{.NotYouLink}}
