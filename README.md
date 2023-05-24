@@ -21,9 +21,12 @@ See `/backend/.env` and `/frontend/.env` to set environment variables.
 - Post API
 - Comment API
 
-### Potential features
+### Feature roadmap
 
-...
+- Remove comment API lol
+- Add book content type
+- Add TV show content type
+- Add movie content type
 
 ### Testing
 
