@@ -135,7 +135,7 @@ export default class SignIn extends React.Component {
       <>
         <Container fluid>
           <Row className="row">
-            <Col xs={12} lg={7} className="left align-self-center">SaaS<br/>Template</Col>
+            <Col xs={12} lg={7} className="left align-self-center">escape<br/>hatch</Col>
             <Col xs={12} lg={4} className="right align-self-center">
               <Form className="signUpForm" noValidate validated={this.state.validated} onSubmit={this.handleSubmit} ref={this.formRef}>
                 <h4 className="header">Sign in</h4>

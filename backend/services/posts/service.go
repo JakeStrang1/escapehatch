@@ -1,8 +1,8 @@
 package posts
 
 import (
-	"github.com/JakeStrang1/saas-template/db"
-	"github.com/JakeStrang1/saas-template/internal/pages"
+	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
 )
 
 func GetPage(filter GetManyFilter, results *[]Post) (*pages.PageResult, error) {

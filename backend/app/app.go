@@ -3,8 +3,8 @@ package app
 import (
 	"log"
 
-	"github.com/JakeStrang1/saas-template/db"
-	"github.com/JakeStrang1/saas-template/email"
+	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/email"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,7 +1,7 @@
 package test
 
 import (
-	api "github.com/JakeStrang1/saas-template/http"
+	api "github.com/JakeStrang1/escapehatch/http"
 	"github.com/samber/lo"
 	"github.com/tidwall/gjson"
 )

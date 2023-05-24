@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/gin-gonic/gin"
 )
 

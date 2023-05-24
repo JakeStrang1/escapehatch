@@ -3,8 +3,8 @@ package posts
 import (
 	"fmt"
 
-	"github.com/JakeStrang1/saas-template/db"
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
 const defaultPerPage = 25

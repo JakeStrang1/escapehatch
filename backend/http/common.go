@@ -5,8 +5,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/JakeStrang1/saas-template/internal/errors"
-	"github.com/JakeStrang1/saas-template/internal/pages"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/go-playground/validator.v9"
 )

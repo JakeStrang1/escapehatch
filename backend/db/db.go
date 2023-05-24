@@ -6,7 +6,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/kamva/mgm/v3"
 	"github.com/samber/lo"
 	"go.mongodb.org/mongo-driver/bson"

@@ -1,4 +1,4 @@
-module github.com/JakeStrang1/saas-template
+module github.com/JakeStrang1/escapehatch
 
 go 1.18
 

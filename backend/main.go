@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/JakeStrang1/saas-template/app"
+	"github.com/JakeStrang1/escapehatch/app"
 	"github.com/joho/godotenv"
 )
 

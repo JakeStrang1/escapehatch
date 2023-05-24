@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/JakeStrang1/saas-template/services/auth"
-	"github.com/JakeStrang1/saas-template/services/auth/session"
+	"github.com/JakeStrang1/escapehatch/services/auth"
+	"github.com/JakeStrang1/escapehatch/services/auth/session"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
 )

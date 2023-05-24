@@ -3,9 +3,9 @@ package auth
 import (
 	"time"
 
-	"github.com/JakeStrang1/saas-template/internal/errors"
-	"github.com/JakeStrang1/saas-template/services/auth/session"
-	"github.com/JakeStrang1/saas-template/services/users"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/services/auth/session"
+	"github.com/JakeStrang1/escapehatch/services/users"
 )
 
 func Authenticate(sessionToken string) (*users.User, error) {

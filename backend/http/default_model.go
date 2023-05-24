@@ -3,7 +3,7 @@ package http
 import (
 	"time"
 
-	"github.com/JakeStrang1/saas-template/db"
+	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/samber/lo"
 )
 

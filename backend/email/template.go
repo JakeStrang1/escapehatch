@@ -7,7 +7,7 @@ import (
 	fp "path/filepath"
 	text "text/template"
 
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
 func sendFromTemplate(subject, toAddress, textTemplatePath, htmlTemplatePath string, templateValues interface{}) error {

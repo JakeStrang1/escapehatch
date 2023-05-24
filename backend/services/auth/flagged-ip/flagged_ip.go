@@ -3,7 +3,7 @@ package flaggedip
 import (
 	"time"
 
-	"github.com/JakeStrang1/saas-template/db"
+	"github.com/JakeStrang1/escapehatch/db"
 )
 
 type FlaggedIP struct {

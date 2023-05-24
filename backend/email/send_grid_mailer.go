@@ -1,7 +1,7 @@
 package email
 
 import (
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
@@ -19,7 +19,7 @@ type SendGridConfig struct {
 func NewSendGridMailer(config SendGridConfig) *SendGridMailer {
 	return &SendGridMailer{
 		Client: sendgrid.NewSendClient(config.APIKey),
-		From:   mail.NewEmail("SaaS Template", config.FromAddress),
+		From:   mail.NewEmail("Escapehatch", config.FromAddress),
 	}
 }
 

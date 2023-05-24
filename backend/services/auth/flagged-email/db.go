@@ -3,7 +3,7 @@ package flaggedemail
 import (
 	"time"
 
-	"github.com/JakeStrang1/saas-template/db"
+	"github.com/JakeStrang1/escapehatch/db"
 )
 
 const collection = "auth_flagged_emails"

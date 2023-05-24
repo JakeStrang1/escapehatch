@@ -3,8 +3,8 @@ package http
 import (
 	"net/http"
 
-	"github.com/JakeStrang1/saas-template/internal/errors"
-	"github.com/JakeStrang1/saas-template/services/auth"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/services/auth"
 	"github.com/gin-gonic/gin"
 )
 

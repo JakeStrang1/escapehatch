@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/JakeStrang1/saas-template/http"
+	"github.com/JakeStrang1/escapehatch/http"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

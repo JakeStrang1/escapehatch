@@ -1,6 +1,6 @@
 package nocontact
 
-import "github.com/JakeStrang1/saas-template/db"
+import "github.com/JakeStrang1/escapehatch/db"
 
 type NoContact struct {
 	db.DefaultModel `db:",inline"`

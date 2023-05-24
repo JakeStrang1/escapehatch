@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/JakeStrang1/saas-template/services/users"
+	"github.com/JakeStrang1/escapehatch/services/users"
 	"github.com/gin-gonic/gin"
 )
 

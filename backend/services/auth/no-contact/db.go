@@ -1,7 +1,7 @@
 package nocontact
 
 import (
-	"github.com/JakeStrang1/saas-template/db"
+	"github.com/JakeStrang1/escapehatch/db"
 )
 
 const collection = "auth_no_contacts"

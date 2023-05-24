@@ -7,15 +7,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/JakeStrang1/saas-template/email"
-	"github.com/JakeStrang1/saas-template/internal/errors"
-	"github.com/JakeStrang1/saas-template/internal/secret"
-	"github.com/JakeStrang1/saas-template/services/auth/challenge"
-	flaggedemail "github.com/JakeStrang1/saas-template/services/auth/flagged-email"
-	flaggedip "github.com/JakeStrang1/saas-template/services/auth/flagged-ip"
-	nocontact "github.com/JakeStrang1/saas-template/services/auth/no-contact"
-	"github.com/JakeStrang1/saas-template/services/auth/templates"
-	"github.com/JakeStrang1/saas-template/services/users"
+	"github.com/JakeStrang1/escapehatch/email"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/secret"
+	"github.com/JakeStrang1/escapehatch/services/auth/challenge"
+	flaggedemail "github.com/JakeStrang1/escapehatch/services/auth/flagged-email"
+	flaggedip "github.com/JakeStrang1/escapehatch/services/auth/flagged-ip"
+	nocontact "github.com/JakeStrang1/escapehatch/services/auth/no-contact"
+	"github.com/JakeStrang1/escapehatch/services/auth/templates"
+	"github.com/JakeStrang1/escapehatch/services/users"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -118,7 +118,7 @@ func sendSignUpChallenge(emailAddress, emailHash, secret string) error {
 		NotYouLink: notYouLink(emailHash, secret),
 	}
 
-	return email.SendFromTemplate("Verify your SaaS Template account", emailAddress, "services/auth/templates/signUp.txt", "services/auth/templates/signUp.html", values)
+	return email.SendFromTemplate("Verify your Escapehatch account", emailAddress, "services/auth/templates/signUp.txt", "services/auth/templates/signUp.html", values)
 }
 
 func userMustNotExist(email string) error {

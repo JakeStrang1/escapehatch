@@ -1,8 +1,8 @@
 package users
 
 import (
-	"github.com/JakeStrang1/saas-template/db"
-	"github.com/JakeStrang1/saas-template/internal/errors"
+	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
 type User struct {

@@ -1,6 +1,6 @@
-# saas-template
+# escapehatch
 
-A generic saas backend and frontend used as a template for new projects.
+A platform where users track and share their favorite books and shows.
 
 ### Usage
 
@@ -18,43 +18,12 @@ See `/backend/.env` and `/frontend/.env` to set environment variables.
 - Passwordless authentication
 - Email abuse reporting and IP flagging
 - Backend test suite
-- Stories
-    - Create - backend only
-    - Get Many - backend only
-    - Get One - beckend only
-
-### What is this site?
-
-It's a blogging platform.
-
-You can sign up as an individual or create an organization.
-
-Write blog posts. Comment and react to posts. Subscribe to authors.
+- Post API
+- Comment API
 
 ### Potential features
 
-- Organizations
-- Google SSO
-- Facebook SSO
-- Microsoft SSO
-- Password-based login
-- Oauth2 for custom apps
-- User settings
-- User photo
-- User bio
-- Organization settings
-- Organization logo
-- Organization info
-- Role based access control
-- API documentation
-- Delete user account
-- Delete organization
-- Change email address
-- Email notifications
-- Sign out
-- Search
-- Subscription settings
-- (I should pick a basic use case for the saas template so I can do stuff with data models)
+...
 
 ### Testing
 

@@ -1,4 +1,4 @@
-Welcome to SaaS Template!
+Welcome to Escapehatch!
 
 Click here to verify your account: {{.VerifyLink}}
 Or type this phrase into your browser: {{.Secret}}

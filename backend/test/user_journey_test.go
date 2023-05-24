@@ -3,7 +3,7 @@ package test
 import (
 	"fmt"
 
-	"github.com/JakeStrang1/saas-template/http"
+	"github.com/JakeStrang1/escapehatch/http"
 	"github.com/samber/lo"
 	"github.com/tidwall/gjson"
 )

@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"github.com/JakeStrang1/saas-template/email"
-	"github.com/JakeStrang1/saas-template/internal/errors"
-	"github.com/JakeStrang1/saas-template/services/auth/templates"
-	"github.com/JakeStrang1/saas-template/services/users"
+	"github.com/JakeStrang1/escapehatch/email"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/services/auth/templates"
+	"github.com/JakeStrang1/escapehatch/services/users"
 )
 
 func SignIn(email string, metaData map[string]string, rememberMe bool, ipAddress string) error {
@@ -63,7 +63,7 @@ func sendSignInChallenge(emailAddress, emailHash, secret string) error {
 		NotYouLink: notYouLink(emailHash, secret),
 	}
 
-	return email.SendFromTemplate("Sign In to SaaS Template", emailAddress, "services/auth/templates/signIn.txt", "services/auth/templates/signIn.html", values)
+	return email.SendFromTemplate("Sign In to Escapehatch", emailAddress, "services/auth/templates/signIn.txt", "services/auth/templates/signIn.html", values)
 }
 
 func userMustExist(email string) error {

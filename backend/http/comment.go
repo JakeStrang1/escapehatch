@@ -1,9 +1,9 @@
 package http
 
 import (
-	"github.com/JakeStrang1/saas-template/internal"
-	"github.com/JakeStrang1/saas-template/internal/pages"
-	"github.com/JakeStrang1/saas-template/services/posts"
+	"github.com/JakeStrang1/escapehatch/internal"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
+	"github.com/JakeStrang1/escapehatch/services/posts"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
 )
