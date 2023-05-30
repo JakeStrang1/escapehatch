@@ -132,4 +132,9 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.#").Int()))
 	s.Assert().Equal("stealth.dragon", gjson.Get(response.Body, "data.0.follower_username").String())
+
+	// Unfollow user
+	response = s.Post(fmt.Sprintf("/users/%s/unfollow", userID2), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().False(gjson.Get(response.Body, "data.followed_by_you").Bool())
 }

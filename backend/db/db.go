@@ -44,7 +44,7 @@ func Create(document mgm.Model) error {
 	return nil
 }
 
-func Delete(document mgm.Model) error {
+func DeleteByID(document mgm.Model) error {
 	err := mgm.Coll(document).Delete(document)
 	if errors.Is(err, mongo.ErrNoDocuments) {
 		return &errors.Error{Code: errors.NotFound, Err: err}

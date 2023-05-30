@@ -222,7 +222,7 @@ Iterative approach:
 - [x] `GET /users/:id/followers`
 - [ ] `GET /users/:id/following`
 - [x] `POST /users/:id/follow`
-- [ ] `POST /users/:id/unfollow`
+- [x] `POST /users/:id/unfollow`
 - [ ] `POST /users/:id/remove`
 - [ ] `POST /items`
 - [ ] `GET /items/:id`

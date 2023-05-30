@@ -61,7 +61,7 @@ func Update(id string, update PostUpdate, result *Post) error {
 func Delete(id string) error {
 	result := Post{}
 	result.ID = id
-	return db.Delete(&result)
+	return db.DeleteByID(&result)
 }
 
 func GetComments(postID string, results *[]Comment) error {
