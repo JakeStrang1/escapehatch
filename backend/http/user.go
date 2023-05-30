@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/JakeStrang1/escapehatch/internal"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/JakeStrang1/escapehatch/services/users"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
@@ -27,6 +28,35 @@ type ShelfAPI struct {
 type ShelfItemAPI struct {
 	ItemID *string `json:"item_id"`
 	Image  *string `json:"image"`
+}
+
+type UserQuery struct {
+	PageQuery
+	Search *string `form:"search"`
+}
+
+func GetUsers(c *gin.Context) {
+	query := UserQuery{}
+	err := c.BindQuery(&query)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "error in query parameters", Err: err})
+		return
+	}
+
+	results := []users.User{}
+	filter := users.Filter{
+		Page:    query.Page,
+		PerPage: query.PerPage,
+		Search:  query.Search,
+	}
+
+	pageInfo, err := users.GetPage(filter, &results)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnMany(c, internal.Map(results, ToUserAPI), *pageInfo)
 }
 
 func GetUser(c *gin.Context) {

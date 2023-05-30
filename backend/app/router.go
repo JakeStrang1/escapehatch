@@ -44,6 +44,7 @@ func Router(config Config) *gin.Engine {
 	 *******************************************/
 
 	// Users
+	r.GET("/users", DefaultAccessPolicy, http.GetUsers)
 	r.GET("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.GetUser)
 
 	// Posts

@@ -199,6 +199,24 @@ func EnsureOptionalUniqueIndex(model mgm.Model, key string) error {
 	return nil
 }
 
+// EnsureTextIndex creates a text index used for a later search query
+// Example search query: { $text: { $search: "\"coffee shop\"" } }
+// Note this can only do full word watches, not partial matches!
+// More info: https://www.mongodb.com/docs/manual/core/link-text-indexes
+func EnsureTextIndex(model mgm.Model, keys []string) error {
+	d := bson.D{}
+	for _, key := range keys {
+		d = append(d, bson.E{Key: key, Value: "text"})
+	}
+	_, err := mgm.Coll(model).Indexes().CreateOne(context.Background(), mongo.IndexModel{
+		Keys: d,
+	})
+	if err != nil {
+		return &errors.Error{Code: errors.Internal, Err: err}
+	}
+	return nil
+}
+
 func IncrementOne(selector map[string]interface{}, fieldName string, result mgm.Model) error {
 	update := bson.M{"$inc": bson.M{fieldName: 1}, "$set": bson.M{"updated_at": time.Now()}}
 	err := mgm.Coll(result).FindOneAndUpdate(context.Background(), selector, update, &options.FindOneAndUpdateOptions{

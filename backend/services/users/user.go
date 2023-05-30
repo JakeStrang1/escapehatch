@@ -5,9 +5,12 @@ import (
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
 )
 
 const userCountCollection = "users_count"
+const defaultPerPage = 25
+const maxPerPage = 250
 
 type User struct {
 	db.DefaultModel `db:",inline"`
@@ -63,6 +66,34 @@ func Create(document *User) error {
 	}
 
 	return hydrate(document)
+}
+
+func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
+	err := filter.Validate()
+	if err != nil {
+		return nil, err
+	}
+
+	page := 1
+	if filter.Page != nil {
+		page = *filter.Page
+	}
+
+	pageSize := defaultPerPage
+	if filter.PerPage != nil {
+		pageSize = *filter.PerPage
+	}
+
+	total, err := db.GetPage(filter, &User{}, results, page, pageSize)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pages.PageResult{
+		Page:       page,
+		PerPage:    pageSize,
+		TotalPages: total,
+	}, nil
 }
 
 func GetByID(id string, result *User) error {

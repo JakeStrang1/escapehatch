@@ -217,7 +217,7 @@ Iterative approach:
 
 ### API Endpoints
 
-- [ ] `GET /users`
+- [x] `GET /users`
 - [x] `GET /users/:id`
 - [ ] `GET /users/:id/followers`
 - [ ] `GET /users/:id/following`

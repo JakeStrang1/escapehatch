@@ -100,4 +100,9 @@ func (s *Suite) TestUserJourney() {
 	response = s.Get("/users/me", withUser2Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.number").Int()))
+
+	// Get users
+	response = s.Get("/users", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.#").Int()))
 }

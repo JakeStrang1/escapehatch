@@ -10,7 +10,7 @@ import (
 
 const CtxKeyEntity = "entity"
 const CtxKeyUserID = "userID"
-const UserQuery = "userID" // An optional query param that can be provided to any request to override the user
+const UserIDQuery = "userID" // An optional query param that can be provided to any request to override the user
 
 func Authenticate(c *gin.Context) {
 	sessionToken, err := c.Cookie("SID")
@@ -36,7 +36,7 @@ func Authenticate(c *gin.Context) {
 	// The userID context key tells handlers who to execute the request on behalf of.
 	// This is not necessarily the same as the calling entity.
 	// Access control must make sure that the entity and userID combination are compatible with the request.
-	if userID, ok := c.GetQuery(UserQuery); ok {
+	if userID, ok := c.GetQuery(UserIDQuery); ok {
 		c.Set(CtxKeyUserID, userID)
 	} else {
 		c.Set(CtxKeyUserID, user.ID)
