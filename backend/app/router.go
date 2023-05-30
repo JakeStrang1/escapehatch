@@ -53,6 +53,9 @@ func Router(config Config) *gin.Engine {
 	r.GET("/users/:id/followers", DefaultAccessPolicy, http.GetUserFollowers)
 	r.GET("/users/:id/following", DefaultAccessPolicy, http.GetUserFollowing)
 
+	// Books
+	r.POST("/books", DefaultAccessPolicy, http.CreateBook)
+
 	// Posts
 	r.POST("/posts", DefaultAccessPolicy, http.CreatePost)
 	r.GET("/posts", DefaultAccessPolicy, http.GetPosts)

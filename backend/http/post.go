@@ -108,7 +108,7 @@ func DeletePost(c *gin.Context) {
 
 func ToPost(postAPI PostAPI) posts.Post {
 	return posts.Post{
-		DefaultModel: FromDefaultModelAPI(postAPI.DefaultModelAPI),
+		DefaultModel: ToDefaultModel(postAPI.DefaultModelAPI),
 		OwnerID:      lo.FromPtr(postAPI.OwnerID),
 		Body:         lo.FromPtr(postAPI.Body),
 	}
