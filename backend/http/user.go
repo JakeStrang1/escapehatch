@@ -124,6 +124,20 @@ func UpdateUser(c *gin.Context) {
 	ReturnOne(c, ToUserAPI(userID, result))
 }
 
+func FollowUser(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	result := users.User{}
+	err := users.Follow(id, userID, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToUserAPI(userID, result))
+}
+
 func GetUserFollowers(c *gin.Context) {
 	id := c.Param("id")
 	userID := c.GetString(CtxKeyUserID)

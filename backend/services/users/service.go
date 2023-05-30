@@ -79,6 +79,34 @@ func Update(id string, update UserUpdate, result *User) error {
 	return db.Update(result)
 }
 
+func Follow(targetUserID string, followerUserID string, result *User) error {
+	if targetUserID == followerUserID {
+		return &errors.Error{Code: errors.Invalid, Message: "cannot follow yourself"}
+	}
+
+	err := db.EnsureUniqueIndex(&Follower{}, []string{"target_user_id", "follower_user_id"})
+	if err != nil {
+		return err
+	}
+
+	follower := Follower{
+		TargetUserID:   targetUserID,
+		FollowerUserID: followerUserID,
+	}
+	err = db.Create(&follower)
+	if err != nil {
+		return err
+	}
+
+	result.ID = targetUserID
+	err = GetByID(targetUserID, result)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {

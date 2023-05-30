@@ -95,11 +95,15 @@ func (s *Suite) TestUserJourney() {
 	response = s.Get("/users/me", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.number").Int()))
+	userID1 := gjson.Get(response.Body, "data.id").String()
+	s.Assert().True(userID1 != "")
 
 	// Get user2 self
 	response = s.Get("/users/me", withUser2Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.number").Int()))
+	userID2 := gjson.Get(response.Body, "data.id").String()
+	s.Assert().True(userID2 != "")
 
 	// Update user
 	userBody := http.UserAPI{
@@ -117,4 +121,15 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.#").Int()))
 	s.Assert().True(gjson.Get(response.Body, "data.0.self").Bool())
 	s.Assert().False(gjson.Get(response.Body, "data.1.self").Bool())
+
+	// Follow user
+	response = s.Post(fmt.Sprintf("/users/%s/follow", userID2), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().True(gjson.Get(response.Body, "data.followed_by_you").Bool())
+
+	// Get followers
+	response = s.Get("/users/me/followers", withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.#").Int()))
+	s.Assert().Equal("stealth.dragon", gjson.Get(response.Body, "data.0.follower_username").String())
 }
