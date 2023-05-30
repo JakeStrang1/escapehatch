@@ -217,17 +217,17 @@ Iterative approach:
 
 ### API Endpoints
 
-- `GET /users`
-- `GET /users/:id`
-- `GET /users/:id/followers`
-- `GET /users/:id/following`
-- `POST /users/:id/follow`
-- `POST /users/:id/unfollow`
-- `POST /users/:id/remove`
-- `POST /items`
-- `GET /items/:id`
-- `PATCH /items/:id`
-- `POST /items/:id/add`
-- `POST /items/:id/remove`
-- `POST /items/:id/delete`
-- `GET /search`
+- [ ] `GET /users`
+- [x] `GET /users/:id`
+- [ ] `GET /users/:id/followers`
+- [ ] `GET /users/:id/following`
+- [ ] `POST /users/:id/follow`
+- [ ] `POST /users/:id/unfollow`
+- [ ] `POST /users/:id/remove`
+- [ ] `POST /items`
+- [ ] `GET /items/:id`
+- [ ] `PATCH /items/:id`
+- [ ] `POST /items/:id/add`
+- [ ] `POST /items/:id/remove`
+- [ ] `POST /items/:id/delete`
+- [ ] `GET /search`
