@@ -46,6 +46,7 @@ func Router(config Config) *gin.Engine {
 	// Users
 	r.GET("/users", DefaultAccessPolicy, http.GetUsers)
 	r.GET("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.GetUser)
+	r.PATCH("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.UpdateUser)
 
 	// Posts
 	r.POST("/posts", DefaultAccessPolicy, http.CreatePost)

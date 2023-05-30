@@ -3,6 +3,7 @@ package users
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
@@ -63,6 +64,21 @@ func Create(document *User) error {
 	return hydrate(document)
 }
 
+func Update(id string, update UserUpdate, result *User) error {
+	result.ID = id
+	err := db.GetByID(result)
+	if err != nil {
+		return err
+	}
+
+	err = result.ApplyUpdate(update)
+	if err != nil {
+		return err
+	}
+
+	return db.Update(result)
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {
@@ -119,6 +135,41 @@ func GenerateDefaultUsername() string {
 		username = username + string(letters[rand.Intn(len(letters))])
 	}
 	return username
+}
+
+func ValidateUsername(username string) error {
+	if len(username) > 20 {
+		return &errors.Error{Code: errors.Invalid, Message: "username cannot be greater than 20 characters"}
+	}
+
+	if len(username) < 3 {
+		return &errors.Error{Code: errors.Invalid, Message: "username cannot be less than 3 characters"}
+	}
+
+	if !usernameCharRegex.MatchString(username) {
+		return &errors.Error{Code: errors.Invalid, Message: "username must contain only lowercase letters, numbers, and periods"}
+	}
+
+	if string(username[0]) == "." || string(username[len(username)-1]) == "." {
+		return &errors.Error{Code: errors.Invalid, Message: "username cannot start or end with a period"}
+	}
+
+	if strings.Contains(username, "..") {
+		return &errors.Error{Code: errors.Invalid, Message: "username cannot have 2 consecutive periods"}
+	}
+
+	user := User{}
+	err := db.GetOne(db.M{"username": username}, &user)
+	if err == nil {
+		return &errors.Error{Code: errors.Invalid, Message: "username is already taken"}
+	}
+	if errors.Code(err) == errors.NotFound {
+		// Do nothing, this is good
+	} else if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // incrementUserCount increments the users_count document and returns an atomically-reserved user number to be used for a new user

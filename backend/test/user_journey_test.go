@@ -101,6 +101,16 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.number").Int()))
 
+	// Update user
+	userBody := http.UserAPI{
+		Username: lo.ToPtr("stealth.dragon"),
+		FullName: lo.ToPtr("John L. Userman"),
+	}
+	response = s.Patch("/users/me", userBody, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("stealth.dragon", gjson.Get(response.Body, "data.username").String())
+	s.Assert().Equal("John L. Userman", gjson.Get(response.Body, "data.full_name").String())
+
 	// Get users
 	response = s.Get("/users", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)

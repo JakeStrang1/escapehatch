@@ -2,13 +2,17 @@ package users
 
 import (
 	"regexp"
-	"strings"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
 var usernameCharRegex = regexp.MustCompile(`^[a-z0-9.]+$`) // Only lowercase letters, numbers, and periods. https://regex101.com/r/1s0zQz/1
+
+type UserUpdate struct {
+	Username *string `db:"username"`
+	FullName *string `db:"full_name"`
+}
 
 type User struct {
 	db.DefaultModel `db:",inline"`
@@ -26,30 +30,30 @@ func (u *User) ValidateOnCreate() error {
 		return &errors.Error{Code: errors.Invalid, Message: "email is missing"}
 	}
 
-	if u.Username != "" {
-		// Blank username is allowed, we will provide a default
-
-		if len(u.Username) > 20 {
-			return &errors.Error{Code: errors.Invalid, Message: "username cannot be greater than 20 characters"}
-		}
-
-		if len(u.Username) < 3 {
-			return &errors.Error{Code: errors.Invalid, Message: "username cannot be less than 3 characters"}
-		}
-
-		if !usernameCharRegex.MatchString(u.Username) {
-			return &errors.Error{Code: errors.Invalid, Message: "username must contain only lowercase letters, numbers, and periods"}
-		}
-
-		if string(u.Username[0]) == "." || string(u.Username[len(u.Username)-1]) == "." {
-			return &errors.Error{Code: errors.Invalid, Message: "username cannot start or end with a period"}
-		}
-
-		if strings.Contains(u.Username, "..") {
-			return &errors.Error{Code: errors.Invalid, Message: "username cannot have 2 consecutive periods"}
+	if u.Username != "" { // Blank username is allowed on create, we will provide a default
+		err := ValidateUsername(u.Username)
+		if err != nil {
+			return err
 		}
 	}
 
+	return nil
+}
+
+func (u *User) ApplyUpdate(update UserUpdate) error {
+	if update.Username != nil {
+		err := ValidateUsername(*update.Username)
+		if err != nil {
+			return err
+		}
+		u.Username = *update.Username
+	}
+	if update.FullName != nil {
+		if *update.FullName == "" {
+			return &errors.Error{Code: errors.Invalid, Message: "full name cannot be blank"}
+		}
+		u.FullName = *update.FullName
+	}
 	return nil
 }
 

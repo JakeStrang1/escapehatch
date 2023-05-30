@@ -82,6 +82,33 @@ func GetUser(c *gin.Context) {
 	ReturnOne(c, ToUserAPI(userID, u))
 }
 
+func UpdateUser(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	// Special case
+	if id == "me" {
+		id = userID
+	}
+
+	body := UserAPI{}
+	err := Body(c, &body)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	result := users.User{}
+	update := ToUserUpdate(body)
+	err = users.Update(id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToUserAPI(userID, result))
+}
+
 func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
 	results := []UserAPI{}
 	for _, dbUser := range dbUsers {
@@ -103,6 +130,13 @@ func ToUserAPI(selfID string, user users.User) UserAPI {
 		Self:            lo.ToPtr(user.ID == selfID),
 		FollowsYou:      lo.ToPtr(user.Follows(selfID)),
 		FollowedByYou:   lo.ToPtr(user.FollowedBy(selfID)),
+	}
+}
+
+func ToUserUpdate(userAPI UserAPI) users.UserUpdate {
+	return users.UserUpdate{
+		Username: userAPI.Username,
+		FullName: userAPI.FullName,
 	}
 }
 
