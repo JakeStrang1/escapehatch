@@ -105,7 +105,7 @@ func (s *Suite) TestUserJourney() {
 	userID2 := gjson.Get(response.Body, "data.id").String()
 	s.Assert().True(userID2 != "")
 
-	// Update user
+	// Update user1
 	userBody := http.UserAPI{
 		Username: lo.ToPtr("stealth.dragon"),
 		FullName: lo.ToPtr("John L. Userman"),
@@ -114,6 +114,16 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("stealth.dragon", gjson.Get(response.Body, "data.username").String())
 	s.Assert().Equal("John L. Userman", gjson.Get(response.Body, "data.full_name").String())
+
+	// Update user2
+	userBody = http.UserAPI{
+		Username: lo.ToPtr("crouching.sock"),
+		FullName: lo.ToPtr("Amy del Taco von Trapp"),
+	}
+	response = s.Patch("/users/me", userBody, withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("crouching.sock", gjson.Get(response.Body, "data.username").String())
+	s.Assert().Equal("Amy del Taco von Trapp", gjson.Get(response.Body, "data.full_name").String())
 
 	// Get users
 	response = s.Get("/users", withUser1Cookie)
@@ -132,6 +142,12 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.#").Int()))
 	s.Assert().Equal("stealth.dragon", gjson.Get(response.Body, "data.0.follower_username").String())
+
+	// Get following
+	response = s.Get("/users/me/following", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.#").Int()))
+	s.Assert().Equal("crouching.sock", gjson.Get(response.Body, "data.0.target_username").String())
 
 	// Unfollow user
 	response = s.Post(fmt.Sprintf("/users/%s/unfollow", userID2), nil, withUser1Cookie)

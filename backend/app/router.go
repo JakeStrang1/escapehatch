@@ -50,6 +50,7 @@ func Router(config Config) *gin.Engine {
 	r.POST("/users/:id/follow", DefaultAccessPolicy, http.FollowUser)
 	r.POST("/users/:id/unfollow", DefaultAccessPolicy, http.UnfollowUser)
 	r.GET("/users/:id/followers", DefaultAccessPolicy, http.GetUserFollowers)
+	r.GET("/users/:id/following", DefaultAccessPolicy, http.GetUserFollowing)
 
 	// Posts
 	r.POST("/posts", DefaultAccessPolicy, http.CreatePost)

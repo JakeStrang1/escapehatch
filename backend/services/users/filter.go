@@ -44,6 +44,7 @@ func (f *Filter) Validate() error {
 }
 
 type FollowerFilter struct {
-	TargetUserID *string `db:"-"`
-	Search       *string `db:"-"`
+	TargetUserID   *string `db:"-"`
+	FollowerUserID *string `db:"-"`
+	Search         *string `db:"-"`
 }

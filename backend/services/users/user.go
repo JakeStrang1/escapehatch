@@ -78,7 +78,7 @@ func (u *User) FollowedBy(userID string) bool {
 	return false
 }
 
-// SearchFollowers returns all the users followers that contain the given search string in their username or full name
+// SearchFollowers returns all the user's followers that contain the given search string in their username or full name
 func (u *User) SearchFollowers(search string) []Follower {
 	search = strings.ToLower(search) // case-insensitive search
 	results := []Follower{}
@@ -87,6 +87,20 @@ func (u *User) SearchFollowers(search string) []Follower {
 			results = append(results, follower)
 		} else if strings.Contains(strings.ToLower(follower.FollowerFullName), search) {
 			results = append(results, follower)
+		}
+	}
+	return results
+}
+
+// SearchFollowing returns everyone that the user is following that contains the given search string in their username or full name
+func (u *User) SearchFollowing(search string) []Follower {
+	search = strings.ToLower(search) // case-insensitive search
+	results := []Follower{}
+	for _, following := range u.Following {
+		if strings.Contains(following.TargetUsername, search) {
+			results = append(results, following)
+		} else if strings.Contains(strings.ToLower(following.TargetFullName), search) {
+			results = append(results, following)
 		}
 	}
 	return results

@@ -201,6 +201,24 @@ func GetManyFollowers(filter FollowerFilter, results *[]Follower) error {
 	return nil
 }
 
+func GetManyFollowing(filter FollowerFilter, results *[]Follower) error {
+	// Get user
+	user := User{}
+	err := GetByID(*filter.FollowerUserID, &user)
+	if err != nil {
+		return err
+	}
+
+	// Filter following
+	following := user.Following
+	if filter.Search != nil {
+		following = user.SearchFollowing(*filter.Search)
+	}
+
+	*results = following
+	return nil
+}
+
 // GenerateDefaultUsername returns a new username that can be used as a placeholder until a user selects their own
 // It has a recognizable prefix so the app can recognize that it needs to be changed.
 func GenerateDefaultUsername() string {

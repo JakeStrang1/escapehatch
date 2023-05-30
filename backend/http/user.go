@@ -188,6 +188,42 @@ func GetUserFollowers(c *gin.Context) {
 	ReturnMany(c, internal.Map(results, ToFollowerAPI), pageInfo)
 }
 
+func GetUserFollowing(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	// Special case
+	if id == "me" {
+		id = userID
+	}
+
+	query := UserFollowerQuery{}
+	err := c.BindQuery(&query)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "error in query parameters", Err: err})
+		return
+	}
+
+	results := []users.Follower{}
+	filter := users.FollowerFilter{
+		FollowerUserID: lo.ToPtr(id),
+		Search:         query.Search,
+	}
+	err = users.GetManyFollowing(filter, &results)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	pageInfo := pages.PageResult{
+		Page:       1,
+		PerPage:    len(results),
+		TotalPages: 1,
+	}
+
+	ReturnMany(c, internal.Map(results, ToFollowerAPI), pageInfo)
+}
+
 func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
 	results := []UserAPI{}
 	for _, dbUser := range dbUsers {
