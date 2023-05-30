@@ -3,6 +3,7 @@ package http
 import (
 	"github.com/JakeStrang1/escapehatch/internal"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
 	"github.com/JakeStrang1/escapehatch/services/users"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
@@ -33,8 +34,22 @@ type ShelfItemAPI struct {
 	Image  *string `json:"image"`
 }
 
+type FollowerAPI struct {
+	DefaultModelAPI  `json:",inline"`
+	TargetUserID     *string `json:"target_user_id"`
+	TargetUsername   *string `json:"target_username"`
+	TargetFullName   *string `json:"target_full_name"`
+	FollowerUserID   *string `json:"follower_user_id"`
+	FollowerUsername *string `json:"follower_username"`
+	FollowerFullName *string `json:"follower_full_name"`
+}
+
 type UserQuery struct {
 	PageQuery
+	Search *string `form:"search"`
+}
+
+type UserFollowerQuery struct {
 	Search *string `form:"search"`
 }
 
@@ -109,6 +124,42 @@ func UpdateUser(c *gin.Context) {
 	ReturnOne(c, ToUserAPI(userID, result))
 }
 
+func GetUserFollowers(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	// Special case
+	if id == "me" {
+		id = userID
+	}
+
+	query := UserFollowerQuery{}
+	err := c.BindQuery(&query)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "error in query parameters", Err: err})
+		return
+	}
+
+	results := []users.Follower{}
+	filter := users.FollowerFilter{
+		TargetUserID: lo.ToPtr(id),
+		Search:       query.Search,
+	}
+	err = users.GetManyFollowers(filter, &results)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	pageInfo := pages.PageResult{
+		Page:       1,
+		PerPage:    len(results),
+		TotalPages: 1,
+	}
+
+	ReturnMany(c, internal.Map(results, ToFollowerAPI), pageInfo)
+}
+
 func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
 	results := []UserAPI{}
 	for _, dbUser := range dbUsers {
@@ -152,5 +203,17 @@ func ToShelfItemAPI(item users.ShelfItem) ShelfItemAPI {
 	return ShelfItemAPI{
 		ItemID: &item.ItemID,
 		Image:  &item.Image,
+	}
+}
+
+func ToFollowerAPI(follower users.Follower) FollowerAPI {
+	return FollowerAPI{
+		DefaultModelAPI:  ToDefaultModelAPI(follower.DefaultModel),
+		TargetUserID:     &follower.TargetUserID,
+		TargetUsername:   &follower.TargetUsername,
+		TargetFullName:   &follower.TargetFullName,
+		FollowerUserID:   &follower.FollowerUserID,
+		FollowerUsername: &follower.FollowerUsername,
+		FollowerFullName: &follower.FollowerFullName,
 	}
 }

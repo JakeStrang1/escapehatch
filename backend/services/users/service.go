@@ -126,6 +126,24 @@ func GetByEmail(email string, result *User) error {
 	return hydrate(result)
 }
 
+func GetManyFollowers(filter FollowerFilter, results *[]Follower) error {
+	// Get user
+	user := User{}
+	err := GetByID(*filter.TargetUserID, &user)
+	if err != nil {
+		return err
+	}
+
+	// Filter followers
+	followers := user.Followers
+	if filter.Search != nil {
+		followers = user.SearchFollowers(*filter.Search)
+	}
+
+	*results = followers
+	return nil
+}
+
 // GenerateDefaultUsername returns a new username that can be used as a placeholder until a user selects their own
 // It has a recognizable prefix so the app can recognize that it needs to be changed.
 func GenerateDefaultUsername() string {
@@ -196,18 +214,56 @@ func incrementUserCount() (int, error) {
 }
 
 func hydrate(user *User) error {
+	// User's followers
 	followers := []Follower{}
-	err := db.GetMany(db.M{"target_user_id": user.ID}, user, &followers)
+	err := db.GetMany(db.M{"target_user_id": user.ID}, &Follower{}, &followers)
 	if err != nil {
 		return err
+	}
+	for i := range followers {
+		err = hydrateFollower(&followers[i])
+		if err != nil {
+			return err
+		}
 	}
 	user.Followers = followers
 
+	// User's following
 	following := []Follower{}
-	err = db.GetMany(db.M{"follower_user_id": user.ID}, user, &following)
+	err = db.GetMany(db.M{"follower_user_id": user.ID}, &Follower{}, &following)
 	if err != nil {
 		return err
 	}
+	for i := range following {
+		err = hydrateFollower(&following[i])
+		if err != nil {
+			return err
+		}
+	}
 	user.Following = following
+	return nil
+}
+
+func hydrateFollower(follower *Follower) error {
+	// Target user
+	targetUser := User{}
+	targetUser.ID = follower.TargetUserID
+	err := db.GetByID(&targetUser)
+	if err != nil {
+		return err
+	}
+	follower.TargetUsername = targetUser.Username
+	follower.TargetFullName = targetUser.FullName
+
+	// Follower user
+	followerUser := User{}
+	followerUser.ID = follower.FollowerUserID
+	err = db.GetByID(&followerUser)
+	if err != nil {
+		return err
+	}
+	follower.FollowerUsername = followerUser.Username
+	follower.FollowerFullName = followerUser.FullName
+
 	return nil
 }

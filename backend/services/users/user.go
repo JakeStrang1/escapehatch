@@ -2,6 +2,7 @@ package users
 
 import (
 	"regexp"
+	"strings"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
@@ -70,9 +71,23 @@ func (u *User) Follows(userID string) bool {
 // FollowedBy returns true if the user is followed by the given user
 func (u *User) FollowedBy(userID string) bool {
 	for _, follower := range u.Followers {
-		if follower.FollowerID == userID {
+		if follower.FollowerUserID == userID {
 			return true
 		}
 	}
 	return false
+}
+
+// SearchFollowers returns all the users followers that contain the given search string in their username or full name
+func (u *User) SearchFollowers(search string) []Follower {
+	search = strings.ToLower(search) // case-insensitive search
+	results := []Follower{}
+	for _, follower := range u.Followers {
+		if strings.Contains(follower.FollowerUsername, search) {
+			results = append(results, follower)
+		} else if strings.Contains(strings.ToLower(follower.FollowerFullName), search) {
+			results = append(results, follower)
+		}
+	}
+	return results
 }

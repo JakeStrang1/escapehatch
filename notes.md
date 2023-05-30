@@ -219,7 +219,7 @@ Iterative approach:
 
 - [x] `GET /users`
 - [x] `GET /users/:id`
-- [ ] `GET /users/:id/followers`
+- [x] `GET /users/:id/followers`
 - [ ] `GET /users/:id/following`
 - [ ] `POST /users/:id/follow`
 - [ ] `POST /users/:id/unfollow`
