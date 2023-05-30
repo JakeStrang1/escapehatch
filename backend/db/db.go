@@ -159,6 +159,14 @@ func GetPage(selector interface{}, model mgm.Model, results interface{}, page in
 	return totalPages, nil
 }
 
+func GetCount(selector interface{}, model mgm.Model) (int, error) {
+	count, err := mgm.Coll(model).CountDocuments(mgm.Ctx(), selector)
+	if err != nil {
+		return 0, &errors.Error{Code: errors.Internal, Err: err}
+	}
+	return int(count), nil
+}
+
 func EnsureUniqueIndex(model mgm.Model, keys []string) error {
 	d := bson.D{}
 	for _, key := range keys {

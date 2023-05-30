@@ -1,13 +1,32 @@
 package http
 
 import (
+	"github.com/JakeStrang1/escapehatch/internal"
 	"github.com/JakeStrang1/escapehatch/services/users"
 	"github.com/gin-gonic/gin"
+	"github.com/samber/lo"
 )
 
 type UserAPI struct {
-	ID    *string `json:"id"`
-	Email *string `json:"email"`
+	DefaultModelAPI `json:",inline"`
+	Email           *string    `json:"email"`
+	Username        *string    `json:"username"`
+	Number          *int       `json:"number"`
+	FullName        *string    `json:"full_name"`
+	Shelves         []ShelfAPI `json:"shelves"`
+	FollowerCount   *int       `json:"follower_count"`
+	FollowingCount  *int       `json:"following_count"`
+}
+
+type ShelfAPI struct {
+	DefaultModelAPI `json:",inline"`
+	Name            *string        `json:"name"`
+	Items           []ShelfItemAPI `json:"items"`
+}
+
+type ShelfItemAPI struct {
+	ItemID *string `json:"item_id"`
+	Image  *string `json:"image"`
 }
 
 func GetUser(c *gin.Context) {
@@ -31,7 +50,28 @@ func GetUser(c *gin.Context) {
 
 func ToUserAPI(user users.User) UserAPI {
 	return UserAPI{
-		ID:    &user.ID,
-		Email: &user.Email,
+		DefaultModelAPI: ToDefaultModelAPI(user.DefaultModel),
+		Email:           &user.Email,
+		Username:        &user.Username,
+		Number:          &user.Number,
+		FullName:        &user.FullName,
+		Shelves:         internal.Map(user.Shelves, ToShelfAPI),
+		FollowerCount:   lo.ToPtr(len(user.Followers)),
+		FollowingCount:  lo.ToPtr(len(user.Following)),
+	}
+}
+
+func ToShelfAPI(shelf users.Shelf) ShelfAPI {
+	return ShelfAPI{
+		DefaultModelAPI: ToDefaultModelAPI(shelf.DefaultModel),
+		Name:            &shelf.Name,
+		Items:           internal.Map(shelf.Items, ToShelfItemAPI),
+	}
+}
+
+func ToShelfItemAPI(item users.ShelfItem) ShelfItemAPI {
+	return ShelfItemAPI{
+		ItemID: &item.ItemID,
+		Image:  &item.Image,
 	}
 }

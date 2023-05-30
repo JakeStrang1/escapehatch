@@ -90,4 +90,14 @@ func (s *Suite) TestUserJourney() {
 	response = s.Delete(fmt.Sprintf("/posts/%s", postID), withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("{}", gjson.Get(response.Body, "data").Raw)
+
+	// Get user1 self
+	response = s.Get("/users/me", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.number").Int()))
+
+	// Get user2 self
+	response = s.Get("/users/me", withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.number").Int()))
 }
