@@ -152,6 +152,20 @@ func UnfollowUser(c *gin.Context) {
 	ReturnOne(c, ToUserAPI(userID, result))
 }
 
+func RemoveUser(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	result := users.User{}
+	err := users.Remove(id, userID, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToUserAPI(userID, result))
+}
+
 func GetUserFollowers(c *gin.Context) {
 	id := c.Param("id")
 	userID := c.GetString(CtxKeyUserID)

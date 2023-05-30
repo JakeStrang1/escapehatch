@@ -223,7 +223,7 @@ Iterative approach:
 - [x] `GET /users/:id/following`
 - [x] `POST /users/:id/follow`
 - [x] `POST /users/:id/unfollow`
-- [ ] `POST /users/:id/remove`
+- [x] `POST /users/:id/remove`
 - [ ] `POST /items`
 - [ ] `GET /items/:id`
 - [ ] `PATCH /items/:id`

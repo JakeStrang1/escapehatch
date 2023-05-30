@@ -49,6 +49,7 @@ func Router(config Config) *gin.Engine {
 	r.PATCH("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.UpdateUser)
 	r.POST("/users/:id/follow", DefaultAccessPolicy, http.FollowUser)
 	r.POST("/users/:id/unfollow", DefaultAccessPolicy, http.UnfollowUser)
+	r.POST("/users/:id/remove", DefaultAccessPolicy, http.RemoveUser)
 	r.GET("/users/:id/followers", DefaultAccessPolicy, http.GetUserFollowers)
 	r.GET("/users/:id/following", DefaultAccessPolicy, http.GetUserFollowing)
 

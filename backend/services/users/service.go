@@ -136,6 +136,35 @@ func Unfollow(targetUserID string, followerUserID string, result *User) error {
 	return nil
 }
 
+func Remove(followerUserID string, targetUserID string, result *User) error {
+	if targetUserID == followerUserID {
+		return &errors.Error{Code: errors.Invalid, Message: "cannot remove yourself"}
+	}
+
+	selector := db.M{
+		"target_user_id":   targetUserID,
+		"follower_user_id": followerUserID,
+	}
+	follower := Follower{}
+	err := db.GetOne(selector, &follower)
+	if err != nil {
+		return err
+	}
+
+	err = db.DeleteByID(&follower)
+	if err != nil {
+		return err
+	}
+
+	result.ID = targetUserID
+	err = GetByID(targetUserID, result)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {
