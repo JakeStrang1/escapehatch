@@ -2,6 +2,7 @@ package users
 
 import (
 	"fmt"
+	"math/rand"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
@@ -11,6 +12,7 @@ import (
 const userCountCollection = "users_count"
 const defaultPerPage = 25
 const maxPerPage = 250
+const defaultUsernamePrefix = "_" // All default usernames will start with '_' which is not an allowed username char otherwise
 
 func Exists(email string) (bool, error) {
 	u := User{}
@@ -25,11 +27,20 @@ func Exists(email string) (bool, error) {
 }
 
 func Create(document *User) error {
-	err := db.EnsureUniqueIndex(&User{}, []string{"email"})
+	err := document.ValidateOnCreate()
+	if err != nil {
+		return err
+	}
+
+	err = db.EnsureUniqueIndex(&User{}, []string{"email"})
 	if err != nil {
 		return err
 	}
 	err = db.EnsureUniqueIndex(&User{}, []string{"number"})
+	if err != nil {
+		return err
+	}
+	err = db.EnsureUniqueIndex(&User{}, []string{"username"})
 	if err != nil {
 		return err
 	}
@@ -39,6 +50,10 @@ func Create(document *User) error {
 		return err
 	}
 	document.Number = number
+
+	if document.Username == "" {
+		document.Username = GenerateDefaultUsername()
+	}
 
 	err = db.Create(document)
 	if err != nil {
@@ -93,6 +108,17 @@ func GetByEmail(email string, result *User) error {
 	}
 
 	return hydrate(result)
+}
+
+// GenerateDefaultUsername returns a new username that can be used as a placeholder until a user selects their own
+// It has a recognizable prefix so the app can recognize that it needs to be changed.
+func GenerateDefaultUsername() string {
+	username := defaultUsernamePrefix
+	letters := "abcdefghijklmnopqrstuvwxyz"
+	for i := 0; i < 8; i++ {
+		username = username + string(letters[rand.Intn(len(letters))])
+	}
+	return username
 }
 
 // incrementUserCount increments the users_count document and returns an atomically-reserved user number to be used for a new user

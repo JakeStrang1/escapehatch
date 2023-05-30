@@ -2,6 +2,8 @@ package app
 
 import (
 	"log"
+	"math/rand"
+	"time"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/email"
@@ -31,12 +33,17 @@ type Config struct {
 }
 
 func NewApp(config Config) App {
+	// Random seed
+	rand.Seed(time.Now().UnixNano())
+
+	// Database
 	err := db.Setup(config.MongoHost, config.MongoDatabaseName)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Using DB: %s/%s\n", config.MongoHost, config.MongoDatabaseName)
 
+	// Email
 	if config.UseSendGrid == "true" {
 		email.SetupSendGridMailer(email.SendGridConfig{
 			APIKey:      config.SendGridAPIKey,
