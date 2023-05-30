@@ -17,6 +17,9 @@ type UserAPI struct {
 	Shelves         []ShelfAPI `json:"shelves"`
 	FollowerCount   *int       `json:"follower_count"`
 	FollowingCount  *int       `json:"following_count"`
+	Self            *bool      `json:"self"`
+	FollowsYou      *bool      `json:"follows_you"`
+	FollowedByYou   *bool      `json:"followed_by_you"`
 }
 
 type ShelfAPI struct {
@@ -36,6 +39,7 @@ type UserQuery struct {
 }
 
 func GetUsers(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
 	query := UserQuery{}
 	err := c.BindQuery(&query)
 	if err != nil {
@@ -56,7 +60,7 @@ func GetUsers(c *gin.Context) {
 		return
 	}
 
-	ReturnMany(c, internal.Map(results, ToUserAPI), *pageInfo)
+	ReturnMany(c, ToUserAPIs(userID, results), *pageInfo)
 }
 
 func GetUser(c *gin.Context) {
@@ -75,10 +79,18 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-	ReturnOne(c, ToUserAPI(u))
+	ReturnOne(c, ToUserAPI(userID, u))
 }
 
-func ToUserAPI(user users.User) UserAPI {
+func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
+	results := []UserAPI{}
+	for _, dbUser := range dbUsers {
+		results = append(results, ToUserAPI(selfID, dbUser))
+	}
+	return results
+}
+
+func ToUserAPI(selfID string, user users.User) UserAPI {
 	return UserAPI{
 		DefaultModelAPI: ToDefaultModelAPI(user.DefaultModel),
 		Email:           &user.Email,
@@ -88,6 +100,9 @@ func ToUserAPI(user users.User) UserAPI {
 		Shelves:         internal.Map(user.Shelves, ToShelfAPI),
 		FollowerCount:   lo.ToPtr(len(user.Followers)),
 		FollowingCount:  lo.ToPtr(len(user.Following)),
+		Self:            lo.ToPtr(user.ID == selfID),
+		FollowsYou:      lo.ToPtr(user.Follows(selfID)),
+		FollowedByYou:   lo.ToPtr(user.FollowedBy(selfID)),
 	}
 }
 
