@@ -1,5 +1,6 @@
 runtime: go120
 env_variables:
+  PROJECT_ID: escapehatch
   FRONTEND_HOST: 'https://www.escapehatch.ca'
   MONGO_DB_NAME: escapehatch
   ORIGIN: 'https://www.escapehatch.ca'

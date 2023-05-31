@@ -11,3 +11,4 @@ availableSecrets:
     env: 'SENDGRID_API_KEY'
 options:
   logging: CLOUD_LOGGING_ONLY # Refs: https://cloud.google.com/build/docs/securing-builds/configure-user-specified-service-accounts#running_builds_using_build_triggers
+  secretEnv: ['MONGO_HOST', 'SENDGRID_API_KEY']
