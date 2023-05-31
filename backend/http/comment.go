@@ -107,7 +107,7 @@ func DeleteComment(c *gin.Context) {
 
 func ToComment(commentAPI CommentAPI) posts.Comment {
 	return posts.Comment{
-		DefaultModel: FromDefaultModelAPI(commentAPI.DefaultModelAPI),
+		DefaultModel: ToDefaultModel(commentAPI.DefaultModelAPI),
 		OwnerID:      lo.FromPtr(commentAPI.OwnerID),
 		Body:         lo.FromPtr(commentAPI.Body),
 	}

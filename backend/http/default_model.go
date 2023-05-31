@@ -21,7 +21,7 @@ func ToDefaultModelAPI(model db.DefaultModel) DefaultModelAPI {
 	}
 }
 
-func FromDefaultModelAPI(model DefaultModelAPI) db.DefaultModel {
+func ToDefaultModel(model DefaultModelAPI) db.DefaultModel {
 	return db.DefaultModel{
 		IDField: db.IDField{ID: lo.FromPtr(model.ID)},
 		DateFields: db.DateFields{
