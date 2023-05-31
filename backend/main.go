@@ -25,6 +25,7 @@ func main() {
 	}
 
 	fmt.Printf("Envs: MONGO_DB_NAME:%s, ORIGIN:%s, USE_SENDGRID:%s, SENDGRID_FROM_EMAIL:%s\n", os.Getenv("MONGO_DB_NAME"), os.Getenv("ORIGIN"), os.Getenv("USE_SENDGRID"), os.Getenv("SENDGRID_FROM_EMAIL"))
+	fmt.Printf("Secrets: MONGO_HOST:%.5s..., SENDGRID_API_KEY:%.5s...\n", os.Getenv("MONGO_HOST"), os.Getenv("SENDGRID_API_KEY"))
 
 	config := app.Config{
 		MongoHost:         os.Getenv("MONGO_HOST"),

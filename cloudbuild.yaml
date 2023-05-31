@@ -2,32 +2,12 @@ steps:
 - name: "gcr.io/cloud-builders/gcloud"
   dir: "backend"
   args: ["app", "deploy"]
-  secretEnv:
-  - 'FRONTEND_HOST'
-  - 'MONGO_DB_NAME'
-  - 'MONGO_HOST'
-  - 'ORIGIN'
-  - 'PRODUCTION'
-  - 'SENDGRID_API_KEY'
-  - 'SENDGRID_FROM_EMAIL'
-  - 'USE_SENDGRID'
+  secretEnv: ['MONGO_HOST', 'SENDGRID_API_KEY']
 availableSecrets:
   secretManager:
-  - versionName: projects/escapehatch/secrets/FRONTEND_HOST/versions/1
-    env: 'FRONTEND_HOST'
-  - versionName: projects/escapehatch/secrets/MONGO_DB_NAME/versions/1
-    env: 'MONGO_DB_NAME'
-  - versionName: projects/escapehatch/secrets/MONGO_HOST/versions/1
+  - versionName: projects/escapehatch/secrets/MONGO_HOST/versions/latest
     env: 'MONGO_HOST'
-  - versionName: projects/escapehatch/secrets/ORIGIN/versions/1
-    env: 'ORIGIN'
-  - versionName: projects/escapehatch/secrets/PRODUCTION/versions/1
-    env: 'PRODUCTION'
-  - versionName: projects/escapehatch/secrets/SENDGRID_API_KEY/versions/1
+  - versionName: projects/escapehatch/secrets/SENDGRID_API_KEY/versions/latest
     env: 'SENDGRID_API_KEY'
-  - versionName: projects/escapehatch/secrets/SENDGRID_FROM_EMAIL/versions/1
-    env: 'SENDGRID_FROM_EMAIL'
-  - versionName: projects/escapehatch/secrets/USE_SENDGRID/versions/1
-    env: 'USE_SENDGRID'
 options:
   logging: CLOUD_LOGGING_ONLY # Refs: https://cloud.google.com/build/docs/securing-builds/configure-user-specified-service-accounts#running_builds_using_build_triggers

@@ -1,1 +1,8 @@
 runtime: go120
+env_variables:
+  FRONTEND_HOST: 'https://www.escapehatch.ca'
+  MONGO_DB_NAME: escapehatch
+  ORIGIN: 'https://www.escapehatch.ca'
+  PRODUCTION: true
+  SENDGRID_FROM_EMAIL: 'jake@jakestrang.com'
+  USE_SENDGRID: true
