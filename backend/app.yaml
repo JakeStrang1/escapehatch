@@ -4,6 +4,6 @@ env_variables:
   FRONTEND_HOST: 'https://www.escapehatch.ca'
   MONGO_DB_NAME: escapehatch
   ORIGIN: 'https://www.escapehatch.ca'
-  PRODUCTION: true
+  PRODUCTION: 'true'
   SENDGRID_FROM_EMAIL: 'jake@jakestrang.com'
-  USE_SENDGRID: true
+  USE_SENDGRID: 'true'
