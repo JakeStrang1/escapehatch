@@ -8,3 +8,4 @@ env_variables:
   PRODUCTION: 'true'
   SENDGRID_FROM_EMAIL: 'jake@jakestrang.com'
   USE_SENDGRID: 'true'
+  USE_GCS: 'true'

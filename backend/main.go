@@ -38,6 +38,7 @@ func main() {
 	}
 
 	config := app.Config{
+		UseGCS:            os.Getenv("USE_GCS"),
 		MongoHost:         os.Getenv("MONGO_HOST"),
 		MongoDatabaseName: os.Getenv("MONGO_DB_NAME"),
 		CORSAllowOrigin:   os.Getenv("ORIGIN"),

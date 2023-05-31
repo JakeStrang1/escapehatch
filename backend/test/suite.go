@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -145,6 +147,59 @@ func (s *Suite) Post(path string, body interface{}, options ...func(*Request)) R
 		Body:     w.Body.String(),
 		Recorder: w,
 	}
+}
+
+func (s *Suite) PostMultipart(path string, values map[string]io.Reader, options ...func(*Request)) Response {
+	w := httptest.NewRecorder()
+
+	writer, reader, err := multipartReader(values)
+	s.Assert().NoError(err)
+	httpRequest, err := http.NewRequest("POST", path, reader)
+	s.Assert().NoError(err)
+	httpRequest.Header.Set("Content-Type", writer.FormDataContentType())
+
+	request := Request{Request: httpRequest}
+
+	for _, option := range options {
+		option(&request)
+	}
+
+	s.App.Router().ServeHTTP(w, request.Request)
+
+	return Response{
+		Status:   w.Code,
+		Body:     w.Body.String(),
+		Recorder: w,
+	}
+}
+
+// multipartReader takes prepared values and converts them to an io.Reader to be passed into http.NewRequest
+// Source: https://stackoverflow.com/a/20397167
+func multipartReader(values map[string]io.Reader) (*multipart.Writer, io.Reader, error) {
+	var b bytes.Buffer
+	w := multipart.NewWriter(&b)
+	for key, reader := range values {
+		var writer io.Writer
+		var err error
+		if closer, ok := reader.(io.Closer); ok {
+			defer closer.Close()
+		}
+		if file, ok := reader.(*os.File); ok {
+			if writer, err = w.CreateFormFile(key, file.Name()); err != nil {
+				return nil, nil, err
+			}
+		} else {
+			if writer, err = w.CreateFormField(key); err != nil {
+				return nil, nil, err
+			}
+		}
+		if _, err = io.Copy(writer, reader); err != nil {
+			return nil, nil, err
+		}
+
+	}
+	w.Close()
+	return w, &b, nil
 }
 
 func (s *Suite) Patch(path string, body interface{}, options ...func(*Request)) Response {

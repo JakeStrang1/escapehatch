@@ -1,12 +1,14 @@
 package app
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"time"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/email"
+	"github.com/JakeStrang1/escapehatch/integrations/storage"
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,11 +32,21 @@ type Config struct {
 	UseSendGrid       string
 	SendGridAPIKey    string
 	SendGridFromEmail string
+	UseGCS            string
 }
 
 func NewApp(config Config) App {
 	// Random seed
 	rand.Seed(time.Now().UnixNano())
+
+	// Storage
+	if config.UseGCS == "true" {
+		fmt.Println("USE_GCS=true")
+		storage.SetupGCSClient()
+	} else {
+		fmt.Println("USE_GCS=false")
+		storage.SetupMockClient()
+	}
 
 	// Database
 	err := db.Setup(config.MongoHost, config.MongoDatabaseName)

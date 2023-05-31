@@ -18,14 +18,16 @@ const (
 type Item struct {
 	db.DefaultModel `db:",inline"`
 	MediaType       MediaType `db:"media_type"`
-	Image           string    `db:"image"`
+	ImageURL        string    `db:"image_url"`
+	ImageFileName   string    `db:"-"`
+	ImageFileBody   []byte    `db:"-"`
 	Title           string    `db:"title"`
 	CreatedBy       string    `db:"created_by"`
 	ChangeLog       []Change  `db:"change_log"`
 }
 
 func (i *Item) ValidateOnCreate() error {
-	if i.Image == "" {
+	if i.ImageURL == "" && len(i.ImageFileBody) == 0 {
 		return &errors.Error{Code: errors.Invalid, Message: "image is required"}
 	}
 
