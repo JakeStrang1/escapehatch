@@ -8,7 +8,7 @@ Check out what your friends like, what your crush likes, discover new creators y
 
 ## Potential features
 
-- Have an enormous database of content (books, shows, movies, artists) - these will be user-driven for now.
+- Have an enormous database of content (books, shows, movies, artists) - these will be user driven for now.
 - Integrate with lots of APIs to pull in data like Spotify, Netflix, Goodreads, to pull in data.
 - Have a ton of content types:
     - Books
