@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -22,6 +23,8 @@ func main() {
 	if err != nil {
 		log.Println("Warning: Error loading .env file")
 	}
+
+	fmt.Printf("Envs: MONGO_DB_NAME:%s, ORIGIN:%s, USE_SENDGRID:%s, SENDGRID_FROM_EMAIL:%s\n", os.Getenv("MONGO_DB_NAME"), os.Getenv("ORIGIN"), os.Getenv("USE_SENDGRID"), os.Getenv("SENDGRID_FROM_EMAIL"))
 
 	config := app.Config{
 		MongoHost:         os.Getenv("MONGO_HOST"),
