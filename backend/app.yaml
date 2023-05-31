@@ -1,5 +1,6 @@
 runtime: go120
 env_variables:
+  # These are non-secret env vars. Put secret env vars in Google Secret Manager and add a loader for each var to main.go
   PROJECT_ID: escapehatch
   FRONTEND_HOST: 'https://www.escapehatch.ca'
   MONGO_DB_NAME: escapehatch

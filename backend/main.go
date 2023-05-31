@@ -22,22 +22,20 @@ import (
  ****************************************************************************************/
 
 func main() {
-	err := godotenv.Overload() // Will overwrite existing env vars
-	if err != nil {
-		log.Println("Warning: Error loading .env file")
-	}
-
-	// Access production secrets
+	// Load env vars
 	if os.Getenv("PRODUCTION") == "true" {
 		log.Println("PRODUCTION=true")
 		log.Println("Loading production secrets from Google Secret Manager...")
 		loadProdSecrets()
+		// Non-secret env vars are already loaded from app.yaml file
 	} else {
 		log.Println("PRODUCTION=false")
+		log.Println("Loading env vars from .env file...")
+		err := godotenv.Overload() // Will overwrite existing env vars
+		if err != nil {
+			log.Println("Warning: Error loading .env file")
+		}
 	}
-
-	fmt.Printf("Envs: MONGO_DB_NAME:%s, ORIGIN:%s, USE_SENDGRID:%s, SENDGRID_FROM_EMAIL:%s\n", os.Getenv("MONGO_DB_NAME"), os.Getenv("ORIGIN"), os.Getenv("USE_SENDGRID"), os.Getenv("SENDGRID_FROM_EMAIL"))
-	fmt.Printf("Secrets: MONGO_HOST:%.5s..., SENDGRID_API_KEY:%.5s...\n", os.Getenv("MONGO_HOST"), os.Getenv("SENDGRID_API_KEY"))
 
 	config := app.Config{
 		MongoHost:         os.Getenv("MONGO_HOST"),
@@ -67,24 +65,20 @@ func loadProdSecrets() {
 	}
 	defer client.Close()
 
-	// Build the request.
+	// MONGO_HOST
 	accessRequest := &secretmanagerpb.AccessSecretVersionRequest{
 		Name: fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, "MONGO_HOST"),
 	}
-
-	// Call the API.
 	result, err := client.AccessSecretVersion(ctx, accessRequest)
 	if err != nil {
 		log.Fatalf("failed to access secret version: %v", err)
 	}
 	os.Setenv("MONGO_HOST", string(result.Payload.Data))
 
-	// Build the request.
+	// SENDGRID_API_KEY
 	accessRequest = &secretmanagerpb.AccessSecretVersionRequest{
 		Name: fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, "SENDGRID_API_KEY"),
 	}
-
-	// Call the API.
 	result, err = client.AccessSecretVersion(ctx, accessRequest)
 	if err != nil {
 		log.Fatalf("failed to access secret version: %v", err)
