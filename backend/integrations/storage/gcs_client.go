@@ -23,14 +23,6 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	ctx := context.Background()
 	obj := g.Bucket(g.bucketName).Object(filename)
 
-	// Public
-	if lo.FromPtr(opt.Public) {
-		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
-			fmt.Println("attempt 1")
-			//return "", &errors.Error{Code: errors.Internal, Err: err}
-		}
-	}
-
 	// Upload
 	w := obj.NewWriter(ctx)
 	_, err := w.Write(data)
@@ -44,7 +36,6 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	// Public
 	if lo.FromPtr(opt.Public) {
 		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
-			fmt.Println("attempt 2")
 			return "", &errors.Error{Code: errors.Internal, Err: err}
 		}
 	}
