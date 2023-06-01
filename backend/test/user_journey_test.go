@@ -199,4 +199,18 @@ func (s *Suite) TestUserJourney() {
 	response = s.Post("/movies", movie, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("The Lord of the Rings: The Fellowship of the Ring", gjson.Get(response.Body, "data.title").String())
+
+	// Create tv series
+	tvSeries := http.TVSeriesAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://i.ebayimg.com/images/g/MagAAMXQGQRR82PV/s-l500.jpg"),
+			Title:    lo.ToPtr("The Office"),
+		},
+		LeadActors:        []string{"Steve Carell", "Jenna Fischer"},
+		TVSeriesStartYear: lo.ToPtr("2005"),
+		TVSeriesEndYear:   lo.ToPtr("2013"),
+	}
+	response = s.Post("/tv-series", tvSeries, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("The Office", gjson.Get(response.Body, "data.title").String())
 }

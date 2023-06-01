@@ -47,3 +47,24 @@ func CreateMovie(userID string, result *Movie) error {
 	result.ImageURL = newImageURL
 	return db.Create(result)
 }
+
+func CreateTVSeries(userID string, result *TVSeries) error {
+	result.MediaType = MediaTypeTVSeries
+	result.CreatedBy = userID
+	err := result.ValidateTVSeriesOnCreate()
+	if err != nil {
+		return err
+	}
+
+	var newImageURL string
+	if len(result.ImageFileBody) != 0 {
+		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
+	} else {
+		newImageURL, err = storage.CreateFromURL(result.ImageURL)
+	}
+	if err != nil {
+		return err
+	}
+	result.ImageURL = newImageURL
+	return db.Create(result)
+}

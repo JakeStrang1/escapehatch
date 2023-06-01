@@ -111,6 +111,33 @@ type TVSeries struct {
 	TVSeriesEndYear   string   `db:"tv_series_end_year"`
 }
 
+func (b *TVSeries) ValidateTVSeriesOnCreate() error {
+	err := b.Item.ValidateOnCreate()
+	if err != nil {
+		return err
+	}
+
+	if len(b.LeadActors) < 2 {
+		return &errors.Error{Code: errors.Invalid, Message: "provide at least 2 lead actors"}
+	}
+
+	for _, actor := range b.LeadActors {
+		if actor == "" {
+			return &errors.Error{Code: errors.Invalid, Message: "actor name cannot be blank"}
+		}
+	}
+
+	if b.TVSeriesStartYear == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "series start year is required"}
+	}
+
+	if b.TVSeriesEndYear == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "series end year is required (can be \"present\" if still ongoing)"}
+	}
+
+	return nil
+}
+
 type Change struct {
 	UpdatedAt time.Time              `db:"updated_at"`
 	UpdatedBy string                 `db:"updated_by"`
