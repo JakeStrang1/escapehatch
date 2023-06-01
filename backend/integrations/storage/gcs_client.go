@@ -22,22 +22,22 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 
 	ctx := context.Background()
 	obj := g.Bucket(g.bucketName).Object(filename)
-	w := obj.NewWriter(ctx)
-
-	// Upload
-	_, err := w.Write(data)
-	if err != nil {
-		return "", &errors.Error{Code: errors.Internal, Err: err}
-	}
-	if err := w.Close(); err != nil {
-		return "", &errors.Error{Code: errors.Internal, Err: err}
-	}
 
 	// Public
 	if lo.FromPtr(opt.Public) {
 		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
 			return "", &errors.Error{Code: errors.Internal, Err: err}
 		}
+	}
+
+	// Upload
+	w := obj.NewWriter(ctx)
+	_, err := w.Write(data)
+	if err != nil {
+		return "", &errors.Error{Code: errors.Internal, Err: err}
+	}
+	if err := w.Close(); err != nil {
+		return "", &errors.Error{Code: errors.Internal, Err: err}
 	}
 
 	return filename, nil
