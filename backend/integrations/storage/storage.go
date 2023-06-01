@@ -12,6 +12,7 @@ var client Client
 
 type Client interface {
 	Upload(filename string, data []byte, options ...Options) (string, error)
+	Close()
 }
 
 type Options struct {
@@ -24,6 +25,10 @@ func SetupGCSClient(bucketName string) {
 
 func SetupLocalClient() {
 	client = NewLocalClient()
+}
+
+func Close() {
+	client.Close()
 }
 
 // Create will upload a file with a new filename to avoid any name conflicts

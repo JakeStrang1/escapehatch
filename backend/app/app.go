@@ -83,4 +83,5 @@ func (a *App) Router() *gin.Engine {
 
 func (a *App) Close() {
 	db.Close()
+	storage.Close()
 }

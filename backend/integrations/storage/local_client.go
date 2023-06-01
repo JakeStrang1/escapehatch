@@ -27,6 +27,8 @@ func (l *LocalClient) Upload(filename string, data []byte, options ...Options) (
 	return filename, nil
 }
 
+func (l *LocalClient) Close() {}
+
 /******************************************************
  * FS implementation used to retrieve files
  ******************************************************/

@@ -6,7 +6,6 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
-	"github.com/samber/lo"
 )
 
 type GCSClient struct {
@@ -23,12 +22,13 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	ctx := context.Background()
 	obj := g.Bucket(g.bucketName).Object(filename)
 
-	// Public
-	if lo.FromPtr(opt.Public) {
-		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
-			return "", &errors.Error{Code: errors.Internal, Err: err}
-		}
-	}
+	// // Public - this code didn't work, leaving it here just as a reminder that it didn't work (no error, permissions didn't change).
+	// // I ended up just making the entire bucket public instead.
+	// if lo.FromPtr(opt.Public) {
+	// 	if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
+	// 		return "", &errors.Error{Code: errors.Internal, Err: err}
+	// 	}
+	// }
 
 	// Upload
 	w := obj.NewWriter(ctx)
@@ -41,6 +41,10 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	}
 
 	return filename, nil
+}
+
+func (g *GCSClient) Close() {
+	g.Client.Close()
 }
 
 func NewGCSClient(bucketName string) *GCSClient {
