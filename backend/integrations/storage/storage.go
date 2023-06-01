@@ -39,12 +39,13 @@ func Create(oldFilename string, data []byte, options ...Options) (string, error)
 	return Upload(newFilename, data, options...)
 }
 
+// CreateFromURL will download the file at the url, and reupload it with a new filename to avoid any name conflicts
+func CreateFromURL(url string, options ...Options) (string, error) {
+	return "", &errors.Error{Code: errors.Internal, Err: fmt.Errorf("not implemented")}
+}
+
 // Upload will upload the given file with the given filename. It will overwrite an existing file with that name.
 // Recommended to use Create instead to avoid overwriting.
 func Upload(filename string, data []byte, options ...Options) (string, error) {
 	return client.Upload(filename, data, options...)
-}
-
-func UploadFromURL(url string, options ...Options) (string, error) {
-	return "", &errors.Error{Code: errors.Internal, Err: fmt.Errorf("not implemented")}
 }

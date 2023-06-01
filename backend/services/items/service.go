@@ -3,6 +3,7 @@ package items
 import (
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/integrations/storage"
+	"github.com/samber/lo"
 )
 
 func CreateBook(userID string, result *Book) error {
@@ -15,9 +16,9 @@ func CreateBook(userID string, result *Book) error {
 
 	var newImageURL string
 	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody)
+		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
 	} else {
-		newImageURL, err = storage.UploadFromURL(result.ImageURL)
+		newImageURL, err = storage.CreateFromURL(result.ImageURL)
 	}
 	if err != nil {
 		return err

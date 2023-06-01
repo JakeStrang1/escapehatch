@@ -6,6 +6,7 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/samber/lo"
 )
 
 type GCSClient struct {
@@ -14,16 +15,21 @@ type GCSClient struct {
 }
 
 func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (string, error) {
+	opt := Options{}
+	if len(options) > 0 {
+		opt = options[0] // ignore additional
+	}
+
 	ctx := context.Background()
 	obj := g.Bucket(g.bucketName).Object(filename)
 
-	// // Public - this code didn't work, leaving it here just as a reminder that it didn't work (no error, permissions didn't change).
-	// // I ended up just making the entire bucket public instead.
-	// if lo.FromPtr(opt.Public) {
-	// 	if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
-	// 		return "", &errors.Error{Code: errors.Internal, Err: err}
-	// 	}
-	// }
+	// Public
+	if lo.FromPtr(opt.Public) {
+		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
+			fmt.Println("attempt 1")
+			//return "", &errors.Error{Code: errors.Internal, Err: err}
+		}
+	}
 
 	// Upload
 	w := obj.NewWriter(ctx)
@@ -33,6 +39,14 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	}
 	if err := w.Close(); err != nil {
 		return "", &errors.Error{Code: errors.Internal, Err: err}
+	}
+
+	// Public
+	if lo.FromPtr(opt.Public) {
+		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
+			fmt.Println("attempt 2")
+			return "", &errors.Error{Code: errors.Internal, Err: err}
+		}
 	}
 
 	return filename, nil
