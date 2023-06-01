@@ -2,6 +2,7 @@ package http
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,10 @@ func NewEngine() *Engine {
 	return &Engine{
 		Engine: gin.Default(),
 	}
+}
+
+func (e *Engine) StaticFS(relativePath string, fs http.FileSystem) gin.IRoutes {
+	return e.Engine.StaticFS(relativePath, fs)
 }
 
 func (e *Engine) GET(path string, handlerArgs ...any) {

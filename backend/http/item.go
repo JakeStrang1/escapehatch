@@ -52,7 +52,7 @@ func ToItemAPI(item items.Item) ItemAPI {
 	return ItemAPI{
 		DefaultModelAPI: ToDefaultModelAPI(item.DefaultModel),
 		MediaType:       (*string)(&item.MediaType),
-		ImageURL:        &item.ImageURL,
+		ImageURL:        IncludeStaticRoot(item.ImageURL),
 		Title:           &item.Title,
 		CreatedBy:       &item.CreatedBy,
 	}

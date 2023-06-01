@@ -3,11 +3,10 @@ package app
 import (
 	"fmt"
 	"log"
-	"math/rand"
-	"time"
 
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/email"
+	"github.com/JakeStrang1/escapehatch/http"
 	"github.com/JakeStrang1/escapehatch/integrations/storage"
 	"github.com/gin-gonic/gin"
 )
@@ -33,19 +32,21 @@ type Config struct {
 	SendGridAPIKey    string
 	SendGridFromEmail string
 	UseGCS            string
+	GCSBucketName     string
+	StaticURLRoot     string
 }
 
 func NewApp(config Config) App {
-	// Random seed
-	rand.Seed(time.Now().UnixNano())
+	// Static assets root URL
+	http.StaticURLRoot = config.StaticURLRoot // Used to hydrate image links
 
 	// Storage
 	if config.UseGCS == "true" {
 		fmt.Println("USE_GCS=true")
-		storage.SetupGCSClient()
+		storage.SetupGCSClient(config.GCSBucketName)
 	} else {
 		fmt.Println("USE_GCS=false")
-		storage.SetupMockClient()
+		storage.SetupLocalClient()
 	}
 
 	// Database

@@ -11,6 +11,8 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
+var StaticURLRoot string
+
 type Response struct {
 	Data  interface{} `json:"data"`
 	Pages *Pages      `json:"pages,omitempty"`
@@ -84,6 +86,16 @@ func ReturnMany(c *gin.Context, results interface{}, pageInfo pages.PageResult) 
 		},
 	}
 	c.JSON(200, response)
+}
+
+// IncludeStaticRoot prepends the static url to the given path to form a fully qualified URL
+// Returns a pointer for convenience, is never nil
+func IncludeStaticRoot(urlpath string) *string {
+	s, err := url.JoinPath(StaticURLRoot, urlpath)
+	if err != nil {
+		panic(err) // error can only occur if base is malformed
+	}
+	return &s
 }
 
 func next(u url.URL, pageInfo pages.PageResult) string {

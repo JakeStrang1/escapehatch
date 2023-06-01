@@ -38,13 +38,15 @@ func main() {
 	}
 
 	config := app.Config{
-		UseGCS:            os.Getenv("USE_GCS"),
 		MongoHost:         os.Getenv("MONGO_HOST"),
 		MongoDatabaseName: os.Getenv("MONGO_DB_NAME"),
 		CORSAllowOrigin:   os.Getenv("ORIGIN"),
 		UseSendGrid:       os.Getenv("USE_SENDGRID"),
 		SendGridAPIKey:    os.Getenv("SENDGRID_API_KEY"),
 		SendGridFromEmail: os.Getenv("SENDGRID_FROM_EMAIL"),
+		UseGCS:            os.Getenv("USE_GCS"),
+		GCSBucketName:     os.Getenv("GCS_BUCKET_NAME"),
+		StaticURLRoot:     os.Getenv("STATIC_URL_ROOT"),
 	}
 	mainApp := app.NewApp(config)
 	defer mainApp.Close()

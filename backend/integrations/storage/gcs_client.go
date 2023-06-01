@@ -4,43 +4,53 @@ import (
 	"context"
 	"fmt"
 
-	storage "cloud.google.com/go/storage"
+	"cloud.google.com/go/storage"
+	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/samber/lo"
 )
 
 type GCSClient struct {
 	*storage.Client
+	bucketName string
 }
 
-func (g *GCSClient) Upload(filename string, data []byte) (string, error) {
-	bkt := g.Bucket("escapehatch.appspot.com")
-	obj := bkt.Object(filename)
+func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (string, error) {
+	opt := Options{}
+	if len(options) > 1 {
+		opt = options[0] // ignore additional options
+	}
 
-	// Write something to obj.
-	// w implements io.Writer.
-	w := obj.NewWriter(context.Background())
-	// Write some text to obj. This will either create the object or overwrite whatever is there already.
+	ctx := context.Background()
+	obj := g.Bucket(g.bucketName).Object(filename)
+	w := obj.NewWriter(ctx)
+
+	// Upload
 	_, err := w.Write(data)
 	if err != nil {
-		fmt.Println("error during file write")
-		fmt.Println(err)
-		// TODO: Handle error.
+		return "", &errors.Error{Code: errors.Internal, Err: err}
 	}
-	// Close, just like writing a file.
 	if err := w.Close(); err != nil {
-		fmt.Println("error during file close")
-		fmt.Println(err)
+		return "", &errors.Error{Code: errors.Internal, Err: err}
 	}
 
-	return "test", nil
+	// Public
+	if lo.FromPtr(opt.Public) {
+		if err := obj.ACL().Set(ctx, storage.AllUsers, storage.RoleReader); err != nil {
+			return "", &errors.Error{Code: errors.Internal, Err: err}
+		}
+	}
+
+	return filename, nil
 }
 
-func NewGCSClient() *GCSClient {
+func NewGCSClient(bucketName string) *GCSClient {
 	client, err := storage.NewClient(context.Background())
 	if err != nil {
 		fmt.Println("error during new client")
 		panic(err)
 	}
 	return &GCSClient{
-		Client: client,
+		Client:     client,
+		bucketName: bucketName,
 	}
 }

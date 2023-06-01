@@ -15,7 +15,7 @@ func CreateBook(userID string, result *Book) error {
 
 	var newImageURL string
 	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Upload(result.ImageFileName, result.ImageFileBody)
+		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody)
 	} else {
 		newImageURL, err = storage.UploadFromURL(result.ImageURL)
 	}

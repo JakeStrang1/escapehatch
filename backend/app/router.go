@@ -1,7 +1,11 @@
 package app
 
 import (
+	nethttp "net/http"
+	"strings"
+
 	"github.com/JakeStrang1/escapehatch/http"
+	"github.com/JakeStrang1/escapehatch/integrations/storage"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -31,6 +35,11 @@ func Router(config Config) *gin.Engine {
 	/*******************************************
 	 * Public routes
 	 *******************************************/
+
+	if strings.ToLower(config.UseGCS) != "true" {
+		// Local storage used for development only (backed in a local MongoDB)
+		r.StaticFS("/local-static", nethttp.FS(&storage.LocalFS{}))
+	}
 
 	r.POST("/auth/sign-up", http.SignUp)
 	r.POST("/auth/sign-in", http.SignIn)

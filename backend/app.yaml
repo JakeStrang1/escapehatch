@@ -9,3 +9,5 @@ env_variables:
   SENDGRID_FROM_EMAIL: 'jake@jakestrang.com'
   USE_SENDGRID: 'true'
   USE_GCS: 'true'
+  GCS_BUCKET_NAME: 'escapehatch.appspot.com'
+  STATIC_URL_ROOT: 'https://storage.googleapis.com/escapehatch.appspot.com'
