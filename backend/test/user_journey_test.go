@@ -168,19 +168,19 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().False(gjson.Get(response.Body, "data.followed_by_you").Bool())
 	s.Assert().False(gjson.Get(response.Body, "data.follows_you").Bool())
 
-	// Create book - commented out while working on image upload
-	// book := http.BookAPI{
-	// 	ItemAPI: http.ItemAPI{
-	// 		ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"),
-	// 		Title:    lo.ToPtr("Harry Potter and the Chamber of Secrets"),
-	// 	},
-	// 	Author:         lo.ToPtr("J. K. Rowling"),
-	// 	PublishedYear:  lo.ToPtr("1998"),
-	// 	IsSeries:       lo.ToPtr(true),
-	// 	SeriesTitle:    lo.ToPtr("Harry Potter"),
-	// 	SequenceNumber: lo.ToPtr("2"),
-	// }
-	// response = s.Post("/books", book, withUser1Cookie)
-	// s.Assert().Equal(200, response.Status)
-	// s.Assert().Equal("Harry Potter and the Chamber of Secrets", gjson.Get(response.Body, "data.title").String())
+	// Create book
+	book := http.BookAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"),
+			Title:    lo.ToPtr("Harry Potter and the Chamber of Secrets"),
+		},
+		Author:         lo.ToPtr("J. K. Rowling"),
+		PublishedYear:  lo.ToPtr("1998"),
+		IsSeries:       lo.ToPtr(true),
+		SeriesTitle:    lo.ToPtr("Harry Potter"),
+		SequenceNumber: lo.ToPtr("2"),
+	}
+	response = s.Post("/books", book, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("Harry Potter and the Chamber of Secrets", gjson.Get(response.Body, "data.title").String())
 }
