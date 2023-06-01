@@ -77,6 +77,33 @@ type Movie struct {
 	LeadActors     []string `db:"lead_actors"`
 }
 
+func (b *Movie) ValidateMovieOnCreate() error {
+	err := b.Item.ValidateOnCreate()
+	if err != nil {
+		return err
+	}
+
+	if len(b.LeadActors) < 2 {
+		return &errors.Error{Code: errors.Invalid, Message: "provide at least 2 lead actors"}
+	}
+
+	for _, actor := range b.LeadActors {
+		if actor == "" {
+			return &errors.Error{Code: errors.Invalid, Message: "actor name cannot be blank"}
+		}
+	}
+
+	if b.PublishedYear == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "published year is required"}
+	}
+
+	if b.IsSeries && b.SeriesTitle == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "series title is required"}
+	}
+
+	return nil
+}
+
 type TVSeries struct {
 	Item              `db:",inline"`
 	LeadActors        []string `db:"lead_actors"`

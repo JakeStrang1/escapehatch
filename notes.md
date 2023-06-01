@@ -224,7 +224,9 @@ Iterative approach:
 - [x] `POST /users/:id/follow`
 - [x] `POST /users/:id/unfollow`
 - [x] `POST /users/:id/remove`
-- [ ] `POST /items`
+- [x] `POST /books`
+- [x] `POST /movies`
+- [ ] `POST /tv-series`
 - [ ] `GET /items/:id`
 - [ ] `PATCH /items/:id`
 - [ ] `POST /items/:id/add`

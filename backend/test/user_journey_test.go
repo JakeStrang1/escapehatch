@@ -183,4 +183,20 @@ func (s *Suite) TestUserJourney() {
 	response = s.Post("/books", book, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("Harry Potter and the Chamber of Secrets", gjson.Get(response.Body, "data.title").String())
+
+	// Create movie
+	movie := http.MovieAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://media1.inlander.com/inlander/imager/u/slideshow/21189517/the-lord-of-the-rings-the-fellowship-of-the-ring-2001-4k-remaster"),
+			Title:    lo.ToPtr("The Lord of the Rings: The Fellowship of the Ring"),
+		},
+		LeadActors:     []string{"Elijah Wood", "Ian McKellen"},
+		PublishedYear:  lo.ToPtr("2001"),
+		IsSeries:       lo.ToPtr(true),
+		SeriesTitle:    lo.ToPtr("The Lord of the Rings"),
+		SequenceNumber: lo.ToPtr("1"),
+	}
+	response = s.Post("/movies", movie, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("The Lord of the Rings: The Fellowship of the Ring", gjson.Get(response.Body, "data.title").String())
 }
