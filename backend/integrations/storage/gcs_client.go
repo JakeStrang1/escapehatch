@@ -14,11 +14,6 @@ type GCSClient struct {
 }
 
 func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (string, error) {
-	opt := Options{}
-	if len(options) > 1 {
-		opt = options[0] // ignore additional options
-	}
-
 	ctx := context.Background()
 	obj := g.Bucket(g.bucketName).Object(filename)
 
