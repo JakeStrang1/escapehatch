@@ -172,8 +172,8 @@ func (s *Suite) TestUserJourney() {
 	book := http.BookAPI{
 		ItemAPI: http.ItemAPI{
 			ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"),
-			Title:    lo.ToPtr("Harry Potter and the Chamber of Secrets"),
 		},
+		Title:          lo.ToPtr("Harry Potter and the Chamber of Secrets"),
 		Author:         lo.ToPtr("J. K. Rowling"),
 		PublishedYear:  lo.ToPtr("1998"),
 		IsSeries:       lo.ToPtr(true),
@@ -182,14 +182,16 @@ func (s *Suite) TestUserJourney() {
 	}
 	response = s.Post("/books", book, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("Harry Potter and the Chamber of Secrets", gjson.Get(response.Body, "data.title").String())
+	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
+	bookID := gjson.Get(response.Body, "data.id").String()
+	s.Assert().True(bookID != "")
 
 	// Create movie
 	movie := http.MovieAPI{
 		ItemAPI: http.ItemAPI{
 			ImageURL: lo.ToPtr("https://media1.inlander.com/inlander/imager/u/slideshow/21189517/the-lord-of-the-rings-the-fellowship-of-the-ring-2001-4k-remaster"),
-			Title:    lo.ToPtr("The Lord of the Rings: The Fellowship of the Ring"),
 		},
+		Title:          lo.ToPtr("The Fellowship of the Ring"),
 		LeadActors:     []string{"Elijah Wood", "Ian McKellen"},
 		PublishedYear:  lo.ToPtr("2001"),
 		IsSeries:       lo.ToPtr(true),
@@ -198,19 +200,46 @@ func (s *Suite) TestUserJourney() {
 	}
 	response = s.Post("/movies", movie, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("The Lord of the Rings: The Fellowship of the Ring", gjson.Get(response.Body, "data.title").String())
+	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.description").String())
+	movieID := gjson.Get(response.Body, "data.id").String()
+	s.Assert().True(movieID != "")
 
 	// Create tv series
 	tvSeries := http.TVSeriesAPI{
 		ItemAPI: http.ItemAPI{
 			ImageURL: lo.ToPtr("https://i.ebayimg.com/images/g/MagAAMXQGQRR82PV/s-l500.jpg"),
-			Title:    lo.ToPtr("The Office"),
 		},
+		Title:             lo.ToPtr("The Office"),
 		LeadActors:        []string{"Steve Carell", "Jenna Fischer"},
 		TVSeriesStartYear: lo.ToPtr("2005"),
 		TVSeriesEndYear:   lo.ToPtr("2013"),
 	}
 	response = s.Post("/tv-series", tvSeries, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("The Office", gjson.Get(response.Body, "data.title").String())
+	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.description").String())
+	tvSeriesID := gjson.Get(response.Body, "data.id").String()
+	s.Assert().True(tvSeriesID != "")
+
+	// Add book to shelf
+	response = s.Post(fmt.Sprintf("/items/%s/add", bookID), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.user_count").Int()))
+
+	// Add movie to shelf
+	response = s.Post(fmt.Sprintf("/items/%s/add", movieID), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.user_count").Int()))
+
+	// Add tv series to shelf
+	response = s.Post(fmt.Sprintf("/items/%s/add", tvSeriesID), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.user_count").Int()))
+
+	// Get user1 self - confirm shelf
+	response = s.Get("/users/me", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(3, int(gjson.Get(response.Body, "data.shelves.#").Int()))
+	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
+	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
+	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
 }

@@ -12,6 +12,7 @@ type Filter struct {
 	Page    *int    `db:"-"`
 	PerPage *int    `db:"-"`
 	Search  *string `db:"-"`
+	ItemID  *string `db:"-"`
 }
 
 // MarshalBSON satisfies the db.Marshaler interface
@@ -23,6 +24,9 @@ func (f Filter) MarshalBSON() ([]byte, error) { // Non-pointer receiver so that 
 			{"username": db.M{"$regex": regexEscapedSearch, "$options": "i"}},
 			{"full_name": db.M{"$regex": regexEscapedSearch, "$options": "i"}},
 		}
+	}
+	if f.ItemID != nil {
+		doc["shelves.items.item_id"] = f.ItemID
 	}
 	return db.Marshal(doc)
 }

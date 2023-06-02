@@ -30,8 +30,9 @@ type ShelfAPI struct {
 }
 
 type ShelfItemAPI struct {
-	ItemID *string `json:"item_id"`
-	Image  *string `json:"image"`
+	ItemID      *string `json:"item_id"`
+	Description *string `json:"description"`
+	ImageURL    *string `json:"image"`
 }
 
 type FollowerAPI struct {
@@ -279,8 +280,9 @@ func ToShelfAPI(shelf users.Shelf) ShelfAPI {
 
 func ToShelfItemAPI(item users.ShelfItem) ShelfItemAPI {
 	return ShelfItemAPI{
-		ItemID: &item.ItemID,
-		Image:  &item.Image,
+		ItemID:      &item.ItemID,
+		Description: &item.Description,
+		ImageURL:    IncludeStaticRoot(item.ImageURL),
 	}
 }
 

@@ -13,10 +13,11 @@ type ItemAPI struct {
 	DefaultModelAPI
 	MediaType     *string `json:"media_type"`
 	ImageURL      *string `json:"image_url"`
-	ImageFileName *string `json:"-"`
-	ImageFileBody []byte  `json:"-"`
-	Title         *string `json:"title"`
+	ImageFileName *string `json:"-"`           // Only used by multipart POST request
+	ImageFileBody []byte  `json:"-"`           // Only used by multipart POST request
+	Description   *string `json:"description"` // Read-only
 	CreatedBy     *string `json:"created_by"`
+	UserCount     *int    `json:"user_count"`
 }
 
 func (i *ItemAPI) BindMultipart(c *gin.Context) error {
@@ -27,10 +28,6 @@ func (i *ItemAPI) BindMultipart(c *gin.Context) error {
 
 	if len(form.Value["image_url"]) > 0 {
 		i.ImageURL = &form.Value["image_url"][0]
-	}
-
-	if len(form.Value["title"]) > 0 {
-		i.Title = &form.Value["title"][0]
 	}
 
 	if len(form.File["image_file"]) > 0 {
@@ -48,13 +45,38 @@ func (i *ItemAPI) BindMultipart(c *gin.Context) error {
 	return nil
 }
 
+func AddItem(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	item, err := items.Add(userID, id)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	var resultAPI any
+	switch v := item.(type) {
+	case *items.Book:
+		resultAPI = ToBookAPI(*v)
+	case *items.Movie:
+		resultAPI = ToMovieAPI(*v)
+	case *items.TVSeries:
+		resultAPI = ToTVSeriesAPI(*v)
+	default:
+	}
+
+	ReturnOne(c, resultAPI)
+}
+
 func ToItemAPI(item items.Item) ItemAPI {
 	return ItemAPI{
 		DefaultModelAPI: ToDefaultModelAPI(item.DefaultModel),
 		MediaType:       (*string)(&item.MediaType),
 		ImageURL:        IncludeStaticRoot(item.ImageURL),
-		Title:           &item.Title,
+		Description:     &item.Description,
 		CreatedBy:       &item.CreatedBy,
+		UserCount:       &item.UserCount,
 	}
 }
 
@@ -63,6 +85,5 @@ func ToItem(itemAPI ItemAPI) items.Item {
 		ImageURL:      lo.FromPtr(itemAPI.ImageURL),
 		ImageFileName: lo.FromPtr(itemAPI.ImageFileName),
 		ImageFileBody: itemAPI.ImageFileBody,
-		Title:         lo.FromPtr(itemAPI.Title),
 	}
 }

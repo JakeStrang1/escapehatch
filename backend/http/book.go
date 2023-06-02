@@ -11,6 +11,7 @@ import (
 
 type BookAPI struct {
 	ItemAPI        `json:",inline"`
+	Title          *string `json:"title"`
 	Author         *string `json:"author"`
 	PublishedYear  *string `json:"published_year"`
 	IsSeries       *bool   `json:"is_series"`
@@ -27,6 +28,10 @@ func (b *BookAPI) BindMultipart(c *gin.Context) error {
 	err = b.ItemAPI.BindMultipart(c)
 	if err != nil {
 		return err
+	}
+
+	if len(form.Value["title"]) > 0 {
+		b.Author = &form.Value["title"][0]
 	}
 
 	if len(form.Value["author"]) > 0 {
@@ -104,6 +109,7 @@ func CreateBookJSON(c *gin.Context) {
 func ToBookAPI(book items.Book) BookAPI {
 	return BookAPI{
 		ItemAPI:        ToItemAPI(book.Item),
+		Title:          &book.Title,
 		Author:         &book.Author,
 		PublishedYear:  &book.PublishedYear,
 		IsSeries:       &book.IsSeries,
@@ -115,6 +121,7 @@ func ToBookAPI(book items.Book) BookAPI {
 func ToBook(bookAPI BookAPI) items.Book {
 	return items.Book{
 		Item:           ToItem(bookAPI.ItemAPI),
+		Title:          lo.FromPtr(bookAPI.Title),
 		Author:         lo.FromPtr(bookAPI.Author),
 		PublishedYear:  lo.FromPtr(bookAPI.PublishedYear),
 		IsSeries:       lo.FromPtr(bookAPI.IsSeries),

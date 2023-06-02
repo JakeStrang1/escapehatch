@@ -9,6 +9,7 @@ import (
 
 type TVSeriesAPI struct {
 	ItemAPI           `json:",inline"`
+	Title             *string  `json:"title"`
 	TVSeriesStartYear *string  `json:"tv_series_start_year"`
 	TVSeriesEndYear   *string  `json:"tv_series_end_year"`
 	LeadActors        []string `json:"lead_actors"`
@@ -23,6 +24,10 @@ func (b *TVSeriesAPI) BindMultipart(c *gin.Context) error {
 	err = b.ItemAPI.BindMultipart(c)
 	if err != nil {
 		return err
+	}
+
+	if len(form.Value["title"]) > 0 {
+		b.TVSeriesStartYear = &form.Value["title"][0]
 	}
 
 	if len(form.Value["tv_series_start_year"]) > 0 {
@@ -92,6 +97,7 @@ func CreateTVSeriesJSON(c *gin.Context) {
 func ToTVSeriesAPI(tvSeries items.TVSeries) TVSeriesAPI {
 	return TVSeriesAPI{
 		ItemAPI:           ToItemAPI(tvSeries.Item),
+		Title:             &tvSeries.Title,
 		TVSeriesStartYear: &tvSeries.TVSeriesStartYear,
 		TVSeriesEndYear:   &tvSeries.TVSeriesEndYear,
 		LeadActors:        tvSeries.LeadActors,
@@ -101,6 +107,7 @@ func ToTVSeriesAPI(tvSeries items.TVSeries) TVSeriesAPI {
 func ToTVSeries(tvSeriesAPI TVSeriesAPI) items.TVSeries {
 	return items.TVSeries{
 		Item:              ToItem(tvSeriesAPI.ItemAPI),
+		Title:             lo.FromPtr(tvSeriesAPI.Title),
 		TVSeriesStartYear: lo.FromPtr(tvSeriesAPI.TVSeriesStartYear),
 		TVSeriesEndYear:   lo.FromPtr(tvSeriesAPI.TVSeriesEndYear),
 		LeadActors:        tvSeriesAPI.LeadActors,

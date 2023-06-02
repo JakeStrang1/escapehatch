@@ -11,6 +11,7 @@ import (
 
 type MovieAPI struct {
 	ItemAPI        `json:",inline"`
+	Title          *string  `json:"title"`
 	PublishedYear  *string  `json:"published_year"`
 	IsSeries       *bool    `json:"is_series"`
 	SeriesTitle    *string  `json:"series_title"`
@@ -27,6 +28,10 @@ func (b *MovieAPI) BindMultipart(c *gin.Context) error {
 	err = b.ItemAPI.BindMultipart(c)
 	if err != nil {
 		return err
+	}
+
+	if len(form.Value["title"]) > 0 {
+		b.SeriesTitle = &form.Value["title"][0]
 	}
 
 	if len(form.Value["published_year"]) > 0 {
@@ -104,6 +109,7 @@ func CreateMovieJSON(c *gin.Context) {
 func ToMovieAPI(movie items.Movie) MovieAPI {
 	return MovieAPI{
 		ItemAPI:        ToItemAPI(movie.Item),
+		Title:          &movie.Title,
 		PublishedYear:  &movie.PublishedYear,
 		IsSeries:       &movie.IsSeries,
 		SeriesTitle:    &movie.SeriesTitle,
@@ -115,6 +121,7 @@ func ToMovieAPI(movie items.Movie) MovieAPI {
 func ToMovie(movieAPI MovieAPI) items.Movie {
 	return items.Movie{
 		Item:           ToItem(movieAPI.ItemAPI),
+		Title:          lo.FromPtr(movieAPI.Title),
 		PublishedYear:  lo.FromPtr(movieAPI.PublishedYear),
 		IsSeries:       lo.FromPtr(movieAPI.IsSeries),
 		SeriesTitle:    lo.FromPtr(movieAPI.SeriesTitle),

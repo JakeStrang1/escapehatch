@@ -57,9 +57,11 @@ func (s *Suite) SetupSuite() {
 
 	config := app.Config{
 		MongoHost:         os.Getenv("MONGO_HOST"),
-		MongoDatabaseName: os.Getenv("TEST_MONGO_DB_NAME"), // Different from local DB name to avoid overwriting
+		MongoDatabaseName: os.Getenv("TEST_MONGO_DB_NAME"),
 		CORSAllowOrigin:   os.Getenv("ORIGIN"),
-		UseSendGrid:       "false", // Tests will never send real emails
+		UseSendGrid:       "false",
+		UseGCS:            "false",
+		StaticURLRoot:     os.Getenv("STATIC_URL_ROOT"),
 	}
 	s.App = app.NewApp(config)
 }

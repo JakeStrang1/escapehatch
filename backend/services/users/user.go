@@ -105,3 +105,41 @@ func (u *User) SearchFollowing(search string) []Follower {
 	}
 	return results
 }
+
+func (u *User) GetShelfByName(result *Shelf) bool {
+	for _, shelf := range u.Shelves {
+		if shelf.Name == result.Name {
+			*result = shelf
+			return true
+		}
+	}
+	return false
+}
+
+func (u *User) AddShelf(result *Shelf) error {
+	err := result.Creating() // Call hook manually to set ID and CreatedAt
+	if err != nil {
+		return &errors.Error{Code: errors.Internal, Err: err}
+	}
+	u.Shelves = append(u.Shelves, *result)
+	return nil
+}
+
+func (u *User) HasItem(itemID string) bool {
+	for _, shelf := range u.Shelves {
+		for _, item := range shelf.Items {
+			if item.ItemID == itemID {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (u *User) UpdateShelf(shelf *Shelf) {
+	for i := range u.Shelves {
+		if u.Shelves[i].ID == shelf.ID {
+			u.Shelves[i] = *shelf
+		}
+	}
+}

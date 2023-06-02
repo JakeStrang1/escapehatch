@@ -165,6 +165,102 @@ func Remove(followerUserID string, targetUserID string, result *User) error {
 	return nil
 }
 
+func AddBook(userID string, shelfItem ShelfItem, result *User) error {
+	err := GetByID(userID, result)
+	if err != nil {
+		return err
+	}
+
+	if result.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf := Shelf{Name: "book"}
+	ok := result.GetShelfByName(&shelf)
+	if !ok {
+		err = result.AddShelf(&shelf)
+		if err != nil {
+			return err
+		}
+	}
+
+	if shelf.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf.AddItem(shelfItem)
+	result.UpdateShelf(&shelf)
+	if err != nil {
+		return err
+	}
+
+	return db.Update(result)
+}
+
+func AddMovie(userID string, shelfItem ShelfItem, result *User) error {
+	err := GetByID(userID, result)
+	if err != nil {
+		return err
+	}
+
+	if result.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf := Shelf{Name: "movie"}
+	ok := result.GetShelfByName(&shelf)
+	if !ok {
+		err = result.AddShelf(&shelf)
+		if err != nil {
+			return err
+		}
+	}
+
+	if shelf.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf.AddItem(shelfItem)
+	result.UpdateShelf(&shelf)
+	if err != nil {
+		return err
+	}
+
+	return db.Update(result)
+}
+
+func AddTVSeries(userID string, shelfItem ShelfItem, result *User) error {
+	err := GetByID(userID, result)
+	if err != nil {
+		return err
+	}
+
+	if result.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf := Shelf{Name: "tv_series"}
+	ok := result.GetShelfByName(&shelf)
+	if !ok {
+		err = result.AddShelf(&shelf)
+		if err != nil {
+			return err
+		}
+	}
+
+	if shelf.HasItem(shelfItem.ItemID) {
+		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
+	}
+
+	shelf.AddItem(shelfItem)
+	result.UpdateShelf(&shelf)
+	if err != nil {
+		return err
+	}
+
+	return db.Update(result)
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {
@@ -191,6 +287,11 @@ func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 		PerPage:    pageSize,
 		TotalPages: total,
 	}, nil
+}
+
+// GetCount returns the count of results. Pagination filters are ignored.
+func GetCount(filter Filter) (int, error) {
+	return db.GetCount(filter, &User{})
 }
 
 func GetByID(id string, result *User) error {
