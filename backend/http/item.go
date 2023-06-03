@@ -45,6 +45,29 @@ func (i *ItemAPI) BindMultipart(c *gin.Context) error {
 	return nil
 }
 
+func GetItem(c *gin.Context) {
+	id := c.Param("id")
+
+	item, err := items.GetByID(id)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	var resultAPI any
+	switch v := item.(type) {
+	case *items.Book:
+		resultAPI = ToBookAPI(*v)
+	case *items.Movie:
+		resultAPI = ToMovieAPI(*v)
+	case *items.TVSeries:
+		resultAPI = ToTVSeriesAPI(*v)
+	default:
+	}
+
+	ReturnOne(c, resultAPI)
+}
+
 func AddItem(c *gin.Context) {
 	id := c.Param("id")
 	userID := c.GetString(CtxKeyUserID)

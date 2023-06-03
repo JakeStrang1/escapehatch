@@ -243,6 +243,12 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
 	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
 
+	// Get item
+	response = s.Get(fmt.Sprintf("/items/%s", bookID), withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
+	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.user_count").Int()))
+
 	// Remove from shelf
 	response = s.Post(fmt.Sprintf("/items/%s/remove", bookID), nil, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
@@ -261,7 +267,12 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("{}", gjson.Get(response.Body, "data").Raw)
 
-	// Get user1 self - confirm shelf
+	// Confirm item deleted
+	response = s.Get(fmt.Sprintf("/items/%s", movieID), withUser1Cookie)
+	s.Assert().Equal(404, response.Status)
+	s.Assert().Equal("not_found", gjson.Get(response.Body, "code").String())
+
+	// Get user1 self - confirm deleted from shelf
 	response = s.Get("/users/me", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.shelves.1.items.#").Int()))
