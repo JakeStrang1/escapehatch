@@ -230,6 +230,6 @@ Iterative approach:
 - [ ] `GET /items/:id`
 - [ ] `PATCH /items/:id`
 - [x] `POST /items/:id/add`
-- [ ] `POST /items/:id/remove`
+- [x] `POST /items/:id/remove`
 - [ ] `POST /items/:id/delete`
 - [ ] `GET /search`

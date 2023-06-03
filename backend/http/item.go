@@ -69,6 +69,30 @@ func AddItem(c *gin.Context) {
 	ReturnOne(c, resultAPI)
 }
 
+func RemoveItem(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	item, err := items.Remove(userID, id)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	var resultAPI any
+	switch v := item.(type) {
+	case *items.Book:
+		resultAPI = ToBookAPI(*v)
+	case *items.Movie:
+		resultAPI = ToMovieAPI(*v)
+	case *items.TVSeries:
+		resultAPI = ToTVSeriesAPI(*v)
+	default:
+	}
+
+	ReturnOne(c, resultAPI)
+}
+
 func ToItemAPI(item items.Item) ItemAPI {
 	return ItemAPI{
 		DefaultModelAPI: ToDefaultModelAPI(item.DefaultModel),

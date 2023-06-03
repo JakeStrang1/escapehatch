@@ -46,6 +46,20 @@ func Add(userID string, id string) (ItemContainer, error) {
 	return container, nil
 }
 
+func Remove(userID string, id string) (ItemContainer, error) {
+	err := users.RemoveItemFromAllShelves(userID, id, &users.User{})
+	if err != nil {
+		return nil, err
+	}
+
+	// Get item
+	container, err := GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+	return container, nil
+}
+
 func GetByID(id string) (ItemContainer, error) {
 	// Book
 	book := newBook(id)

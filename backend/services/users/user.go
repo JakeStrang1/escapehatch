@@ -143,3 +143,15 @@ func (u *User) UpdateShelf(shelf *Shelf) {
 		}
 	}
 }
+
+func (u *User) RemoveItemFromAllShelves(itemID string) error {
+	for i := range u.Shelves {
+		if u.Shelves[i].HasItem(itemID) {
+			err := u.Shelves[i].RemoveItem(itemID)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}

@@ -261,6 +261,20 @@ func AddTVSeries(userID string, shelfItem ShelfItem, result *User) error {
 	return db.Update(result)
 }
 
+func RemoveItemFromAllShelves(userID string, itemID string, result *User) error {
+	err := GetByID(userID, result)
+	if err != nil {
+		return err
+	}
+
+	err = result.RemoveItemFromAllShelves(itemID)
+	if err != nil {
+		return err
+	}
+
+	return db.Update(result)
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {

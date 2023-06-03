@@ -8,3 +8,10 @@ func Map[T any, R any](collection []T, iteratee func(item T) R) []R {
 		return iteratee(item)
 	})
 }
+
+// Filter manipulates a slice by removing any elements where iteratee(element) == false
+func Filter[T any](collection []T, iteratee func(item T) bool) []T {
+	return lo.FilterMap(collection, func(item T, _ int) (T, bool) {
+		return item, iteratee(item)
+	})
+}

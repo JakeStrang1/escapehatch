@@ -2,6 +2,7 @@ package users
 
 import (
 	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/internal"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
@@ -26,6 +27,23 @@ func (s *Shelf) AddItem(item ShelfItem) error {
 		return &errors.Error{Code: errors.Internal, Err: err}
 	}
 	s.Items = append(s.Items, item)
+	return nil
+}
+
+func (s *Shelf) RemoveItem(itemID string) error {
+	updatedItems := internal.Filter(s.Items, func(item ShelfItem) bool {
+		return item.ItemID != itemID
+	})
+
+	if len(s.Items) == len(updatedItems) {
+		return nil // No change
+	}
+	s.Items = updatedItems
+
+	err := s.Saving() // Call hook manually to set UpdatedAt
+	if err != nil {
+		return &errors.Error{Code: errors.Internal, Err: err}
+	}
 	return nil
 }
 

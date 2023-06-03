@@ -242,4 +242,14 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
 	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
 	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
+
+	// Remove from shelf
+	response = s.Post(fmt.Sprintf("/items/%s/remove", bookID), nil, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.user_count").Int()))
+
+	// Get user1 self - confirm shelf
+	response = s.Get("/users/me", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.shelves.0.items.#").Int()))
 }
