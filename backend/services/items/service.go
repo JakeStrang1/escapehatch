@@ -5,6 +5,7 @@ import (
 	"github.com/JakeStrang1/escapehatch/integrations/storage"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/JakeStrang1/escapehatch/services/users"
+	"github.com/kamva/mgm/v3"
 	"github.com/samber/lo"
 )
 
@@ -58,6 +59,62 @@ func Remove(userID string, id string) (ItemContainer, error) {
 		return nil, err
 	}
 	return container, nil
+}
+
+type DeleteParams struct {
+	UserID string
+	Reason string
+	ItemID string
+}
+
+func (d *DeleteParams) Validate() error {
+	if d.Reason == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "reason must not be blank"}
+	}
+	return nil
+}
+
+func Delete(params DeleteParams) error {
+	// Validate
+	err := params.Validate()
+	if err != nil {
+		return err
+	}
+
+	// Get item
+	container, err := GetByID(params.ItemID)
+	if err != nil {
+		return err
+	}
+
+	filter := users.Filter{
+		ItemID: &params.ItemID,
+	}
+	count, err := users.GetCount(filter)
+	if err != nil {
+		return err
+	}
+
+	// Backup in deleted_items
+	container.GetItem().MarkDeleted(params.Reason, params.UserID, count)
+	_, err = mgm.CollectionByName("deleted_items").InsertOne(mgm.Ctx(), container)
+	if err != nil {
+		return &errors.Error{Code: errors.Internal, Err: err}
+	}
+
+	// Delete
+	model := container.(mgm.Model)
+	err = db.DeleteByID(model)
+	if err != nil {
+		return err
+	}
+
+	// Remove from shelves
+	err = users.RemoveItemFromAllUsers(params.ItemID)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetByID(id string) (ItemContainer, error) {

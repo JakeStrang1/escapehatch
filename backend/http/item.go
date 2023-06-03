@@ -93,6 +93,35 @@ func RemoveItem(c *gin.Context) {
 	ReturnOne(c, resultAPI)
 }
 
+type DeleteItemBody struct {
+	Reason *string `json:"reason"`
+}
+
+func DeleteItem(c *gin.Context) {
+	id := c.Param("id")
+	userID := c.GetString(CtxKeyUserID)
+
+	body := DeleteItemBody{}
+	err := Body(c, &body)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	params := items.DeleteParams{
+		Reason: lo.FromPtr(body.Reason),
+		UserID: userID,
+		ItemID: id,
+	}
+	err = items.Delete(params)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, struct{}{})
+}
+
 func ToItemAPI(item items.Item) ItemAPI {
 	return ItemAPI{
 		DefaultModelAPI: ToDefaultModelAPI(item.DefaultModel),

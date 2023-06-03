@@ -275,6 +275,28 @@ func RemoveItemFromAllShelves(userID string, itemID string, result *User) error 
 	return db.Update(result)
 }
 
+func RemoveItemFromAllUsers(itemID string) error {
+	selector := db.M{"shelves.items.item_id": itemID}
+	users := []User{}
+	err := db.GetMany(selector, &User{}, &users)
+	if err != nil {
+		return err
+	}
+
+	for _, user := range users {
+		err = user.RemoveItemFromAllShelves(itemID)
+		if err != nil {
+			return err
+		}
+		err = db.Update(&user)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 	err := filter.Validate()
 	if err != nil {

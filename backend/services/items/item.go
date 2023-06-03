@@ -15,9 +15,16 @@ const (
 	MediaTypeTVSeries MediaType = "tv_series"
 )
 
+type ChangeType string
+
+const (
+	ChangeTypeUpdate ChangeType = "update"
+	ChangeTypeDelete ChangeType = "delete"
+)
+
 // ItemContainer describes a type that contains an item. All media type structs should implement this interface.
 type ItemContainer interface {
-	GetItem() Item
+	GetItem() *Item
 }
 
 type Item struct {
@@ -39,9 +46,23 @@ func (i *Item) ValidateOnCreate() error {
 	return nil
 }
 
+func (i *Item) MarkDeleted(reason string, userID string, userCount int) {
+	i.ChangeLog = append(i.ChangeLog, Change{
+		ChangeType: ChangeTypeDelete,
+		UpdatedAt:  time.Now(),
+		UpdatedBy:  userID,
+		Metadata: map[string]any{
+			"reason":         reason,
+			"users_impacted": userCount,
+		},
+	})
+}
+
 type Change struct {
-	UpdatedAt time.Time              `db:"updated_at"`
-	UpdatedBy string                 `db:"updated_by"`
-	Old       map[string]interface{} `db:"old"`
-	New       map[string]interface{} `db:"new"`
+	ChangeType ChangeType     `db:"change_type"`
+	UpdatedAt  time.Time      `db:"updated_at"`
+	UpdatedBy  string         `db:"updated_by"`
+	Old        map[string]any `db:"old"`
+	New        map[string]any `db:"new"`
+	Metadata   map[string]any `db:"metadata"`
 }

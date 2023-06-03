@@ -17,8 +17,8 @@ type Movie struct {
 	LeadActors     []string `db:"lead_actors"`
 }
 
-func (b *Movie) GetItem() Item {
-	return b.Item
+func (b *Movie) GetItem() *Item {
+	return &b.Item
 }
 
 func (b *Movie) ValidateMovieOnCreate() error {

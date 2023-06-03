@@ -74,6 +74,7 @@ func Router(config Config) *gin.Engine {
 	// Items
 	r.POST("/items/:id/add", DefaultAccessPolicy, http.AddItem)
 	r.POST("/items/:id/remove", DefaultAccessPolicy, http.RemoveItem)
+	r.POST("/items/:id/delete", DefaultAccessPolicy, http.DeleteItem)
 
 	// Posts
 	r.POST("/posts", DefaultAccessPolicy, http.CreatePost)

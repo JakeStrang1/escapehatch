@@ -14,8 +14,8 @@ type TVSeries struct {
 	TVSeriesEndYear   string   `db:"tv_series_end_year"`
 }
 
-func (b *TVSeries) GetItem() Item {
-	return b.Item
+func (b *TVSeries) GetItem() *Item {
+	return &b.Item
 }
 
 func (b *TVSeries) ValidateTVSeriesOnCreate() error {

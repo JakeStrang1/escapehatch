@@ -17,8 +17,8 @@ type Book struct {
 	SequenceNumber string `db:"sequence_number"`
 }
 
-func (b *Book) GetItem() Item {
-	return b.Item
+func (b *Book) GetItem() *Item {
+	return &b.Item
 }
 
 func (b *Book) ValidateBookOnCreate() error {

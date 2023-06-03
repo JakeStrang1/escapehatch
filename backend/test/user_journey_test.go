@@ -252,4 +252,17 @@ func (s *Suite) TestUserJourney() {
 	response = s.Get("/users/me", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.shelves.0.items.#").Int()))
+
+	// Delete item
+	deleteBody := http.DeleteItemBody{
+		Reason: lo.ToPtr("duplicate"),
+	}
+	response = s.Post(fmt.Sprintf("/items/%s/delete", movieID), deleteBody, withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("{}", gjson.Get(response.Body, "data").Raw)
+
+	// Get user1 self - confirm shelf
+	response = s.Get("/users/me", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.shelves.1.items.#").Int()))
 }
