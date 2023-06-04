@@ -106,6 +106,59 @@ func CreateMovieJSON(c *gin.Context) {
 	ReturnOne(c, ToMovieAPI(result))
 }
 
+func UpdateMovie(c *gin.Context) {
+	switch c.ContentType() {
+	case "multipart/form-data":
+		UpdateMovieMultipart(c)
+	default:
+		UpdateMovieJSON(c)
+	}
+}
+
+func UpdateMovieMultipart(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := MovieAPI{}
+	err := body.BindMultipart(c)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "malformed request", Err: err})
+		return
+	}
+
+	result := items.Movie{}
+	update := ToMovieUpdate(body)
+	err = items.UpdateMovie(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToMovieAPI(result))
+}
+
+func UpdateMovieJSON(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := MovieAPI{}
+	err := Body(c, &body)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	result := items.Movie{}
+	update := ToMovieUpdate(body)
+	err = items.UpdateMovie(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToMovieAPI(result))
+}
+
 func ToMovieAPI(movie items.Movie) MovieAPI {
 	return MovieAPI{
 		ItemAPI:        ToItemAPI(movie.Item),
@@ -126,6 +179,18 @@ func ToMovie(movieAPI MovieAPI) items.Movie {
 		IsSeries:       lo.FromPtr(movieAPI.IsSeries),
 		SeriesTitle:    lo.FromPtr(movieAPI.SeriesTitle),
 		SequenceNumber: lo.FromPtr(movieAPI.SequenceNumber),
+		LeadActors:     movieAPI.LeadActors,
+	}
+}
+
+func ToMovieUpdate(movieAPI MovieAPI) items.MovieUpdate {
+	return items.MovieUpdate{
+		ItemUpdate:     ToItemUpdate(movieAPI.ItemAPI),
+		Title:          movieAPI.Title,
+		PublishedYear:  movieAPI.PublishedYear,
+		IsSeries:       movieAPI.IsSeries,
+		SeriesTitle:    movieAPI.SeriesTitle,
+		SequenceNumber: movieAPI.SequenceNumber,
 		LeadActors:     movieAPI.LeadActors,
 	}
 }

@@ -68,6 +68,7 @@ func Router(config Config) *gin.Engine {
 
 	// Movies
 	r.POST("/movies", DefaultAccessPolicy, http.CreateMovie)
+	r.PATCH("/movies/:id", DefaultAccessPolicy, http.UpdateMovie)
 
 	// TV Series
 	r.POST("/tv-series", DefaultAccessPolicy, http.CreateTVSeries)

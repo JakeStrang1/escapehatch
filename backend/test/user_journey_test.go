@@ -189,18 +189,18 @@ func (s *Suite) TestUserJourney() {
 	// Create movie
 	movie := http.MovieAPI{
 		ItemAPI: http.ItemAPI{
-			ImageURL: lo.ToPtr("https://media1.inlander.com/inlander/imager/u/slideshow/21189517/the-lord-of-the-rings-the-fellowship-of-the-ring-2001-4k-remaster"),
+			ImageURL: lo.ToPtr("https://i5.walmartimages.com/asr/71c8534f-9215-4618-89b5-aa40e8960d74_1.18497d350764f2b983374e79c28c477a.jpeg?odnHeight=2000&odnWidth=2000&odnBg=ffffff"),
 		},
-		Title:          lo.ToPtr("The Fellowship of the Ring"),
-		LeadActors:     []string{"Elijah Wood", "Ian McKellen"},
-		PublishedYear:  lo.ToPtr("2001"),
+		Title:          lo.ToPtr("The Felowship of Rings"), // Deliberate typos, fixed in update test
+		LeadActors:     []string{"Elija Wod", "Ian MaKelen"},
+		PublishedYear:  lo.ToPtr("2201"),
 		IsSeries:       lo.ToPtr(true),
-		SeriesTitle:    lo.ToPtr("The Lord of the Rings"),
-		SequenceNumber: lo.ToPtr("1"),
+		SeriesTitle:    lo.ToPtr("The Lard of the Ringz"),
+		SequenceNumber: lo.ToPtr("50"),
 	}
 	response = s.Post("/movies", movie, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.description").String())
+	s.Assert().Equal("The Felowship of Rings (The Lard of the Ringz #50)", gjson.Get(response.Body, "data.description").String())
 	movieID := gjson.Get(response.Body, "data.id").String()
 	s.Assert().True(movieID != "")
 
@@ -240,7 +240,7 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(3, int(gjson.Get(response.Body, "data.shelves.#").Int()))
 	s.Assert().Equal("Hary Poter and Chamber of Secretz (Harry Plotter #1)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
-	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
+	s.Assert().Equal("The Felowship of Rings (The Lard of the Ringz #50)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
 	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
 
 	// Get item
@@ -274,6 +274,22 @@ func (s *Suite) TestUserJourney() {
 	response = s.Patch(fmt.Sprintf("/books/%s", bookID), book, withUser2Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
+
+	// Update movie
+	movie = http.MovieAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://media1.inlander.com/inlander/imager/u/slideshow/21189517/the-lord-of-the-rings-the-fellowship-of-the-ring-2001-4k-remaster"),
+		},
+		Title:          lo.ToPtr("The Fellowship of the Ring"),
+		LeadActors:     []string{"Elijah Wood", "Ian McKellen"},
+		PublishedYear:  lo.ToPtr("2001"),
+		IsSeries:       lo.ToPtr(true),
+		SeriesTitle:    lo.ToPtr("The Lord of the Rings"),
+		SequenceNumber: lo.ToPtr("1"),
+	}
+	response = s.Patch(fmt.Sprintf("/movies/%s", movieID), movie, withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.description").String())
 
 	// Delete item
 	deleteBody := http.DeleteItemBody{

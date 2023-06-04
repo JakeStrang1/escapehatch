@@ -7,6 +7,16 @@ import (
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
+type MovieUpdate struct {
+	ItemUpdate     `db:",inline"`
+	Title          *string  `db:"title,omitempty"`
+	PublishedYear  *string  `db:"published_year,omitempty"`
+	IsSeries       *bool    `db:"is_series,omitempty"`
+	SeriesTitle    *string  `db:"series_title,omitempty"`
+	SequenceNumber *string  `db:"sequence_number,omitempty"`
+	LeadActors     []string `db:"lead_actors,omitempty"`
+}
+
 type Movie struct {
 	Item           `db:",inline"`
 	Title          string   `db:"title"`
@@ -47,6 +57,70 @@ func (b *Movie) ValidateOnCreate() error {
 
 	if b.IsSeries && b.SeriesTitle == "" {
 		return &errors.Error{Code: errors.Invalid, Message: "series title is required"}
+	}
+
+	return nil
+}
+
+func (b *Movie) Validate() error {
+	err := b.Item.Validate()
+	if err != nil {
+		return err
+	}
+
+	if b.Title == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "title is required"}
+	}
+
+	if len(b.LeadActors) < 2 {
+		return &errors.Error{Code: errors.Invalid, Message: "provide at least 2 lead actors"}
+	}
+
+	for _, actor := range b.LeadActors {
+		if actor == "" {
+			return &errors.Error{Code: errors.Invalid, Message: "actor name cannot be blank"}
+		}
+	}
+
+	if b.PublishedYear == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "published year is required"}
+	}
+
+	if b.IsSeries && b.SeriesTitle == "" {
+		return &errors.Error{Code: errors.Invalid, Message: "series title is required"}
+	}
+
+	return nil
+}
+
+func (b *Movie) ApplyUpdate(userID string, update MovieUpdate) error {
+	err := b.Item.ApplyUpdate(userID, update.ItemUpdate)
+	if err != nil {
+		return err
+	}
+
+	if update.Title != nil {
+		b.Title = *update.Title
+	}
+
+	if update.PublishedYear != nil {
+		b.PublishedYear = *update.PublishedYear
+	}
+
+	if update.IsSeries != nil {
+		b.IsSeries = *update.IsSeries
+	}
+
+	if update.SeriesTitle != nil {
+		b.SeriesTitle = *update.SeriesTitle
+	}
+
+	if update.SequenceNumber != nil {
+		b.SequenceNumber = *update.SequenceNumber
+	}
+
+	if update.LeadActors != nil {
+		b.LeadActors = update.LeadActors
 	}
 
 	return nil

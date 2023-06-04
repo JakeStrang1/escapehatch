@@ -82,6 +82,11 @@ func (b *Book) Validate() error {
 }
 
 func (b *Book) ApplyUpdate(userID string, update BookUpdate) error {
+	err := b.Item.ApplyUpdate(userID, update.ItemUpdate)
+	if err != nil {
+		return err
+	}
+
 	if update.Title != nil {
 		b.Title = *update.Title
 	}
@@ -104,11 +109,6 @@ func (b *Book) ApplyUpdate(userID string, update BookUpdate) error {
 
 	if update.SequenceNumber != nil {
 		b.SequenceNumber = *update.SequenceNumber
-	}
-
-	err := b.Item.ApplyUpdate(userID, update.ItemUpdate)
-	if err != nil {
-		return err
 	}
 
 	return nil

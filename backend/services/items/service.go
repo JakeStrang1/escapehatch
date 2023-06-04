@@ -289,6 +289,41 @@ func CreateMovie(userID string, result *Movie) error {
 	return hydrateMovie(result)
 }
 
+func UpdateMovie(userID string, id string, update MovieUpdate, result *Movie) error {
+	result.ID = id
+	err := GetMovieByID(result)
+	if err != nil {
+		return err
+	}
+
+	err = result.ApplyUpdate(userID, update)
+	if err != nil {
+		return err
+	}
+
+	err = result.Validate()
+	if err != nil {
+		return err
+	}
+
+	err = SaveImage(&result.Item)
+	if err != nil {
+		return err
+	}
+
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	// Track Changes
+	Track(id).Updated(update, result).By(userID).Save()
+
+	// TODO: Refresh cached image links and descriptions on user shelves (Cloud Tasks looks like good option)
+
+	return hydrateMovie(result)
+}
+
 func IsMovieID(movie *Movie) (bool, error) {
 	err := GetMovieByID(movie)
 	if errors.Code(err) == errors.NotFound {
