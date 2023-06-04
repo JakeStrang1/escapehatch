@@ -8,13 +8,13 @@ import (
 )
 
 type BookUpdate struct {
-	ItemUpdate
-	Title          *string
-	Author         *string
-	PublishedYear  *string
-	IsSeries       *bool
-	SeriesTitle    *string
-	SequenceNumber *string
+	ItemUpdate     `db:",inline"`
+	Title          *string `db:"title,omitempty"`
+	Author         *string `db:"author,omitempty"`
+	PublishedYear  *string `db:"published_year,omitempty"`
+	IsSeries       *bool   `db:"is_series,omitempty"`
+	SeriesTitle    *string `db:"series_title,omitempty"`
+	SequenceNumber *string `db:"sequence_number,omitempty"`
 }
 
 type Book struct {
@@ -82,46 +82,31 @@ func (b *Book) Validate() error {
 }
 
 func (b *Book) ApplyUpdate(userID string, update BookUpdate) error {
-	old := map[string]any{}
-	new := map[string]any{}
-
 	if update.Title != nil {
-		old["title"] = b.Title
-		new["title"] = *update.Title
 		b.Title = *update.Title
 	}
 
 	if update.Author != nil {
-		old["author"] = b.Author
-		new["author"] = *update.Author
 		b.Author = *update.Author
 	}
 
 	if update.PublishedYear != nil {
-		old["published_year"] = b.PublishedYear
-		new["published_year"] = *update.PublishedYear
 		b.PublishedYear = *update.PublishedYear
 	}
 
 	if update.IsSeries != nil {
-		old["is_series"] = b.IsSeries
-		new["is_series"] = *update.IsSeries
 		b.IsSeries = *update.IsSeries
 	}
 
 	if update.SeriesTitle != nil {
-		old["series_title"] = b.SeriesTitle
-		new["series_title"] = *update.SeriesTitle
 		b.SeriesTitle = *update.SeriesTitle
 	}
 
 	if update.SequenceNumber != nil {
-		old["sequence_number"] = b.SequenceNumber
-		new["sequence_number"] = *update.SequenceNumber
 		b.SequenceNumber = *update.SequenceNumber
 	}
 
-	err := b.Item.ApplyUpdate(userID, update.ItemUpdate, old, new, nil)
+	err := b.Item.ApplyUpdate(userID, update.ItemUpdate)
 	if err != nil {
 		return err
 	}

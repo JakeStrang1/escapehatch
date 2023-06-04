@@ -96,7 +96,6 @@ func Delete(params DeleteParams) error {
 	}
 
 	// Backup in deleted_items
-	container.GetItem().MarkDeleted(params.Reason, params.UserID, count)
 	_, err = mgm.CollectionByName("deleted_items").InsertOne(mgm.Ctx(), container)
 	if err != nil {
 		return &errors.Error{Code: errors.Internal, Err: err}
@@ -108,6 +107,9 @@ func Delete(params DeleteParams) error {
 	if err != nil {
 		return err
 	}
+
+	// Track Changes
+	Track(container.GetItem().ID).Deleted(params.Reason, count).By(params.UserID).Save()
 
 	// Remove from shelves
 	err = users.RemoveItemFromAllUsers(params.ItemID)
@@ -194,6 +196,9 @@ func CreateBook(userID string, result *Book) error {
 		return err
 	}
 
+	// Track Changes
+	Track(result.ID).Created(result).By(userID).Save()
+
 	return hydrateBook(result)
 }
 
@@ -243,6 +248,9 @@ func UpdateBook(userID string, id string, update BookUpdate, result *Book) error
 		return err
 	}
 
+	// Track Changes
+	Track(id).Updated(update, result).By(userID).Save()
+
 	// TODO: Refresh cached image links and descriptions on user shelves (Cloud Tasks looks like good option)
 
 	return hydrateBook(result)
@@ -265,20 +273,18 @@ func CreateMovie(userID string, result *Movie) error {
 		return err
 	}
 
-	var newImageURL string
-	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
-	} else {
-		newImageURL, err = storage.CreateFromURL(result.ImageURL)
-	}
+	err = SaveImage(&result.Item)
 	if err != nil {
 		return err
 	}
-	result.ImageURL = newImageURL
+
 	err = db.Create(result)
 	if err != nil {
 		return err
 	}
+
+	// Track Changes
+	Track(result.ID).Created(result).By(userID).Save()
 
 	return hydrateMovie(result)
 }
@@ -319,20 +325,18 @@ func CreateTVSeries(userID string, result *TVSeries) error {
 		return err
 	}
 
-	var newImageURL string
-	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
-	} else {
-		newImageURL, err = storage.CreateFromURL(result.ImageURL)
-	}
+	err = SaveImage(&result.Item)
 	if err != nil {
 		return err
 	}
-	result.ImageURL = newImageURL
+
 	err = db.Create(result)
 	if err != nil {
 		return err
 	}
+
+	// Track Changes
+	Track(result.ID).Created(result).By(userID).Save()
 
 	return hydrateTVSeries(result)
 }
