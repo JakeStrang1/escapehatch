@@ -27,6 +27,18 @@ func (l *LocalClient) Upload(filename string, data []byte, options ...Options) (
 	return filename, nil
 }
 
+func (l *LocalClient) FileExists(filename string) (bool, error) {
+	localFile := LocalFile{}
+	err := db.GetOne(db.M{"filename": filename}, &localFile)
+	if errors.Code(err) == errors.NotFound {
+		return false, nil
+	}
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
 func (l *LocalClient) Close() {}
 
 /******************************************************

@@ -43,6 +43,19 @@ func (g *GCSClient) Upload(filename string, data []byte, options ...Options) (st
 	return filename, nil
 }
 
+func (g *GCSClient) FileExists(filename string) (bool, error) {
+	ctx := context.Background()
+	obj := g.Bucket(g.bucketName).Object(filename)
+	_, err := obj.Attrs(ctx)
+	if err == storage.ErrObjectNotExist {
+		return false, nil
+	}
+	if err != nil {
+		return false, &errors.Error{Code: errors.Internal, Err: err}
+	}
+	return true, nil
+}
+
 func (g *GCSClient) Close() {
 	g.Client.Close()
 }

@@ -18,7 +18,7 @@ func (b *TVSeries) GetItem() *Item {
 	return &b.Item
 }
 
-func (b *TVSeries) ValidateTVSeriesOnCreate() error {
+func (b *TVSeries) ValidateOnCreate() error {
 	err := b.Item.ValidateOnCreate()
 	if err != nil {
 		return err

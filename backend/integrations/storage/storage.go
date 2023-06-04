@@ -16,6 +16,7 @@ var client Client
 
 type Client interface {
 	Upload(filename string, data []byte, options ...Options) (string, error)
+	FileExists(filename string) (bool, error)
 	Close()
 }
 
@@ -45,7 +46,14 @@ func Create(oldFilename string, data []byte, options ...Options) (string, error)
 }
 
 // CreateFromURL will download the file at the url, and reupload it with a new filename to avoid any name conflicts
+// If the url matches the name of an existing file, no changes will be made and the file url will be returned with no error.
 func CreateFromURL(fileURL string, options ...Options) (string, error) {
+	if exists, err := FileExists(fileURL); err != nil {
+		return "", err
+	} else if exists {
+		return fileURL, nil
+	}
+
 	// Validate URL
 	u, err := url.Parse(fileURL)
 	if err != nil {
@@ -76,6 +84,10 @@ func CreateFromURL(fileURL string, options ...Options) (string, error) {
 // Recommended to use Create instead to avoid overwriting.
 func Upload(filename string, data []byte, options ...Options) (string, error) {
 	return client.Upload(filename, data, options...)
+}
+
+func FileExists(fileURL string) (bool, error) {
+	return client.FileExists(fileURL)
 }
 
 func extensionFromResponse(resp *http.Response) string {

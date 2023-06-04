@@ -163,3 +163,11 @@ func ToItem(itemAPI ItemAPI) items.Item {
 		ImageFileBody: itemAPI.ImageFileBody,
 	}
 }
+
+func ToItemUpdate(itemAPI ItemAPI) items.ItemUpdate {
+	return items.ItemUpdate{
+		ImageURL:      itemAPI.ImageURL,
+		ImageFileName: itemAPI.ImageFileName,
+		ImageFileBody: itemAPI.ImageFileBody,
+	}
+}

@@ -106,6 +106,59 @@ func CreateBookJSON(c *gin.Context) {
 	ReturnOne(c, ToBookAPI(result))
 }
 
+func UpdateBook(c *gin.Context) {
+	switch c.ContentType() {
+	case "multipart/form-data":
+		UpdateBookMultipart(c)
+	default:
+		UpdateBookJSON(c)
+	}
+}
+
+func UpdateBookMultipart(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := BookAPI{}
+	err := body.BindMultipart(c)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "malformed request", Err: err})
+		return
+	}
+
+	result := items.Book{}
+	update := ToBookUpdate(body)
+	err = items.UpdateBook(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToBookAPI(result))
+}
+
+func UpdateBookJSON(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := BookAPI{}
+	err := Body(c, &body)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	result := items.Book{}
+	update := ToBookUpdate(body)
+	err = items.UpdateBook(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToBookAPI(result))
+}
+
 func ToBookAPI(book items.Book) BookAPI {
 	return BookAPI{
 		ItemAPI:        ToItemAPI(book.Item),
@@ -127,5 +180,17 @@ func ToBook(bookAPI BookAPI) items.Book {
 		IsSeries:       lo.FromPtr(bookAPI.IsSeries),
 		SeriesTitle:    lo.FromPtr(bookAPI.SeriesTitle),
 		SequenceNumber: lo.FromPtr(bookAPI.SequenceNumber),
+	}
+}
+
+func ToBookUpdate(bookAPI BookAPI) items.BookUpdate {
+	return items.BookUpdate{
+		ItemUpdate:     ToItemUpdate(bookAPI.ItemAPI),
+		Title:          bookAPI.Title,
+		Author:         bookAPI.Author,
+		PublishedYear:  bookAPI.PublishedYear,
+		IsSeries:       bookAPI.IsSeries,
+		SeriesTitle:    bookAPI.SeriesTitle,
+		SequenceNumber: bookAPI.SequenceNumber,
 	}
 }

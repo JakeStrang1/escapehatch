@@ -64,6 +64,7 @@ func Router(config Config) *gin.Engine {
 
 	// Books
 	r.POST("/books", DefaultAccessPolicy, http.CreateBook)
+	r.PATCH("/books/:id", DefaultAccessPolicy, http.UpdateBook)
 
 	// Movies
 	r.POST("/movies", DefaultAccessPolicy, http.CreateMovie)

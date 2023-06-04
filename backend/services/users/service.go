@@ -76,7 +76,12 @@ func Update(id string, update UserUpdate, result *User) error {
 		return err
 	}
 
-	return db.Update(result)
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	return hydrate(result)
 }
 
 func Follow(targetUserID string, followerUserID string, result *User) error {
@@ -194,7 +199,12 @@ func AddBook(userID string, shelfItem ShelfItem, result *User) error {
 		return err
 	}
 
-	return db.Update(result)
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	return hydrate(result)
 }
 
 func AddMovie(userID string, shelfItem ShelfItem, result *User) error {
@@ -226,7 +236,12 @@ func AddMovie(userID string, shelfItem ShelfItem, result *User) error {
 		return err
 	}
 
-	return db.Update(result)
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	return hydrate(result)
 }
 
 func AddTVSeries(userID string, shelfItem ShelfItem, result *User) error {
@@ -258,7 +273,12 @@ func AddTVSeries(userID string, shelfItem ShelfItem, result *User) error {
 		return err
 	}
 
-	return db.Update(result)
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	return hydrate(result)
 }
 
 func RemoveItemFromAllShelves(userID string, itemID string, result *User) error {
@@ -272,7 +292,12 @@ func RemoveItemFromAllShelves(userID string, itemID string, result *User) error 
 		return err
 	}
 
-	return db.Update(result)
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	return hydrate(result)
 }
 
 func RemoveItemFromAllUsers(itemID string) error {

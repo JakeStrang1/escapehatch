@@ -11,7 +11,7 @@ const defaultPerPage = 25
 const maxPerPage = 250
 
 type PostUpdate struct {
-	Body *string `db:"body"`
+	Body *string
 }
 
 type Post struct {

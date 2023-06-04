@@ -145,6 +145,21 @@ func GetByID(id string) (ItemContainer, error) {
 	return nil, &errors.Error{Code: errors.NotFound} // ID not found under any known media type
 }
 
+func SaveImage(result *Item) error {
+	var newImageURL string
+	var err error
+	if len(result.ImageFileBody) != 0 {
+		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
+	} else {
+		newImageURL, err = storage.CreateFromURL(result.ImageURL)
+	}
+	if err != nil {
+		return err
+	}
+	result.ImageURL = newImageURL
+	return nil
+}
+
 func hydrateItem(item *Item) error {
 	filter := users.Filter{
 		ItemID: &item.ID,
@@ -164,21 +179,16 @@ func hydrateItem(item *Item) error {
 func CreateBook(userID string, result *Book) error {
 	result.MediaType = MediaTypeBook
 	result.CreatedBy = userID
-	err := result.ValidateBookOnCreate()
+	err := result.ValidateOnCreate()
 	if err != nil {
 		return err
 	}
 
-	var newImageURL string
-	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
-	} else {
-		newImageURL, err = storage.CreateFromURL(result.ImageURL)
-	}
+	err = SaveImage(&result.Item)
 	if err != nil {
 		return err
 	}
-	result.ImageURL = newImageURL
+
 	err = db.Create(result)
 	if err != nil {
 		return err
@@ -206,6 +216,38 @@ func GetBookByID(book *Book) error {
 	return hydrateBook(book)
 }
 
+func UpdateBook(userID string, id string, update BookUpdate, result *Book) error {
+	result.ID = id
+	err := GetBookByID(result)
+	if err != nil {
+		return err
+	}
+
+	err = result.ApplyUpdate(userID, update)
+	if err != nil {
+		return err
+	}
+
+	err = result.Validate()
+	if err != nil {
+		return err
+	}
+
+	err = SaveImage(&result.Item)
+	if err != nil {
+		return err
+	}
+
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	// TODO: Refresh cached image links and descriptions on user shelves (Cloud Tasks looks like good option)
+
+	return hydrateBook(result)
+}
+
 func hydrateBook(book *Book) error {
 	book.SetDescription()
 	return hydrateItem(&book.Item)
@@ -218,7 +260,7 @@ func hydrateBook(book *Book) error {
 func CreateMovie(userID string, result *Movie) error {
 	result.MediaType = MediaTypeMovie
 	result.CreatedBy = userID
-	err := result.ValidateMovieOnCreate()
+	err := result.ValidateOnCreate()
 	if err != nil {
 		return err
 	}
@@ -272,7 +314,7 @@ func hydrateMovie(movie *Movie) error {
 func CreateTVSeries(userID string, result *TVSeries) error {
 	result.MediaType = MediaTypeTVSeries
 	result.CreatedBy = userID
-	err := result.ValidateTVSeriesOnCreate()
+	err := result.ValidateOnCreate()
 	if err != nil {
 		return err
 	}

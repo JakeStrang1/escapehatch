@@ -27,6 +27,12 @@ type ItemContainer interface {
 	GetItem() *Item
 }
 
+type ItemUpdate struct {
+	ImageURL      *string
+	ImageFileName *string
+	ImageFileBody []byte
+}
+
 type Item struct {
 	db.DefaultModel `db:",inline"`
 	MediaType       MediaType `db:"media_type"`
@@ -43,6 +49,44 @@ func (i *Item) ValidateOnCreate() error {
 	if i.ImageURL == "" && len(i.ImageFileBody) == 0 {
 		return &errors.Error{Code: errors.Invalid, Message: "image is required"}
 	}
+	return nil
+}
+
+func (i *Item) Validate() error {
+	if i.ImageURL == "" && len(i.ImageFileBody) == 0 {
+		return &errors.Error{Code: errors.Invalid, Message: "image is required"}
+	}
+	return nil
+}
+
+func (i *Item) ApplyUpdate(userID string, update ItemUpdate, old map[string]any, new map[string]any, metadata map[string]any) error {
+	if update.ImageURL != nil {
+		old["image_url"] = i.ImageURL
+		new["image_url"] = *update.ImageURL
+		i.ImageURL = *update.ImageURL
+	}
+
+	if update.ImageFileName != nil {
+		old["image_url"] = i.ImageURL
+		new["image_url"] = "from file"
+		i.ImageFileName = *update.ImageFileName
+	}
+
+	if update.ImageFileBody != nil {
+		old["image_url"] = i.ImageURL
+		new["image_url"] = "from file"
+		i.ImageFileBody = update.ImageFileBody
+	}
+
+	i.ChangeLog = append(i.ChangeLog, Change{
+		ChangeType: ChangeTypeUpdate,
+		UpdatedAt:  time.Now(),
+		UpdatedBy:  userID,
+		Old:        old,
+		New:        new,
+		Metadata:   metadata,
+	})
+
 	return nil
 }
 

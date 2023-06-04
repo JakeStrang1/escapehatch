@@ -21,7 +21,7 @@ func (b *Movie) GetItem() *Item {
 	return &b.Item
 }
 
-func (b *Movie) ValidateMovieOnCreate() error {
+func (b *Movie) ValidateOnCreate() error {
 	err := b.Item.ValidateOnCreate()
 	if err != nil {
 		return err

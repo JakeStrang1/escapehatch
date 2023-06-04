@@ -171,18 +171,18 @@ func (s *Suite) TestUserJourney() {
 	// Create book
 	book := http.BookAPI{
 		ItemAPI: http.ItemAPI{
-			ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"),
+			ImageURL: lo.ToPtr("https://pictures.abebooks.com/isbn/9780747538486-uk.jpg"),
 		},
-		Title:          lo.ToPtr("Harry Potter and the Chamber of Secrets"),
-		Author:         lo.ToPtr("J. K. Rowling"),
-		PublishedYear:  lo.ToPtr("1998"),
+		Title:          lo.ToPtr("Hary Poter and Chamber of Secretz"), // Deliberate typos, fixed in update test
+		Author:         lo.ToPtr("J. K. Growling"),
+		PublishedYear:  lo.ToPtr("1998-ish"),
 		IsSeries:       lo.ToPtr(true),
-		SeriesTitle:    lo.ToPtr("Harry Potter"),
-		SequenceNumber: lo.ToPtr("2"),
+		SeriesTitle:    lo.ToPtr("Harry Plotter"),
+		SequenceNumber: lo.ToPtr("1"),
 	}
 	response = s.Post("/books", book, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
+	s.Assert().Equal("Hary Poter and Chamber of Secretz (Harry Plotter #1)", gjson.Get(response.Body, "data.description").String())
 	bookID := gjson.Get(response.Body, "data.id").String()
 	s.Assert().True(bookID != "")
 
@@ -239,14 +239,14 @@ func (s *Suite) TestUserJourney() {
 	response = s.Get("/users/me", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(3, int(gjson.Get(response.Body, "data.shelves.#").Int()))
-	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
+	s.Assert().Equal("Hary Poter and Chamber of Secretz (Harry Plotter #1)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
 	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
 	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
 
 	// Get item
 	response = s.Get(fmt.Sprintf("/items/%s", bookID), withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
+	s.Assert().Equal("Hary Poter and Chamber of Secretz (Harry Plotter #1)", gjson.Get(response.Body, "data.description").String())
 	s.Assert().Equal(1, int(gjson.Get(response.Body, "data.user_count").Int()))
 
 	// Remove from shelf
@@ -258,6 +258,22 @@ func (s *Suite) TestUserJourney() {
 	response = s.Get("/users/me", withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal(0, int(gjson.Get(response.Body, "data.shelves.0.items.#").Int()))
+
+	// Update book
+	book = http.BookAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474169725i/15881.jpg"),
+		},
+		Title:          lo.ToPtr("Harry Potter and the Chamber of Secrets"),
+		Author:         lo.ToPtr("J. K. Rowling"),
+		PublishedYear:  lo.ToPtr("1998"),
+		IsSeries:       lo.ToPtr(true),
+		SeriesTitle:    lo.ToPtr("Harry Potter"),
+		SequenceNumber: lo.ToPtr("2"),
+	}
+	response = s.Patch(fmt.Sprintf("/books/%s", bookID), book, withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("Harry Potter and the Chamber of Secrets (Harry Potter #2)", gjson.Get(response.Body, "data.description").String())
 
 	// Delete item
 	deleteBody := http.DeleteItemBody{
