@@ -94,6 +94,59 @@ func CreateTVSeriesJSON(c *gin.Context) {
 	ReturnOne(c, ToTVSeriesAPI(result))
 }
 
+func UpdateTVSeries(c *gin.Context) {
+	switch c.ContentType() {
+	case "multipart/form-data":
+		UpdateTVSeriesMultipart(c)
+	default:
+		UpdateTVSeriesJSON(c)
+	}
+}
+
+func UpdateTVSeriesMultipart(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := TVSeriesAPI{}
+	err := body.BindMultipart(c)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "malformed request", Err: err})
+		return
+	}
+
+	result := items.TVSeries{}
+	update := ToTVSeriesUpdate(body)
+	err = items.UpdateTVSeries(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToTVSeriesAPI(result))
+}
+
+func UpdateTVSeriesJSON(c *gin.Context) {
+	userID := c.GetString(CtxKeyUserID)
+	id := c.Param("id")
+
+	body := TVSeriesAPI{}
+	err := Body(c, &body)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	result := items.TVSeries{}
+	update := ToTVSeriesUpdate(body)
+	err = items.UpdateTVSeries(userID, id, update, &result)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	ReturnOne(c, ToTVSeriesAPI(result))
+}
+
 func ToTVSeriesAPI(tvSeries items.TVSeries) TVSeriesAPI {
 	return TVSeriesAPI{
 		ItemAPI:           ToItemAPI(tvSeries.Item),
@@ -110,6 +163,16 @@ func ToTVSeries(tvSeriesAPI TVSeriesAPI) items.TVSeries {
 		Title:             lo.FromPtr(tvSeriesAPI.Title),
 		TVSeriesStartYear: lo.FromPtr(tvSeriesAPI.TVSeriesStartYear),
 		TVSeriesEndYear:   lo.FromPtr(tvSeriesAPI.TVSeriesEndYear),
+		LeadActors:        tvSeriesAPI.LeadActors,
+	}
+}
+
+func ToTVSeriesUpdate(tvSeriesAPI TVSeriesAPI) items.TVSeriesUpdate {
+	return items.TVSeriesUpdate{
+		ItemUpdate:        ToItemUpdate(tvSeriesAPI.ItemAPI),
+		Title:             tvSeriesAPI.Title,
+		TVSeriesStartYear: tvSeriesAPI.TVSeriesStartYear,
+		TVSeriesEndYear:   tvSeriesAPI.TVSeriesEndYear,
 		LeadActors:        tvSeriesAPI.LeadActors,
 	}
 }

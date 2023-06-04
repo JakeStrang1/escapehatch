@@ -228,7 +228,7 @@ Iterative approach:
 - [x] `POST /movies`
 - [x] `POST /tv-series`
 - [x] `GET /items/:id`
-- [ ] `PATCH /items/:id`
+- [x] `PATCH /items/:id`
 - [x] `POST /items/:id/add`
 - [x] `POST /items/:id/remove`
 - [x] `POST /items/:id/delete`

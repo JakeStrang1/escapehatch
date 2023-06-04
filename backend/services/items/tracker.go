@@ -106,6 +106,12 @@ func (t *Tracker) getUpdateData() any {
 			v.ImageURL = &movieResult.ImageURL
 		}
 		update = v
+	case TVSeriesUpdate:
+		tvSeriesResult := t.Result.(*TVSeries)
+		if v.ImageURL != nil || len(v.ImageFileBody) > 0 {
+			v.ImageURL = &tvSeriesResult.ImageURL
+		}
+		update = v
 	default:
 		panic("unknown type")
 	}

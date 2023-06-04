@@ -376,6 +376,41 @@ func CreateTVSeries(userID string, result *TVSeries) error {
 	return hydrateTVSeries(result)
 }
 
+func UpdateTVSeries(userID string, id string, update TVSeriesUpdate, result *TVSeries) error {
+	result.ID = id
+	err := GetTVSeriesByID(result)
+	if err != nil {
+		return err
+	}
+
+	err = result.ApplyUpdate(userID, update)
+	if err != nil {
+		return err
+	}
+
+	err = result.Validate()
+	if err != nil {
+		return err
+	}
+
+	err = SaveImage(&result.Item)
+	if err != nil {
+		return err
+	}
+
+	err = db.Update(result)
+	if err != nil {
+		return err
+	}
+
+	// Track Changes
+	Track(id).Updated(update, result).By(userID).Save()
+
+	// TODO: Refresh cached image links and descriptions on user shelves (Cloud Tasks looks like good option)
+
+	return hydrateTVSeries(result)
+}
+
 func IsTVSeriesID(tvSeries *TVSeries) (bool, error) {
 	err := GetTVSeriesByID(tvSeries)
 	if errors.Code(err) == errors.NotFound {

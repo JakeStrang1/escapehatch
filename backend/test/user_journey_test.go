@@ -207,16 +207,16 @@ func (s *Suite) TestUserJourney() {
 	// Create tv series
 	tvSeries := http.TVSeriesAPI{
 		ItemAPI: http.ItemAPI{
-			ImageURL: lo.ToPtr("https://i.ebayimg.com/images/g/MagAAMXQGQRR82PV/s-l500.jpg"),
+			ImageURL: lo.ToPtr("https://images-na.ssl-images-amazon.com/images/I/81R7QZV5P1L._AC_UL600_SR600,600_.jpg"),
 		},
-		Title:             lo.ToPtr("The Office"),
-		LeadActors:        []string{"Steve Carell", "Jenna Fischer"},
-		TVSeriesStartYear: lo.ToPtr("2005"),
-		TVSeriesEndYear:   lo.ToPtr("2013"),
+		Title:             lo.ToPtr("Th Ofice"), // Deliberate typos, fixed in update test
+		LeadActors:        []string{"Stefe Carel", "Jena Fisherb"},
+		TVSeriesStartYear: lo.ToPtr("2055"),
+		TVSeriesEndYear:   lo.ToPtr("2213"),
 	}
 	response = s.Post("/tv-series", tvSeries, withUser1Cookie)
 	s.Assert().Equal(200, response.Status)
-	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.description").String())
+	s.Assert().Equal("Th Ofice (2055 - 2213)", gjson.Get(response.Body, "data.description").String())
 	tvSeriesID := gjson.Get(response.Body, "data.id").String()
 	s.Assert().True(tvSeriesID != "")
 
@@ -241,7 +241,7 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(3, int(gjson.Get(response.Body, "data.shelves.#").Int()))
 	s.Assert().Equal("Hary Poter and Chamber of Secretz (Harry Plotter #1)", gjson.Get(response.Body, "data.shelves.0.items.0.description").String())
 	s.Assert().Equal("The Felowship of Rings (The Lard of the Ringz #50)", gjson.Get(response.Body, "data.shelves.1.items.0.description").String())
-	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
+	s.Assert().Equal("Th Ofice (2055 - 2213)", gjson.Get(response.Body, "data.shelves.2.items.0.description").String())
 
 	// Get item
 	response = s.Get(fmt.Sprintf("/items/%s", bookID), withUser1Cookie)
@@ -290,6 +290,20 @@ func (s *Suite) TestUserJourney() {
 	response = s.Patch(fmt.Sprintf("/movies/%s", movieID), movie, withUser2Cookie)
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("The Fellowship of the Ring (The Lord of the Rings #1)", gjson.Get(response.Body, "data.description").String())
+
+	// Update tv series
+	tvSeries = http.TVSeriesAPI{
+		ItemAPI: http.ItemAPI{
+			ImageURL: lo.ToPtr("https://i.ebayimg.com/images/g/MagAAMXQGQRR82PV/s-l500.jpg"),
+		},
+		Title:             lo.ToPtr("The Office"),
+		LeadActors:        []string{"Steve Carell", "Jenna Fischer"},
+		TVSeriesStartYear: lo.ToPtr("2005"),
+		TVSeriesEndYear:   lo.ToPtr("2013"),
+	}
+	response = s.Patch(fmt.Sprintf("/tv-series/%s", tvSeriesID), tvSeries, withUser2Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.description").String())
 
 	// Delete item
 	deleteBody := http.DeleteItemBody{
