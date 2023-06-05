@@ -34,7 +34,7 @@ type Config struct {
 	UseGCS            string
 	GCSBucketName     string
 	StaticURLRoot     string
-	UseAtlas          string
+	UseAtlasSearch    string
 }
 
 func NewApp(config Config) App {
@@ -51,7 +51,7 @@ func NewApp(config Config) App {
 	}
 
 	// Database
-	err := db.Setup(config.MongoHost, config.MongoDatabaseName, config.UseAtlas == "true")
+	err := db.Setup(config.MongoHost, config.MongoDatabaseName, config.UseAtlasSearch == "true")
 	if err != nil {
 		panic(err)
 	}

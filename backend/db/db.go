@@ -22,16 +22,16 @@ import (
  * - Define helpers for interacting with the DB
  ****************************************************************************************/
 
-var UseAtlas bool
+var UseAtlasSearch bool
 
-func Setup(host string, dbName string, useAtlas bool) error {
+func Setup(host string, dbName string, useAtlasSearch bool) error {
 	err := mgm.SetDefaultConfig(nil, dbName, options.Client().ApplyURI(host), &options.ClientOptions{
 		Registry: Registry(), // Override the default registry to use "db" struct tag instead of "bson"
 	})
 	if err != nil {
 		return &errors.Error{Code: errors.Internal, Message: "couldn't connect to database", Err: err}
 	}
-	UseAtlas = useAtlas
+	UseAtlasSearch = useAtlasSearch
 	return nil
 }
 
@@ -246,7 +246,7 @@ func Update(result mgm.Model) error {
 }
 
 func Search(search string, paths []string, model mgm.Model, results any) error {
-	if UseAtlas {
+	if UseAtlasSearch {
 		return SearchAtlas(search, paths, model, results)
 	} else {
 		return SearchLocal(search, model, results)
