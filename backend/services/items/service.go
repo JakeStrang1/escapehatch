@@ -150,10 +150,17 @@ func GetByID(id string) (ItemContainer, error) {
 func SaveImage(result *Item) error {
 	var newImageURL string
 	var err error
+	options := storage.Options{
+		Public:         lo.ToPtr(true),
+		ImageCompress:  lo.ToPtr(true),
+		ImageMaxWidth:  lo.ToPtr(600),
+		ImageMaxHeight: lo.ToPtr(600),
+		ImageMaxKB:     lo.ToPtr(100),
+	}
 	if len(result.ImageFileBody) != 0 {
-		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, storage.Options{Public: lo.ToPtr(true)})
+		newImageURL, err = storage.Create(result.ImageFileName, result.ImageFileBody, options)
 	} else {
-		newImageURL, err = storage.CreateFromURL(result.ImageURL)
+		newImageURL, err = storage.CreateFromURL(result.ImageURL, options)
 	}
 	if err != nil {
 		return err

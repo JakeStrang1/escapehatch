@@ -9,7 +9,9 @@ import (
 	"path/filepath"
 
 	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/images"
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 )
 
 var client Client
@@ -21,7 +23,11 @@ type Client interface {
 }
 
 type Options struct {
-	Public *bool
+	Public         *bool
+	ImageCompress  *bool // If true, must have a non-zero value for ImageMaxWidth, ImageMaxHeight, and ImageMaxKB
+	ImageMaxWidth  *int
+	ImageMaxHeight *int
+	ImageMaxKB     *int
 }
 
 func SetupGCSClient(bucketName string) {
@@ -41,6 +47,16 @@ func Close() {
 func Create(oldFilename string, data []byte, options ...Options) (string, error) {
 	ext := filepath.Ext(oldFilename)
 	u := uuid.New()
+
+	if len(options) > 0 && lo.FromPtr(options[0].ImageCompress) {
+		var err error
+		data, err = images.CompressedJPEG(data, *options[0].ImageMaxWidth, *options[0].ImageMaxHeight, *options[0].ImageMaxKB)
+		if err != nil {
+			return "", err
+		}
+		ext = ".jpg"
+	}
+
 	newFilename := u.String() + ext
 	return Upload(newFilename, data, options...)
 }
@@ -77,7 +93,7 @@ func CreateFromURL(fileURL string, options ...Options) (string, error) {
 		ext = extensionFromResponse(resp)
 	}
 
-	return Create(ext, data)
+	return Create(ext, data, options...)
 }
 
 // Upload will upload the given file with the given filename. It will overwrite an existing file with that name.
