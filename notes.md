@@ -232,4 +232,4 @@ Iterative approach:
 - [x] `POST /items/:id/add`
 - [x] `POST /items/:id/remove`
 - [x] `POST /items/:id/delete`
-- [ ] `GET /search`
+- [x] `GET /search`

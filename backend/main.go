@@ -47,6 +47,7 @@ func main() {
 		UseGCS:            os.Getenv("USE_GCS"),
 		GCSBucketName:     os.Getenv("GCS_BUCKET_NAME"),
 		StaticURLRoot:     os.Getenv("STATIC_URL_ROOT"),
+		UseAtlas:          os.Getenv("USE_ATLAS"),
 	}
 	mainApp := app.NewApp(config)
 	defer mainApp.Close()

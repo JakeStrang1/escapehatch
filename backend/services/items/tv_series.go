@@ -6,6 +6,8 @@ import (
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
+var TVSeriesSearchPaths = []string{"title"}
+
 type TVSeriesUpdate struct {
 	ItemUpdate        `db:",inline"`
 	Title             *string  `db:"title,omitempty"`

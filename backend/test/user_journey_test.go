@@ -305,6 +305,11 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(200, response.Status)
 	s.Assert().Equal("The Office (2005 - 2013)", gjson.Get(response.Body, "data.description").String())
 
+	// Search item
+	response = s.Get("/search?search=chamber", withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(bookID, gjson.Get(response.Body, "data.0.id").String())
+
 	// Delete item
 	deleteBody := http.DeleteItemBody{
 		Reason: lo.ToPtr("duplicate"),

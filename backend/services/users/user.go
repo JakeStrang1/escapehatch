@@ -8,6 +8,7 @@ import (
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
+var UserSearchPaths = []string{"username", "full_name"}
 var usernameCharRegex = regexp.MustCompile(`^[a-z0-9.]+$`) // Only lowercase letters, numbers, and periods. https://regex101.com/r/1s0zQz/1
 
 type UserUpdate struct {

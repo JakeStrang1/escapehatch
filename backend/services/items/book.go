@@ -7,6 +7,8 @@ import (
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
+var BookSearchPaths = []string{"title", "author", "series_title", "sequence_number"}
+
 type BookUpdate struct {
 	ItemUpdate     `db:",inline"`
 	Title          *string `db:"title,omitempty"`

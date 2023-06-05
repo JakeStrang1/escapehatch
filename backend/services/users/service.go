@@ -45,6 +45,10 @@ func Create(document *User) error {
 	if err != nil {
 		return err
 	}
+	err = db.EnsureTextIndex(&User{}, UserSearchPaths)
+	if err != nil {
+		return err
+	}
 
 	number, err := incrementUserCount()
 	if err != nil {

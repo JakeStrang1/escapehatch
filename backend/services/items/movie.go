@@ -7,6 +7,8 @@ import (
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 )
 
+var MovieSearchPaths = []string{"title", "series_title", "sequence_number"}
+
 type MovieUpdate struct {
 	ItemUpdate     `db:",inline"`
 	Title          *string  `db:"title,omitempty"`

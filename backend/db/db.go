@@ -22,13 +22,16 @@ import (
  * - Define helpers for interacting with the DB
  ****************************************************************************************/
 
-func Setup(host string, dbName string) error {
+var UseAtlas bool
+
+func Setup(host string, dbName string, useAtlas bool) error {
 	err := mgm.SetDefaultConfig(nil, dbName, options.Client().ApplyURI(host), &options.ClientOptions{
 		Registry: Registry(), // Override the default registry to use "db" struct tag instead of "bson"
 	})
 	if err != nil {
 		return &errors.Error{Code: errors.Internal, Message: "couldn't connect to database", Err: err}
 	}
+	UseAtlas = useAtlas
 	return nil
 }
 
@@ -201,7 +204,7 @@ func EnsureOptionalUniqueIndex(model mgm.Model, key string) error {
 
 // EnsureTextIndex creates a text index used for a later search query
 // Example search query: { $text: { $search: "\"coffee shop\"" } }
-// Note this can only do full word watches, not partial matches!
+// Note this can only do full word matches, not partial matches!
 // More info: https://www.mongodb.com/docs/manual/core/link-text-indexes
 func EnsureTextIndex(model mgm.Model, keys []string) error {
 	d := bson.D{}
@@ -240,4 +243,12 @@ func Update(result mgm.Model) error {
 		return &errors.Error{Code: errors.Internal, Err: err}
 	}
 	return nil
+}
+
+func Search(search string, paths []string, model mgm.Model, results any) error {
+	if UseAtlas {
+		return SearchAtlas(search, paths, model, results)
+	} else {
+		return SearchLocal(search, model, results)
+	}
 }

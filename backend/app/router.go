@@ -52,6 +52,9 @@ func Router(config Config) *gin.Engine {
 	 * Access-controlled routes past this point
 	 *******************************************/
 
+	// Search
+	r.GET("/search", DefaultAccessPolicy, http.Search)
+
 	// Users
 	r.GET("/users", DefaultAccessPolicy, http.GetUsers)
 	r.GET("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.GetUser)

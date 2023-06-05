@@ -191,6 +191,11 @@ func CreateBook(userID string, result *Book) error {
 		return err
 	}
 
+	err = db.EnsureTextIndex(result, BookSearchPaths)
+	if err != nil {
+		return err
+	}
+
 	err = db.Create(result)
 	if err != nil {
 		return err
@@ -278,6 +283,11 @@ func CreateMovie(userID string, result *Movie) error {
 		return err
 	}
 
+	err = db.EnsureTextIndex(result, MovieSearchPaths)
+	if err != nil {
+		return err
+	}
+
 	err = db.Create(result)
 	if err != nil {
 		return err
@@ -361,6 +371,11 @@ func CreateTVSeries(userID string, result *TVSeries) error {
 	}
 
 	err = SaveImage(&result.Item)
+	if err != nil {
+		return err
+	}
+
+	err = db.EnsureTextIndex(result, TVSeriesSearchPaths)
 	if err != nil {
 		return err
 	}
