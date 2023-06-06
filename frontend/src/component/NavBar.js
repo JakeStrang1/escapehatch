@@ -8,7 +8,7 @@ import banner from './../assets/banner.png'
 export default class NavBar extends React.Component {  
   constructor(props){
     super(props);
-    this.homeClass = this.props.homeCurrent ? "home-nav-current" : "home-nav" // Orange vs. gray icon
+    this.homeClass = this.props.homeCurrent ? "home-nav-current" : "home-nav" // Orange vs gray icon
     this.searchClass = this.props.searchCurrent ? "search-nav-current" : "search-nav"
     this.friendsClass = this.props.friendsCurrent ? "friends-nav-current" : "friends-nav"
   }
