@@ -45,6 +45,10 @@ body {
     padding-right: 40px;
 }
 
+.lowercase {
+    text-transform: lowercase;
+}
+
 @media only screen and (min-width: 992px) {
     .row {
         height: 100vh;

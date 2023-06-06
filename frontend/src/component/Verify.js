@@ -257,27 +257,27 @@ export default class Verify extends React.Component {
                   First word:
                 </Form.Label>
                 <Form.Control type="text" placeholder={this.state.placeholderOne} ref={this.inputOneRef} value={this.state.wordOne} required
-                  onChange={this.handleChangeOne}/>
+                  onChange={this.handleChangeOne} className="lowercase"/>
               </Col>
               <Col>
                 <Form.Label className="sr-only">
                 Second word:
                 </Form.Label>
                 <Form.Control type="text" placeholder={this.state.placeholderTwo} ref={this.inputTwoRef} value={this.state.wordTwo} required
-                  onChange={this.handleChangeTwo}/>
+                  onChange={this.handleChangeTwo} className="lowercase"/>
               </Col>
               <Col>
                 <Form.Label className="sr-only">
                 Third word:
                 </Form.Label>
                 <Form.Control type="text" placeholder={this.state.placeholderThree} ref={this.inputThreeRef} value={this.state.wordThree} required
-                  onChange={this.handleChangeThree}/>
+                  onChange={this.handleChangeThree} className="lowercase"/>
               </Col>
               <Col>
                 <Form.Label className="sr-only">
                 Fourth word:
                 </Form.Label>
-                <Form.Control className={"no-validation-border " + this.state.isValidClass} type="text" placeholder={this.state.placeholderFour} ref={this.inputFourRef} value={this.state.wordFour} required
+                <Form.Control className={"no-validation-border lowercase" + this.state.isValidClass} type="text" placeholder={this.state.placeholderFour} ref={this.inputFourRef} value={this.state.wordFour} required
                   onChange={this.handleChangeFour}/>
               </Col>
             </Form.Row>

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"strings"
 	"time"
 
 	"github.com/JakeStrang1/escapehatch/internal/errors"
@@ -71,7 +72,7 @@ func verifyChallenge(email, secret, emailHash string) (*challenge.Challenge, err
 		return nil, errors.New(errors.ChallengeMaxAttempts, "too many attempts")
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(ch.SecretHash), []byte(secret))
+	err = bcrypt.CompareHashAndPassword([]byte(ch.SecretHash), []byte(strings.ToLower(secret)))
 	if err != nil {
 		return nil, &errors.Error{Code: errors.ChallengeFailed, Message: "secret is incorrect", Err: err}
 	}
