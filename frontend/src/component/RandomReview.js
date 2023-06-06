@@ -158,7 +158,7 @@ var reviews = [
   },
   {
     stars: 5,
-    body: "It made sense to me right away: Look up a show, add it to your shelf, and then any time you look at your shelf you see the show there. Why is this such a difficult concept for people??",
+    body: "It made sense to me right away. Look up a show, add it to your shelf, and then any time you look at your shelf you can see the show there. It's like the idea just crystallized so hard in my mind.",
     author: "User"
   },
   {
