@@ -1,11 +1,13 @@
 import React from "react"
+import NavBar from "./NavBar"
+import Container from 'react-bootstrap/Container'
 
 export default class Home extends React.Component {
   render() {
     return (
-      <div>
-        <p>Home!</p>
-      </div>
+      <>
+        <NavBar homeCurrent={true} />
+      </>
     )
   }
 }

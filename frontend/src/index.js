@@ -17,7 +17,7 @@ import AuthContext from "./authContext"
 // import Cookies from 'js-cookie';
 import api from './api'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './stylesheet.css'
+import './assets/stylesheet.css'
 
 const auth = {
   attempted: false,

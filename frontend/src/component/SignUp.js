@@ -5,6 +5,7 @@ import api, {
   ERR_INVALID,
 } from "../api"
 import Container from 'react-bootstrap/Container'
+import Image from 'react-bootstrap/Image'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
@@ -12,6 +13,7 @@ import Col from 'react-bootstrap/Col'
 import Fade from 'react-bootstrap/Fade'
 import FormGroup from "react-bootstrap/esm/FormGroup"
 import randomEmail from "../util/randomEmail"
+import landingImage from './../assets/landing.png'
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -135,8 +137,10 @@ export default class SignUp extends React.Component {
       <>
         <Container fluid>
           <Row className="row">
-            <Col xs={12} lg={7} className="left align-self-center">escape<br/>hatch</Col>
-            <Col xs={12} lg={4} className="right align-self-center">
+            <Col xs={12} lg={7} className="left align-self-center">
+              <Image src={landingImage} fluid/>
+            </Col>
+            <Col xs={11} lg={4} className="right align-self-center">
               <Form className="signUpForm" noValidate validated={this.state.validated} onSubmit={this.handleSubmit} ref={this.formRef}>
                 <h4 className="header">Create an account</h4>
                 <Form.Group controlId="formEmail">

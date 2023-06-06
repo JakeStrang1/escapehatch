@@ -286,13 +286,13 @@ export default class Verify extends React.Component {
             </small>
           </Form.Group>
           <FormGroup controlId="formSubmit">
-            <Button variant="primary" type="submit" className="">
+            <Button variant="primary" type="submit" className="orange-btn">
               Submit
             </Button>
           </FormGroup>
         </Form>
         <small>
-          <Link to={backLink}>
+          <Link to={backLink} className="gray">
             {backText} 
           </Link>
         </small>
@@ -321,7 +321,7 @@ export default class Verify extends React.Component {
         <Container fluid>
           <Row className="d-flex align-items-center text-center pt-3">
               <Col>
-                <h4>We've sent you an email with a secret phrase:</h4>
+                <h4 className="orange">We've sent you an email with a secret phrase:</h4>
                 {Content}
               </Col>
           </Row>
