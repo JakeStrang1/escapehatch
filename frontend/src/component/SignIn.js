@@ -14,6 +14,7 @@ import Fade from 'react-bootstrap/Fade'
 import FormGroup from "react-bootstrap/esm/FormGroup"
 import randomEmail from "../util/randomEmail"
 import landingImage from './../assets/landing.png'
+import RandomReview from "./RandomReview"
 
 export default class SignIn extends React.Component {
   constructor(props) {
@@ -141,6 +142,7 @@ export default class SignIn extends React.Component {
               <Image src={landingImage} fluid/>
             </Col>
             <Col xs={11} lg={4} className="right align-self-center">
+              <RandomReview  signUp={false}/>
               <Form className="signUpForm" noValidate validated={this.state.validated} onSubmit={this.handleSubmit} ref={this.formRef}>
                 <h4 className="header">Sign in</h4>
                 <Form.Group controlId="formEmail">

@@ -12,7 +12,7 @@ const NoAuthRoute = ({component: Component, ...rest}) => {
         <AuthContext.Consumer>
             {auth => {
                 if (!auth.attempted) {
-                    Promise.all([auth.User(), wait(2000)])
+                    Promise.all([auth.User(), wait(0)]) // add a wait time to force a minimum load time
                     .then(() => forceUpdate())
                     return (<Loading/>)
                 }

@@ -17,18 +17,31 @@ body {
 }
 
 .left {
-    color: #FFFFFF44;
     padding-left: 10px;
     margin-top: 20px;
     margin-bottom: 30px;
-    font-size: 100px;
-    font-family: 'Source Code Pro', monospace;
     line-height: 0.9em;
 }
 
 .right {
     min-height: 200px;
     padding-left: 60px;
+    color: #555;
+}
+
+.review-box {
+    margin: 30px 0px;
+}
+
+.review {
+    margin-top: 10px;
+    font-size: 1.5em;
+}
+
+.review-author {
+    font-weight: 600;
+    text-align: right;
+    padding-right: 40px;
 }
 
 @media only screen and (min-width: 992px) {
