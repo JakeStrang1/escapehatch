@@ -30,6 +30,10 @@ body {
     margin-bottom: 200px;
 }
 
+.error {
+    color: #555;
+}
+
 .head-space {
     margin-top: 30px;
 }

@@ -36,7 +36,7 @@ export default class ErrorPage extends React.Component {
     return (
       <>
         <Container fluid>
-          <Row className="d-flex align-items-center text-center pt-3">
+          <Row className="d-flex align-items-center text-center pt-3 landing-row head-space foot-space error">
               <Col>
                 <ErrorComponent/>
               </Col>
