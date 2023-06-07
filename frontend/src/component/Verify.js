@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormGroup from "react-bootstrap/esm/FormGroup"
+import Image from 'react-bootstrap/Image'
+import keyImage from './../assets/key.png'
 import { Redirect, Link } from 'react-router-dom'
 import api, { 
   ERR_CHALLENGE_FAILED,
@@ -319,11 +321,20 @@ export default class Verify extends React.Component {
     return (
       <>
         <Container fluid>
-          <Row className="d-flex align-items-center text-center pt-3">
-              <Col>
-                <h4 className="orange">We've sent you an email with a secret phrase:</h4>
-                {Content}
-              </Col>
+          <Row className="d-flex align-items-center landing-row head-space">
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-3">
+                <Col xs={12}>
+                  <Image src={keyImage} fluid/>
+                </Col>
+              </Row>
+              <Row className="d-flex align-items-center text-center pt-3 foot-space">
+                <Col>
+                  <h4 className="orange">We've sent you an email with a secret phrase:</h4>
+                  {Content}
+                </Col>
+              </Row>
+            </Col>
           </Row>
         </Container>
       </>

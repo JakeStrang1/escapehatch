@@ -137,7 +137,7 @@ export default class SignUp extends React.Component {
     return (
       <>
         <Container fluid>
-          <Row className="row">
+          <Row className="landing-row">
             <Col xs={12} lg={7} className="left align-self-center">
               <Image src={landingImage} fluid/>
             </Col>
