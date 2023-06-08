@@ -100,6 +100,33 @@ api.GetUser = () => {
     .then(FormatResponse)
 }
 
+api.UpdateUser = (fullName, username) => {
+    let body = {
+        full_name: fullName,
+        username: username
+    }
+    return fetch(host + '/users/me', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(body)
+    })
+    .then(FormatResponse)
+}
+
+api.ValidateUsername = (username) => {
+    return fetch(host + '/validate-username?u=' + encodeURIComponent(username), {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
 // If request is successful, FormatResponse returns:
 // {
 //     ok: true,

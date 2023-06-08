@@ -33,6 +33,7 @@ func (u *User) ValidateOnCreate() error {
 	}
 
 	if u.Username != "" { // Blank username is allowed on create, we will provide a default
+		u.Username = strings.ToLower(u.Username) // Force lowercase
 		err := ValidateUsername(u.Username)
 		if err != nil {
 			return err

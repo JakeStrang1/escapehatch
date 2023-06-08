@@ -426,6 +426,8 @@ func GenerateDefaultUsername() string {
 }
 
 func ValidateUsername(username string) error {
+	username = strings.ToLower(username) // Treat as if lowercase
+
 	if len(username) > 20 {
 		return &errors.Error{Code: errors.Invalid, Message: "username cannot be greater than 20 characters"}
 	}
@@ -435,7 +437,7 @@ func ValidateUsername(username string) error {
 	}
 
 	if !usernameCharRegex.MatchString(username) {
-		return &errors.Error{Code: errors.Invalid, Message: "username must contain only lowercase letters, numbers, and periods"}
+		return &errors.Error{Code: errors.Invalid, Message: "username must contain only letters, numbers, and periods"}
 	}
 
 	if string(username[0]) == "." || string(username[len(username)-1]) == "." {

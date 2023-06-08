@@ -97,5 +97,8 @@ func Router(config Config) *gin.Engine {
 	r.PATCH("/posts/:id/comments/:commentID", DefaultAccessPolicy, http.UpdateComment)
 	r.DELETE("/posts/:id/comments/:commentID", DefaultAccessPolicy, http.DeleteComment)
 
+	// Utils
+	r.GET("/validate-username", DefaultAccessPolicy, http.ValidateUsername)
+
 	return r.Engine
 }

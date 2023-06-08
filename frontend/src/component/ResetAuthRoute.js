@@ -7,7 +7,7 @@ const ResetAuthRoute = ({component: Component, ...rest}) => {
     return (
         <AuthContext.Consumer>
             {auth => {
-                auth.attempted = false                
+                auth.attempted = false
                 return (<Component {...rest}/>)
             }}
         </AuthContext.Consumer>

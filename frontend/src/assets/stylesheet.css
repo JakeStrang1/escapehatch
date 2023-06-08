@@ -30,6 +30,15 @@ body {
     margin-bottom: 200px;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+    /* devil words */
+    color: #666;
+}
+
+.text {
+    color: #666;
+}
+
 .error {
     color: #555;
 }
@@ -270,4 +279,12 @@ body {
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #aaaaaaff !important;
     opacity: 1; /* Firefox */
-  }
+}
+
+.medium-input {
+    max-width: 300px;
+}
+
+.paragraph-column {
+    max-width: 400px;
+}
