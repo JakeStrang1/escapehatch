@@ -17,17 +17,17 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <>
-        <Navbar fixed="top" className="sticky-nav">
+        <Navbar fixed="top" className="sticky-nav" style={{backgroundColor: "black"}}>
             <Col xs={6} sm={6} md={5} lg={4} align-self-center className="mt-auto mb-auto brand-column">
-              <Navbar.Brand href="#home">
+              <Navbar.Brand href="/">
                 <Image src={banner} fluid/>
               </Navbar.Brand>
             </Col>
             <Col xs={6} sm={6} md={5} lg={4}>
               <Row id="nav-link-row">
-                  <Col className="bare-column"><Nav.Link href="#home" className={this.homeClass}></Nav.Link></Col>
-                  <Col className="bare-column"><Nav.Link href="#link" className={this.searchClass}></Nav.Link></Col>
-                  <Col className="bare-column"><Nav.Link href="#link" className={this.friendsClass}></Nav.Link></Col>
+                  <Col className="bare-column"><Nav.Link href="/" className={this.homeClass}></Nav.Link></Col>
+                  <Col className="bare-column"><Nav.Link href="/search" className={this.searchClass}></Nav.Link></Col>
+                  <Col className="bare-column"><Nav.Link href="/followers" className={this.friendsClass}></Nav.Link></Col>
               </Row>
             </Col>
         </Navbar>

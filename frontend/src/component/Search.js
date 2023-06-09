@@ -13,7 +13,7 @@ import api, {
   ERR_UNEXPECTED,
 } from "../api"
 
-export default class Home extends React.Component {
+export default class Search extends React.Component {
   constructor(props){
     super(props);
   }
@@ -21,9 +21,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <>
-        <NavBar homeCurrent={true} />
-        <UserSummary user={this.props.user}/>
-        <Shelves user={this.props.user}/>
+        <NavBar searchCurrent={true} />
       </>
     )
   }

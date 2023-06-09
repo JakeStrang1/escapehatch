@@ -415,3 +415,10 @@ h1, h2, h3, h4, h5, h6, p {
     min-width: 200px;
     max-width: 300px;
 }
+
+.outline-link {
+    border-color: #666;
+    border-style: solid;
+    border-radius: 20px;
+    border-width: 1px;
+}

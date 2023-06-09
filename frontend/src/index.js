@@ -17,6 +17,8 @@ import NotYou from "./component/NotYou"
 import Verify from "./component/Verify"
 import VerifyLink from "./component/VerifyLink"
 import Home from "./component/Home"
+import Search from "./component/Search"
+import Followers from "./component/Followers"
 import ErrorPage from "./component/ErrorPage"
 import AuthContext from "./authContext"
 // import Cookies from 'js-cookie';
@@ -72,6 +74,8 @@ ReactDOM.render(
           <Route path="/oh-no" component={ErrorPage}/>
           <AuthRoute path="/new-user" component={NewUser}/>
           <AuthRoute exact path="/" redirect="/sign-up" component={Home}/>
+          <AuthRoute path="/search" component={Search}/>
+          <AuthRoute path="/followers" component={Followers}/>
           <SignOutRoute path="/sign-out"/>
           <Redirect to={{pathname: "/oh-no", state: { errorCode: "not_found"}}}/>
         </Switch>
