@@ -170,15 +170,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.125"
-     inkscape:cx="-2032"
-     inkscape:cy="-32"
+     inkscape:cx="-3096"
+     inkscape:cy="-360"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-x="-1928"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:snap-global="false"
      inkscape:showpageshadow="2"
@@ -254,50 +254,49 @@
          id="tspan4518-5-2-5-1"
          sodipodi:role="line">escap</tspan></text>
     <g
-       id="g5020"
-       transform="translate(-346.38131,79.11178)">
+       id="g25471"
+       transform="translate(-643.77298,98.16178)">
+      <path
+         id="path25466"
+         style="opacity:1;stroke-width:3.365;stroke-opacity:0.631373"
+         d="m -45.206558,58.709876 c -5.586189,0.0044 -10.119474,-4.518229 -10.128249,-10.104413 -0.0088,-5.586183 4.51028,-10.123019 10.096455,-10.136181 5.586175,-0.01316 10.126558,4.502327 10.135358,10.104401 0.0088,5.602074 -4.517375,10.131805 -10.103564,10.136193 z"
+         sodipodi:nodetypes="ssscs"
+         inkscape:export-filename="frontend\public\favicon.png"
+         inkscape:export-xdpi="20.087151"
+         inkscape:export-ydpi="20.087151" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4661-7-5-9"
+         d="m -46.30135,43.0169 v 8.628271 c -1.075983,-0.02074 -1.909296,-0.317062 -2.494606,-0.893891 -0.607147,-0.598342 -0.9104,-1.447201 -0.9104,-2.54709 0,-0.545545 0.109725,-1.086823 0.329708,-1.623568 0.219975,-0.536747 0.527987,-1.016253 0.923947,-1.438609 -0.43927,-0.401433 -1.368164,-1.365302 -1.768751,-1.768741 -0.651128,0.677531 -1.156985,1.438691 -1.517751,2.283407 -0.351961,0.844713 -0.527782,1.693998 -0.527782,2.547511 0,1.26707 0.237592,2.349202 0.712744,3.246713 0.475151,0.897507 1.17022,1.583935 2.085313,2.059086 0.881504,0.444946 1.937421,0.674968 3.163344,0.695392 v 1.512255 c 0.722342,-2.17e-4 1.444668,-4.34e-4 2.167019,0 v -1.517335 c 1.163979,-0.04462 2.172777,-0.265558 3.024502,-0.66407 0.959107,-0.457557 1.689174,-1.117206 2.190714,-1.979517 0.501548,-0.862312 0.752532,-1.900807 0.752532,-3.115085 0,-1.143885 -0.285972,-2.120606 -0.857916,-2.930123 -0.571936,-0.809519 -1.399196,-1.42553 -2.481486,-1.847887 -1.08229,-0.431159 -2.379984,-0.646719 -3.893427,-0.646719 z m 2.164464,2.560632 c 1.1175,0.07919 1.984491,0.369488 2.600425,0.871039 0.624739,0.492748 0.937068,1.157144 0.937068,1.993058 0,1.020699 -0.334353,1.812532 -1.00309,2.375673 -0.611814,0.507166 -1.458583,0.779623 -2.534403,0.822789 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583" />
+    </g>
+    <g
+       id="g68319">
       <text
          id="text4520-6-4-7-3"
-         y="81.422462"
-         x="-211.59383"
-         style="font-style:normal;font-weight:normal;font-size:33.0035553px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458329"
+         y="160.53424"
+         x="-557.97516"
+         style="font-style:normal;font-weight:normal;font-size:33.0036px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;fill-opacity:1;stroke-width:0.26458329"
-           y="81.422462"
-           x="-211.59383"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           y="160.53424"
+           x="-557.97516"
            id="tspan4518-5-2-4-3"
            sodipodi:role="line">hatch</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path4661-7-5"
-         d="m -222.46393,65.916085 v 10.534757 c -1.31373,-0.02532 -2.33117,-0.38712 -3.04581,-1.091404 -0.7413,-0.73055 -1.11156,-1.766971 -1.11156,-3.10989 0,-0.666087 0.13397,-1.326964 0.40256,-1.982308 0.26858,-0.655345 0.64465,-1.240802 1.1281,-1.756482 -0.53633,-0.490133 -1.67047,-1.666975 -2.15957,-2.159558 -0.795,0.827238 -1.41263,1.756582 -1.85311,2.787944 -0.42973,1.03136 -0.6444,2.068301 -0.6444,3.110404 0,1.54704 0.29009,2.868278 0.87023,3.9641 0.58014,1.095819 1.42879,1.933919 2.54608,2.514058 1.07628,0.543261 2.36551,0.824108 3.86231,0.849045 v 1.8464 c 0.88195,-2.65e-4 1.76388,-5.29e-4 2.64584,0 v -1.852602 c 1.42117,-0.05448 2.65287,-0.324236 3.69279,-0.810802 1.17103,-0.558658 2.06241,-1.364062 2.67477,-2.416908 0.61237,-1.052846 0.91881,-2.320805 0.91881,-3.803387 0,-1.396636 -0.34916,-2.589171 -1.04748,-3.577558 -0.69831,-0.988388 -1.70836,-1.740512 -3.02979,-2.256192 -1.32143,-0.526427 -2.90586,-0.789617 -4.75371,-0.789617 z m 2.64272,3.126424 c 1.36442,0.09669 2.42298,0.451129 3.17501,1.063502 0.76278,0.601625 1.14412,1.412824 1.14412,2.433441 0,1.24623 -0.40823,2.213026 -1.22473,2.900597 -0.747,0.619228 -1.78087,0.951886 -3.0944,1.004591 z"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0035553px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.26458329" />
-      <g
-         id="g25471"
-         transform="translate(-297.39167,19.05)">
-        <path
-           id="path25466"
-           style="opacity:1;stroke-width:3.365;stroke-opacity:0.631373"
-           d="m -45.206558,58.709876 c -5.586189,0.0044 -10.119474,-4.518229 -10.128249,-10.104413 -0.0088,-5.586183 4.51028,-10.123019 10.096455,-10.136181 5.586175,-0.01316 10.126558,4.502327 10.135358,10.104401 0.0088,5.602074 -4.517375,10.131805 -10.103564,10.136193 z"
-           sodipodi:nodetypes="ssscs"
-           inkscape:export-filename="frontend\public\favicon.png"
-           inkscape:export-xdpi="20.087151"
-           inkscape:export-ydpi="20.087151" />
-        <path
-           inkscape:connector-curvature="0"
-           id="path4661-7-5-9"
-           d="m -46.30135,43.0169 v 8.628271 c -1.075983,-0.02074 -1.909296,-0.317062 -2.494606,-0.893891 -0.607147,-0.598342 -0.9104,-1.447201 -0.9104,-2.54709 0,-0.545545 0.109725,-1.086823 0.329708,-1.623568 0.219975,-0.536747 0.527987,-1.016253 0.923947,-1.438609 -0.43927,-0.401433 -1.368164,-1.365302 -1.768751,-1.768741 -0.651128,0.677531 -1.156985,1.438691 -1.517751,2.283407 -0.351961,0.844713 -0.527782,1.693998 -0.527782,2.547511 0,1.26707 0.237592,2.349202 0.712744,3.246713 0.475151,0.897507 1.17022,1.583935 2.085313,2.059086 0.881504,0.444946 1.937421,0.674968 3.163344,0.695392 v 1.512255 c 0.722342,-2.17e-4 1.444668,-4.34e-4 2.167019,0 v -1.517335 c 1.163979,-0.04462 2.172777,-0.265558 3.024502,-0.66407 0.959107,-0.457557 1.689174,-1.117206 2.190714,-1.979517 0.501548,-0.862312 0.752532,-1.900807 0.752532,-3.115085 0,-1.143885 -0.285972,-2.120606 -0.857916,-2.930123 -0.571936,-0.809519 -1.399196,-1.42553 -2.481486,-1.847887 -1.08229,-0.431159 -2.379984,-0.646719 -3.893427,-0.646719 z m 2.164464,2.560632 c 1.1175,0.07919 1.984491,0.369488 2.600425,0.871039 0.624739,0.492748 0.937068,1.157144 0.937068,1.993058 0,1.020699 -0.334353,1.812532 -1.00309,2.375673 -0.611814,0.507166 -1.458583,0.779623 -2.534403,0.822789 z"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583" />
-      </g>
+         d="m -568.84524,145.02786 v 10.53476 c -1.31373,-0.0253 -2.33117,-0.38712 -3.04581,-1.0914 -0.7413,-0.73055 -1.11156,-1.76697 -1.11156,-3.10989 0,-0.66609 0.13397,-1.32697 0.40256,-1.98231 0.26858,-0.65534 0.64465,-1.2408 1.1281,-1.75648 -0.53633,-0.49014 -1.67047,-1.66698 -2.15957,-2.15956 -0.795,0.82724 -1.41263,1.75658 -1.85311,2.78794 -0.42973,1.03136 -0.6444,2.0683 -0.6444,3.11041 0,1.54704 0.29009,2.86828 0.87023,3.9641 0.58014,1.09582 1.42879,1.93392 2.54608,2.51406 1.07628,0.54326 2.36551,0.8241 3.86231,0.84904 v 1.8464 c 0.88195,-2.6e-4 1.76388,-5.3e-4 2.64584,0 v -1.8526 c 1.42117,-0.0545 2.65287,-0.32424 3.69279,-0.8108 1.17103,-0.55866 2.06241,-1.36407 2.67477,-2.41691 0.61237,-1.05285 0.91881,-2.32081 0.91881,-3.80339 0,-1.39663 -0.34916,-2.58917 -1.04748,-3.57756 -0.69831,-0.98838 -1.70836,-1.74051 -3.02979,-2.25619 -1.32143,-0.52643 -2.90586,-0.78962 -4.75371,-0.78962 z m 2.64272,3.12643 c 1.36442,0.0967 2.42298,0.45113 3.17501,1.0635 0.76278,0.60163 1.14412,1.41282 1.14412,2.43344 0,1.24623 -0.40823,2.21303 -1.22473,2.9006 -0.747,0.61923 -1.78087,0.95188 -3.0944,1.00459 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583" />
       <text
          id="text4520-6-4-5-9-4"
-         y="81.461723"
-         x="-318.03418"
-         style="font-style:normal;font-weight:normal;font-size:33.0035553px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458329"
+         y="160.5735"
+         x="-664.41547"
+         style="font-style:normal;font-weight:normal;font-size:33.0036px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;stroke-width:0.26458329"
-           y="81.461723"
-           x="-318.03418"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#000000;stroke-width:0.264583"
+           y="160.5735"
+           x="-664.41547"
            id="tspan4518-5-2-5-1-5"
            sodipodi:role="line">escap</tspan></text>
     </g>
@@ -3633,24 +3632,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan65945"><tspan
+           id="tspan69075"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65943">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan69073">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan65949"><tspan
+           id="tspan69079"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65947">shows you're into so your </tspan></tspan><tspan
+             id="tspan69077">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan65953"><tspan
+           id="tspan69083"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65951">friends can see. This could </tspan></tspan><tspan
+             id="tspan69081">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan65957"><tspan
+           id="tspan69087"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65955">be big.&quot;</tspan></tspan></text>
+             id="tspan69085">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3774,24 +3773,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan65961"><tspan
+           id="tspan69091"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65959">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan69089">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan65965"><tspan
+           id="tspan69095"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65963">shows you're into so your </tspan></tspan><tspan
+             id="tspan69093">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan65969"><tspan
+           id="tspan69099"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65967">friends can see. This could </tspan></tspan><tspan
+             id="tspan69097">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan65973"><tspan
+           id="tspan69103"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan65971">be big.&quot;</tspan></tspan></text>
+             id="tspan69101">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4546,5 +4545,13 @@
          id="path28721"
          sodipodi:nodetypes="ccccc" />
     </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4661-7-5-4"
+       d="m -320.12072,85.416624 v 10.53476 c -1.31373,-0.0253 -2.33117,-0.38712 -3.04581,-1.0914 -0.7413,-0.73055 -1.11156,-1.76697 -1.11156,-3.10989 0,-0.66609 0.13397,-1.32697 0.40256,-1.98231 0.26858,-0.65534 0.64465,-1.2408 1.1281,-1.75648 -0.53633,-0.49014 -1.67047,-1.66698 -2.15957,-2.15956 -0.795,0.82724 -1.41263,1.75658 -1.85311,2.78794 -0.42973,1.03136 -0.6444,2.0683 -0.6444,3.11041 0,1.54704 0.29009,2.86828 0.87023,3.9641 0.58014,1.09582 1.42879,1.93392 2.54608,2.51406 1.07628,0.54326 2.36551,0.8241 3.86231,0.84904 v 1.846396 c 0.88195,-2.6e-4 1.76388,-5.3e-4 2.64584,0 v -1.852596 c 1.42117,-0.0545 2.65287,-0.32424 3.69279,-0.8108 1.17103,-0.55866 2.06241,-1.36407 2.67477,-2.41691 0.61237,-1.05285 0.91881,-2.32081 0.91881,-3.80339 0,-1.39663 -0.34916,-2.58917 -1.04748,-3.57756 -0.69831,-0.98838 -1.70836,-1.74051 -3.02979,-2.25619 -1.32143,-0.52643 -2.90586,-0.78962 -4.75371,-0.78962 z m 2.64272,3.12643 c 1.36442,0.0967 2.42298,0.45113 3.17501,1.0635 0.76278,0.60163 1.14412,1.41282 1.14412,2.43344 0,1.24623 -0.40823,2.21303 -1.22473,2.9006 -0.747,0.61923 -1.78087,0.95188 -3.0944,1.00459 z"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       inkscape:export-filename="frontend\src\assets\logo100.png"
+       inkscape:export-xdpi="147.58173"
+       inkscape:export-ydpi="147.58173" />
   </g>
 </svg>
