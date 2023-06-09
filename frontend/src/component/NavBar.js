@@ -17,7 +17,7 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <>
-        <Navbar fixed="top">
+        <Navbar fixed="top" className="sticky-nav">
             <Col xs={6} sm={6} md={5} lg={4} align-self-center className="mt-auto mb-auto brand-column">
               <Navbar.Brand href="#home">
                 <Image src={banner} fluid/>
