@@ -48,6 +48,20 @@ func SignIn(c *gin.Context) {
 	c.JSON(200, struct{}{})
 }
 
+func SignOut(c *gin.Context) {
+	secure := false
+	httpOnly := false
+	if os.Getenv("PRODUCTION") != "false" {
+		// Cookie doesn't save in production without this. Must be called before SetCookie().
+		// Secure flag must also be set when using this, so only use on production
+		c.SetSameSite(http.SameSiteNoneMode)
+		secure = true
+		httpOnly = true
+	}
+	c.SetCookie("SID", "", 0, "/", host(c.Request.Host), secure, httpOnly) // Cookie must be cleared from the backend
+	c.JSON(200, struct{}{})
+}
+
 type VerifyBody struct {
 	Email     *string `json:"email" validate:"required_without=EmailHash"`
 	Secret    *string `json:"secret" validate:"required"`

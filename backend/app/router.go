@@ -52,6 +52,9 @@ func Router(config Config) *gin.Engine {
 	 * Access-controlled routes past this point
 	 *******************************************/
 
+	// Log out
+	r.POST("/auth/sign-out", DefaultAccessPolicy, http.SignOut)
+
 	// Search
 	r.GET("/search", DefaultAccessPolicy, http.Search)
 

@@ -1,4 +1,5 @@
 import React from "react"
+import { Redirect } from 'react-router-dom'
 import NavBar from "./NavBar"
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -6,7 +7,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Row from 'react-bootstrap/Row'
-import { Redirect, Link } from 'react-router-dom'
 import api, {
   ERR_UNEXPECTED,
 } from "../api"
@@ -14,11 +14,6 @@ import api, {
 export default class UserSummary extends React.Component {
   constructor(props){
     super(props);
-
-    this.state = {
-      user: this.props.user,
-    }
-
   }
 
   render() {
@@ -254,7 +249,7 @@ class UserDropDown extends React.Component {
         <Dropdown.Toggle className="userDropDown" variant="secondary">
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Log out</Dropdown.Item>
+          <Dropdown.Item href="/sign-out">Log out</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )

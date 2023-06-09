@@ -12,6 +12,7 @@ import NewUser from "./component/NewUser"
 import ResetAuthRoute from "./component/ResetAuthRoute"
 import SignIn from "./component/SignIn"
 import SignUp from "./component/SignUp"
+import SignOutRoute from "./component/SignOutRoute"
 import NotYou from "./component/NotYou"
 import Verify from "./component/Verify"
 import VerifyLink from "./component/VerifyLink"
@@ -25,13 +26,30 @@ import './assets/stylesheet.css'
 
 const auth = {
   attempted: false,
+  signOutAttempted: false,
   user: null,
   User: async function() {
     this.attempted = true
+    this.signOutAttempted = false
     return api.GetUser()
     .then(response => {
       if (response.ok) {
         this.user = response.body.data
+        return
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+    .catch(e => {
+      console.log(e)
+    })
+  },
+  SignOut: async function() {
+    this.signOutAttempted = true
+    this.attempted = false
+    return api.SignOut()
+    .then(response => {
+      if (response.ok) {
+        this.user = null
         return
       }
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
@@ -54,6 +72,7 @@ ReactDOM.render(
           <Route path="/oh-no" component={ErrorPage}/>
           <AuthRoute path="/new-user" component={NewUser}/>
           <AuthRoute exact path="/" redirect="/sign-up" component={Home}/>
+          <SignOutRoute path="/sign-out"/>
           <Redirect to={{pathname: "/oh-no", state: { errorCode: "not_found"}}}/>
         </Switch>
       </AuthContext.Provider>

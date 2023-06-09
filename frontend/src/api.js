@@ -47,6 +47,17 @@ api.SignIn = email => {
     .then(FormatResponse)
 }
 
+api.SignOut = () => {
+    return fetch(host + '/auth/sign-out', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include' // Needed to properly set cookie from response
+    })
+    .then(FormatResponse)
+}
+
 api.Verify = (secret, email, isHash) => {
     let body = {
         secret: secret
