@@ -26,6 +26,15 @@ type ItemContainer interface {
 	GetItem() *Item
 }
 
+// ItemStat is a cache collection that indexes items by popularity.
+// It is not important to be perfectly accurate, and the entire collection can be discarded and regenerated at will
+type ItemStat struct {
+	db.DefaultModel `db:",inline"`
+	ItemID          string    `db:"item_id"`
+	MediaType       MediaType `db:"media_type"`
+	UserCount       int       `db:"user_count"`
+}
+
 type ItemUpdate struct {
 	ImageURL      *string `db:"image_url,omitempty"`
 	ImageFileName *string `db:"-"`
@@ -71,4 +80,11 @@ func (i *Item) ApplyUpdate(userID string, update ItemUpdate) error {
 	}
 
 	return nil
+}
+
+func (i *Item) ToStat(mediaType MediaType) *ItemStat {
+	return &ItemStat{
+		ItemID:    i.ID,
+		MediaType: mediaType,
+	}
 }

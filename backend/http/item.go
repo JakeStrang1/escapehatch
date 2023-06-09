@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/JakeStrang1/escapehatch/internal/errors"
@@ -43,6 +44,46 @@ func (i *ItemAPI) BindMultipart(c *gin.Context) error {
 	}
 
 	return nil
+}
+
+type ItemQuery struct {
+	PageQuery
+}
+
+func GetItems(c *gin.Context) {
+	query := ItemQuery{}
+	err := c.BindQuery(&query)
+	if err != nil {
+		Error(c, &errors.Error{Code: errors.BadRequest, Message: "error in query parameters", Err: err})
+		return
+	}
+
+	filter := items.Filter{
+		Page:    query.Page,
+		PerPage: query.PerPage,
+	}
+
+	results, pageInfo, err := items.GetPage(filter)
+	if err != nil {
+		Error(c, err)
+		return
+	}
+
+	var resultsAPI []any
+	for _, result := range results {
+		switch v := result.(type) {
+		case *items.Book:
+			resultsAPI = append(resultsAPI, ToBookAPI(*v))
+		case *items.Movie:
+			resultsAPI = append(resultsAPI, ToMovieAPI(*v))
+		case *items.TVSeries:
+			resultsAPI = append(resultsAPI, ToTVSeriesAPI(*v))
+		default:
+			panic(fmt.Sprintf("unknown type: %T", v))
+		}
+	}
+
+	ReturnMany(c, resultsAPI, *pageInfo)
 }
 
 func GetItem(c *gin.Context) {

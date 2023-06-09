@@ -1,17 +1,82 @@
 package items
 
 import (
+	"fmt"
+
 	"github.com/JakeStrang1/escapehatch/db"
 	"github.com/JakeStrang1/escapehatch/integrations/storage"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
+	"github.com/JakeStrang1/escapehatch/internal/pages"
 	"github.com/JakeStrang1/escapehatch/services/users"
 	"github.com/kamva/mgm/v3"
 	"github.com/samber/lo"
 )
 
+const defaultPerPage = 25
+const maxPerPage = 250
+
 /***********************************************
  * Item Services
  ***********************************************/
+
+func GetPage(filter Filter) ([]any, *pages.PageResult, error) {
+	err := filter.Validate()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	page := 1
+	if filter.Page != nil {
+		page = *filter.Page
+	}
+
+	pageSize := defaultPerPage
+	if filter.PerPage != nil {
+		pageSize = *filter.PerPage
+	}
+
+	opts := db.GetManyOptions{Sort: [][]any{{"user_count", -1}}} // Sort by most popular
+	itemStats := []ItemStat{}
+	total, err := db.GetPage(filter, &ItemStat{}, &itemStats, page, pageSize, opts)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	results := []any{}
+	for _, itemStat := range itemStats {
+		switch itemStat.MediaType {
+		case MediaTypeBook:
+			book := newBook(itemStat.ItemID)
+			err = GetBookByID(&book)
+			if err != nil {
+				return nil, nil, err
+			}
+			results = append(results, &book)
+		case MediaTypeMovie:
+			movie := newMovie(itemStat.ItemID)
+			err = GetMovieByID(&movie)
+			if err != nil {
+				return nil, nil, err
+			}
+			results = append(results, &movie)
+		case MediaTypeTVSeries:
+			tvSeries := newTVSeries(itemStat.ItemID)
+			err = GetTVSeriesByID(&tvSeries)
+			if err != nil {
+				return nil, nil, err
+			}
+			results = append(results, &tvSeries)
+		default:
+			panic("unknown type")
+		}
+	}
+
+	return results, &pages.PageResult{
+		Page:       page,
+		PerPage:    pageSize,
+		TotalPages: total,
+	}, nil
+}
 
 func Add(userID string, id string) (ItemContainer, error) {
 	container, err := GetByID(id)
@@ -44,6 +109,14 @@ func Add(userID string, id string) (ItemContainer, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Save stat
+	fmt.Println(id)
+	err = db.IncrementOne(db.M{"item_id": id}, "user_count", &ItemStat{})
+	if err != nil {
+		return nil, err
+	}
+
 	return container, nil
 }
 
@@ -110,6 +183,9 @@ func Delete(params DeleteParams) error {
 
 	// Track Changes
 	Track(container.GetItem().ID).Deleted(params.Reason, count).By(params.UserID).Save()
+
+	// Save stat
+	db.DeleteOne(db.M{"item_id": params.ItemID}, &ItemStat{})
 
 	// Remove from shelves
 	err = users.RemoveItemFromAllUsers(params.ItemID)
@@ -211,6 +287,9 @@ func CreateBook(userID string, result *Book) error {
 	// Track Changes
 	Track(result.ID).Created(result).By(userID).Save()
 
+	// Save Stat
+	db.Create(result.ToStat(MediaTypeBook))
+
 	return hydrateBook(result)
 }
 
@@ -303,6 +382,9 @@ func CreateMovie(userID string, result *Movie) error {
 	// Track Changes
 	Track(result.ID).Created(result).By(userID).Save()
 
+	// Save Stat
+	db.Create(result.ToStat(MediaTypeMovie))
+
 	return hydrateMovie(result)
 }
 
@@ -394,6 +476,9 @@ func CreateTVSeries(userID string, result *TVSeries) error {
 
 	// Track Changes
 	Track(result.ID).Created(result).By(userID).Save()
+
+	// Save Stat
+	db.Create(result.ToStat(MediaTypeTVSeries))
 
 	return hydrateTVSeries(result)
 }

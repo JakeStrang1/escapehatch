@@ -58,6 +58,17 @@ func DeleteByID(document mgm.Model) error {
 	return nil
 }
 
+func DeleteOne(selector map[string]interface{}, result mgm.Model) error {
+	err := mgm.Coll(result).FindOneAndDelete(mgm.Ctx(), selector).Err()
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return &errors.Error{Code: errors.NotFound, Err: err}
+	}
+	if err != nil {
+		return &errors.Error{Code: errors.Internal, Err: err}
+	}
+	return nil
+}
+
 // GetByID returns the document with matching ID
 func GetByID(document mgm.Model) error {
 	err := mgm.Coll(document).FindByID(document.GetID(), document)
@@ -110,6 +121,7 @@ func GetOne(selector map[string]interface{}, result mgm.Model, opts ...GetOneOpt
 type GetManyOptions struct {
 	Limit *int64
 	Skip  *int64
+	Sort  [][]any
 }
 
 func (o *GetManyOptions) ToFindOptions() *options.FindOptions {
@@ -119,6 +131,13 @@ func (o *GetManyOptions) ToFindOptions() *options.FindOptions {
 	}
 	if o.Skip != nil {
 		result.Skip = o.Skip
+	}
+	if o.Sort != nil {
+		d := bson.D{}
+		for _, key := range o.Sort {
+			d = append(d, bson.E{Key: key[0].(string), Value: key[1]})
+		}
+		result.Sort = d
 	}
 	return result
 }

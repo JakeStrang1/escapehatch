@@ -81,6 +81,7 @@ func Router(config Config) *gin.Engine {
 	r.PATCH("/tv-series/:id", DefaultAccessPolicy, http.UpdateTVSeries)
 
 	// Items
+	r.GET("/items", DefaultAccessPolicy, http.GetItems)
 	r.GET("/items/:id", DefaultAccessPolicy, http.GetItem)
 	r.POST("/items/:id/add", DefaultAccessPolicy, http.AddItem)
 	r.POST("/items/:id/remove", DefaultAccessPolicy, http.RemoveItem)
