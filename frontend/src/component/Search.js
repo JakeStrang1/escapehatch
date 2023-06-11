@@ -10,6 +10,7 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Row from 'react-bootstrap/Row'
+import Form from 'react-bootstrap/Form'
 
 import { Redirect, Link } from 'react-router-dom'
 import api, {
@@ -134,8 +135,8 @@ class BookResult extends React.Component {
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{this.props.result.author}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
-            <AddButton/>
+            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
+            <AddButton itemId={this.props.result.id}/>
           </div>
         </div>
       </>
@@ -154,8 +155,8 @@ class MovieResult extends React.Component {
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
-            <AddButton/>
+            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
+            <AddButton itemId={this.props.result.id}/>
           </div>
         </div>
       </>
@@ -174,8 +175,8 @@ class TVSeriesResult extends React.Component {
             <div className="result-details">{this.props.result.tv_series_start_year} &ndash; {this.props.result.tv_series_end_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
-            <AddButton/>
+            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
+            <AddButton itemId={this.props.result.id}/>
           </div>
         </div>
       </>
@@ -184,10 +185,33 @@ class TVSeriesResult extends React.Component {
 }
 
 class AddButton extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      loading: false
+    }
+
+    this.handleAddToShelf = this.handleAddToShelf.bind(this)
+  }
+
+  handleAddToShelf(e) {
+    e.preventDefault()
+    api.Data(api.AddItem(e.target.id))
+    .then(item => {
+      this.setState({loading: false})
+    })
+    this.setState({loading: true})
+  }
+
   render() {
     return (
       <>
-        <Button className="orange-btn">Add to shelf</Button>
+        <Form id={this.props.itemId} onSubmit={!this.state.loading ? this.handleAddToShelf : null}>
+          <Button type="submit" disabled={this.state.loading} className="orange-btn">
+            {this.state.loading ? 'Loading...' : 'Add to shelf'}
+          </Button>
+        </Form>
       </>
     )
   }
@@ -195,4 +219,11 @@ class AddButton extends React.Component {
 
 function formatActors(actors) {
   return actors.join(", ")
+}
+
+function peopleOrPerson(num) {
+  if (num == 1) {
+    return "person"
+  }
+  return "people"
 }

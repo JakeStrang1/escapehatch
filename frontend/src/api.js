@@ -149,6 +149,17 @@ api.GetItems = () => {
     .then(FormatResponse)
 }
 
+api.AddItem = itemId => {
+    return fetch(host + '/items/' + itemId + "/add", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then(FormatResponse)
+}
+
 api.Search = (searchText) => {
     return fetch(host + '/search?search=' + encodeURIComponent(searchText), {
         method: 'GET',
