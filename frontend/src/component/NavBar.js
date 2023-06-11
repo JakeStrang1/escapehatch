@@ -9,6 +9,9 @@ import Nav from 'react-bootstrap/Nav'
 import Image from 'react-bootstrap/Image'
 import banner from './../assets/banner.png'
 import searchImage from './../assets/search_small.png'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import FormGroup from "react-bootstrap/esm/FormGroup"
 
 export default class NavBar extends React.Component {  
   constructor(props){
@@ -43,7 +46,7 @@ export default class NavBar extends React.Component {
             {
               function () {
                 if (this.props.searchCurrent) {
-                  return <SearchBar/>
+                  return <SearchBar searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
                 }
               }.bind(this)()
             }
@@ -64,18 +67,30 @@ class SearchBar extends React.Component {
               <Col sm={1} md={2} lg={3} xl={4}></Col>
               <Col>
                 <div className="d-flex flex-row align-items-center justify-content-center">
-                  <InputGroup className="mt-1 mb-1">
-                    <InputGroup.Prepend>
-                      <InputGroup.Text id="search" style={{backgroundColor: "white"}}>
-                        <Image src={searchImage} fluid/>
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl
-                      placeholder="Find a show, movie, or book"
-                      aria-label="Find a show, movie, or book"
-                      aria-describedby="search"
-                    />
-                  </InputGroup>
+                  <Form className="search-form" onSubmit={this.props.handleSearchSubmit} onChange={this.props.handleSearchChange}>
+                    <Form.Group controlId="formEmail" className="mb-0 mt-2">
+                      <Form.Label className="sr-only">
+                        Search
+                      </Form.Label>
+                      <InputGroup>
+                        <InputGroup.Prepend>
+                          <InputGroup.Text id="search" style={{backgroundColor: "white"}}>
+                            <Image src={searchImage} fluid/>
+                          </InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl
+                          placeholder={this.props.searchText}
+                          aria-label={this.props.searchText}
+                          aria-describedby="search"
+                        />
+                      </InputGroup>
+                    </Form.Group>
+                    <FormGroup controlId="searchSubmit" className="mb-0">
+                      <Button variant="primary" type="submit" className="sr-only">
+                        Submit
+                      </Button>
+                    </FormGroup>
+                  </Form>
                 </div>
               </Col>
               <Col sm={1} md={2} lg={3} xl={4}></Col>

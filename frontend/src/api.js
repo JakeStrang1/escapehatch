@@ -149,6 +149,17 @@ api.GetItems = () => {
     .then(FormatResponse)
 }
 
+api.Search = (searchText) => {
+    return fetch(host + '/search?search=' + encodeURIComponent(searchText), {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
 // Use this to wrap a request function if you only want the "data" field.
 // E.g. api.Data(api.GetUser()).then(user => { do something })
 api.Data = async (promise) => {

@@ -68,21 +68,27 @@ func (u *TVSeriesSearch) Result() any {
 func GetSearch(search string, results *[]any) error {
 	searchResults := []SearchResult{}
 
-	// Users
-	userSearchResults := []UserSearch{}
-	err := db.Search(search, users.UserSearchPaths, &users.User{}, &userSearchResults)
-	if err != nil {
-		return err
-	}
-	searchResults = append(searchResults, internal.Map(userSearchResults, func(r UserSearch) SearchResult { return &r })...)
+	// // Users // Commented out for now but I think eventually including users in the universal search could happen
+	// userSearchResults := []UserSearch{}
+	// err := db.Search(search, users.UserSearchPaths, &users.User{}, &userSearchResults)
+	// if err != nil {
+	// 	return err
+	// }
+	// searchResults = append(searchResults, internal.Map(userSearchResults, func(r UserSearch) SearchResult { return &r })...)
 
 	// Books
 	bookSearchResults := []BookSearch{}
-	err = db.Search(search, BookSearchPaths, &Book{}, &bookSearchResults)
+	err := db.Search(search, BookSearchPaths, &Book{}, &bookSearchResults)
 	if err != nil {
 		return err
 	}
-	searchResults = append(searchResults, internal.Map(bookSearchResults, func(r BookSearch) SearchResult { return &r })...)
+	for i := range bookSearchResults {
+		err = hydrateBook(&bookSearchResults[i].Book)
+		if err != nil {
+			return err
+		}
+		searchResults = append(searchResults, &bookSearchResults[i])
+	}
 
 	// Movies
 	movieSearchResults := []MovieSearch{}
@@ -90,7 +96,13 @@ func GetSearch(search string, results *[]any) error {
 	if err != nil {
 		return err
 	}
-	searchResults = append(searchResults, internal.Map(movieSearchResults, func(r MovieSearch) SearchResult { return &r })...)
+	for i := range movieSearchResults {
+		err = hydrateMovie(&movieSearchResults[i].Movie)
+		if err != nil {
+			return err
+		}
+		searchResults = append(searchResults, &movieSearchResults[i])
+	}
 
 	// TV series
 	tvSeriesSearchResults := []TVSeriesSearch{}
@@ -98,13 +110,19 @@ func GetSearch(search string, results *[]any) error {
 	if err != nil {
 		return err
 	}
-	searchResults = append(searchResults, internal.Map(tvSeriesSearchResults, func(r TVSeriesSearch) SearchResult { return &r })...)
+	for i := range tvSeriesSearchResults {
+		err = hydrateTVSeries(&tvSeriesSearchResults[i].TVSeries)
+		if err != nil {
+			return err
+		}
+		searchResults = append(searchResults, &tvSeriesSearchResults[i])
+	}
 
 	// Sort
 	sort.Slice(searchResults, func(i, j int) bool {
 		return searchResults[i].Score() > searchResults[j].Score() // return higher scores first
 	})
 
-	*results = internal.Map(searchResults, func(r SearchResult) any { return r.Result() }) // Might want a hydrate here?
+	*results = internal.Map(searchResults, func(r SearchResult) any { return r.Result() })
 	return nil
 }

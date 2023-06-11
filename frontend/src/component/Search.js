@@ -21,11 +21,13 @@ export default class Search extends React.Component {
     super(props);
 
     this.state = {
-      results: []
+      results: [],
+      search: ""
     }
 
     this.GetDefaultResults = this.GetDefaultResults.bind(this)
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
 
     this.GetDefaultResults()
   }
@@ -37,14 +39,28 @@ export default class Search extends React.Component {
     })
   }
 
-  handleSearchSubmit(e) {
+  handleSearchChange(e) {
+    this.setState({search: e.target.value})
+  }
 
+  handleSearchSubmit(e) {
+    e.preventDefault()
+
+    if (!this.state.search) {
+      this.GetDefaultResults()
+      return
+    }
+
+    api.Data(api.Search(this.state.search))
+    .then(items => {
+      this.setState({results: items})
+    })
   }
 
   render() {
     return (
       <>
-        <NavBar searchCurrent={true} searchText="Find a show, movie, or book" searchSubmit={this.handleSearchSubmit} />
+        <NavBar searchCurrent={true} searchText="Find a show, movie, or book" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
         <SearchResults results={this.state.results}/>
       </>
     )
@@ -60,7 +76,6 @@ class SearchResults extends React.Component {
               <Row>
                 <Col>
                   {this.props.results.map((result, index) => {
-                    console.log(result.image_url)
                     return <SearchResult key={index} result={result}/>
                   })}
                 </Col>
@@ -76,7 +91,7 @@ class SearchResult extends React.Component {
   render() {
     return (
       <>
-        <Row className="search-result pt-3 pb-3">
+        <Row className="pt-3 pb-3">
           <Col xs={4} className="d-flex text-right align-items-center justify-content-end">
             <Image src={this.props.result.image_url} className="search-result-image" fluid rounded/>
           </Col>
@@ -98,6 +113,11 @@ class SearchResult extends React.Component {
             }
           </Col>
         </Row>
+        <Row>
+          <Col xs={1} md={2} lg={3}></Col>
+          <Col className="search-result"></Col>
+          <Col xs={1} md={2} lg={3}></Col>
+        </Row>
       </>
     )
   }
@@ -107,14 +127,14 @@ class BookResult extends React.Component {
   render() {
     return (
       <>
-        <div class="result-content">
+        <div className="result-content">
           <div>
-            <div class="result-media-type">Book</div>
-            <div class="result-title">{this.props.result.description}</div>
-            <div class="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{this.props.result.author}</div>
+            <div className="result-media-type">Book</div>
+            <div className="result-title">{this.props.result.description}</div>
+            <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{this.props.result.author}</div>
           </div>
-          <div class="result-stat-box">
-            <div class="result-user-count">Added by {this.props.result.user_count} people</div>
+          <div className="result-stat-box">
+            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
             <AddButton/>
           </div>
         </div>
@@ -127,14 +147,14 @@ class MovieResult extends React.Component {
   render() {
     return (
       <>
-        <div class="result-content">
+        <div className="result-content">
           <div>
-            <div class="result-media-type">Movie</div>
-            <div class="result-title">{this.props.result.description}</div>
-            <div class="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
+            <div className="result-media-type">Movie</div>
+            <div className="result-title">{this.props.result.description}</div>
+            <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
-          <div class="result-stat-box">
-            <div class="result-user-count">Added by {this.props.result.user_count} people</div>
+          <div className="result-stat-box">
+            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
             <AddButton/>
           </div>
         </div>
@@ -147,14 +167,14 @@ class TVSeriesResult extends React.Component {
   render() {
     return (
       <>
-        <div class="result-content">
+        <div className="result-content">
           <div>
-            <div class="result-media-type">TV Series</div>
-            <div class="result-title">{this.props.result.title}</div>
-            <div class="result-details">{this.props.result.tv_series_start_year} &ndash; {this.props.result.tv_series_end_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
+            <div className="result-media-type">TV Series</div>
+            <div className="result-title">{this.props.result.title}</div>
+            <div className="result-details">{this.props.result.tv_series_start_year} &ndash; {this.props.result.tv_series_end_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
-          <div class="result-stat-box">
-            <div class="result-user-count">Added by {this.props.result.user_count} people</div>
+          <div className="result-stat-box">
+            <div className="result-user-count">Added by {this.props.result.user_count} people</div>
             <AddButton/>
           </div>
         </div>
