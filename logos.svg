@@ -21,6 +21,18 @@
      id="defs2">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient4987">
+      <stop
+         style="stop-color:#ffa52a;stop-opacity:1"
+         offset="0"
+         id="stop4983" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4985" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient28727">
       <stop
          style="stop-color:#fdb002;stop-opacity:1;"
@@ -161,6 +173,33 @@
        r="13.84509"
        gradientTransform="matrix(-1.5075633,0.09487833,-0.16460091,-2.8819286,-427.79898,152.16307)"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4987"
+       id="linearGradient4989"
+       x1="-746.19843"
+       y1="111.45004"
+       x2="-739.19012"
+       y2="71.352089"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4987"
+       id="linearGradient19951"
+       gradientUnits="userSpaceOnUse"
+       x1="-746.19843"
+       y1="111.45004"
+       x2="-739.19012"
+       y2="71.352089" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4987"
+       id="linearGradient19953"
+       gradientUnits="userSpaceOnUse"
+       x1="-746.19843"
+       y1="111.45004"
+       x2="-739.19012"
+       y2="71.352089" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -169,9 +208,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7071068"
-     inkscape:cx="-2141.1193"
-     inkscape:cy="-65.053822"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="-2530.0281"
+     inkscape:cy="137.17871"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -3652,24 +3691,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan5559"><tspan
+           id="tspan25521"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5557">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan25519">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan5563"><tspan
+           id="tspan25525"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5561">shows you're into so your </tspan></tspan><tspan
+             id="tspan25523">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan5567"><tspan
+           id="tspan25529"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5565">friends can see. This could </tspan></tspan><tspan
+             id="tspan25527">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan5571"><tspan
+           id="tspan25533"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5569">be big.&quot;</tspan></tspan></text>
+             id="tspan25531">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3793,24 +3832,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan5575"><tspan
+           id="tspan25537"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5573">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan25535">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan5579"><tspan
+           id="tspan25541"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5577">shows you're into so your </tspan></tspan><tspan
+             id="tspan25539">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan5583"><tspan
+           id="tspan25545"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5581">friends can see. This could </tspan></tspan><tspan
+             id="tspan25543">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan5587"><tspan
+           id="tspan25549"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5585">be big.&quot;</tspan></tspan></text>
+             id="tspan25547">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4789,6 +4828,48 @@
            d="m -1033.1036,58.83938 c -0.1308,2.35406 -0.2122,4.66696 1.1225,5.79975"
            id="path69219"
            sodipodi:nodetypes="cc" />
+      </g>
+    </g>
+    <g
+       id="g19925"
+       transform="translate(1.122532,-40.411152)"
+       inkscape:export-filename="frontend\src\assets\search_icon_selected.png"
+       inkscape:export-xdpi="40.602562"
+       inkscape:export-ydpi="40.602562">
+      <rect
+         y="81.737328"
+         x="729.63983"
+         height="34.090969"
+         width="23.585115"
+         id="rect20017-9-5-7"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.631373"
+         inkscape:export-filename="frontend\src\assets\search_icon_selected.png"
+         inkscape:export-xdpi="40.602562"
+         inkscape:export-ydpi="40.602562"
+         transform="scale(-1,1)" />
+      <g
+         id="g21242-3"
+         transform="matrix(0.80299771,0,0,0.80299771,-220.47059,47.30295)"
+         style="fill:#ffa52a;fill-opacity:1;stroke-width:1.24533">
+        <path
+           id="path21177-6"
+           style="opacity:1;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:4.19055;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.631373"
+           d="m -641.97919,58.410378 h -2.51562 c -0.0363,3.514858 -2.89401,6.346148 -6.40905,6.349848 -3.54127,0.0025 -6.41495,-2.864569 -6.42064,-6.405837 -0.006,-3.541526 2.85917,-6.417903 6.40069,-6.42643 3.54153,-0.0082 6.3908,3.029406 6.45521,6.495977 m 2.48914,-0.01486 c -0.0157,-5.038489 -4.11077,-9.138437 -9.14927,-9.126741 l 7e-5,-2.1e-5 c -5.03848,0.01177 -9.11456,4.103694 -9.10679,9.142186 0.008,5.038484 4.09662,9.117731 9.13511,9.113869 1.7657,-0.0016 3.49303,-0.515341 4.97266,-1.478864 l 6.91617,4.843312 1.1365,-1.632671 -4.9939,-6.536476 c 0.71495,-1.328899 1.08928,-2.814315 1.08952,-4.323328"
+           sodipodi:nodetypes="cccscccssscccccc" />
+      </g>
+      <g
+         id="g4981"
+         style="fill:url(#linearGradient4989);fill-opacity:1">
+        <path
+           style="fill:url(#linearGradient19951);fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m -746.66916,101.59431 -4.95938,10.37818 10.10274,0.0935 -1.12861,-9.64024 c -1.12456,0.0701 -3.39655,-0.25736 -4.01475,-0.83144 z"
+           id="path4977"
+           sodipodi:nodetypes="ccccc" />
+        <path
+           style="fill:url(#linearGradient19953);fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m -743.30347,94.386487 -1.69756,3.711918 c 0.52328,0.338407 1.21778,0.471684 2.07531,0.434078 z"
+           id="path1935"
+           sodipodi:nodetypes="cccc" />
       </g>
     </g>
   </g>

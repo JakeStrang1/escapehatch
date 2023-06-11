@@ -138,6 +138,31 @@ api.ValidateUsername = (username) => {
     .then(FormatResponse)
 }
 
+api.GetItems = () => {
+    return fetch(host + '/items', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
+// Use this to wrap a request function if you only want the "data" field.
+// E.g. api.Data(api.GetUser()).then(user => { do something })
+api.Data = async (promise) => {
+    return promise.then(response => {
+        if (response.ok) {
+            return response.body.data
+        }
+        console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+    .catch(e => {
+        console.log(e)
+    })
+}
+
 // If request is successful, FormatResponse returns:
 // {
 //     ok: true,
