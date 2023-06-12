@@ -13,8 +13,27 @@ import api, {
   ERR_NOT_FOUND,
   ERR_UNEXPECTED 
 } from "../api"
+import { connect } from "react-redux";
+import { clearAuth } from "./../reducers/auth"
+import { updateUser } from "./../reducers/user"
 
-export default class Verify extends React.Component {
+function mapStateToProps(state) {
+  const user = state.user.value
+  const auth = state.auth.value
+  return {
+    auth,
+    user
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearAuth: () => dispatch(clearAuth()),
+    updateUser: () => dispatch(updateUser())
+  }
+};
+
+class Verify extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,6 +56,11 @@ export default class Verify extends React.Component {
       placeholderThree: '',
       placeholderFour: '',
       FeedbackComponent: EmptyFeedback
+    }
+
+    if (this.props.auth.status != "") {
+      this.props.clearAuth()
+      this.props.updateUser(null)
     }
 
     this.state.placeholderOne = this.state.placeholderOneDefault
@@ -359,3 +383,5 @@ function ChallengeFailedError() {
     <p>Oops! That's not the right phrase. Give it another try.</p>
   )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Verify)

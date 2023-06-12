@@ -1,53 +1,69 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import AuthContext from '../authContext'
 import Loading from "./Loading"
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "./../reducers/user"
+import { setAuthPending, setAuthComplete, clearSignOut } from "./../reducers/auth"
+import api from './../api'
 
 // NoAuthRoute ensures that authentication has been attempted.
 // If authentication was successful, redirects to the home page.
 // If authentication fails, proceeds to the given route.
 const NoAuthRoute = ({component: Component, ...rest}) => {
-    const forceUpdate = useForceUpdate()
-    return (
-        <AuthContext.Consumer>
-            {auth => {
-                if (!auth.attempted) {
-                    Promise.all([auth.User(), wait(0)]) // add a wait time to force a minimum load time
-                    .then(() => forceUpdate())
-                    return (<Loading/>)
-                }
+  const auth = useSelector(state => state.auth.value);
+  const dispatch = useDispatch();
 
-                return (
-                <AuthChecker auth={auth.user}>
-                    <Component {...rest}/>
-                </AuthChecker>
-            )}}
-        </AuthContext.Consumer>
+  console.log("a/c/f")
+
+  if (auth.status == "") {
+    console.log("b")
+    api.GetUser()
+    .then(response => {
+      if (response.ok) {
+        console.log("e")
+        dispatch(updateUser(response.body.data)) // Update user state
+      } else {
+        console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+      }
+        dispatch(setAuthComplete())
+      }
     )
+    .catch(e => {
+      console.log(e)
+    })
+    dispatch(setAuthPending())
+    dispatch(clearSignOut())
+    return (<Loading/>)
+  }
+
+  if (auth.status == "PENDING") {
+    console.log("d")
+    return (<Loading/>)
+  }
+
+  if (auth.status == "COMPLETE") {
+    console.log("g")
+    return (
+      <AuthChecker redirect={rest.redirect}>
+          <Component {...rest}/>
+      </AuthChecker>
+    )
+  }
+
+  console.error("unknown auth status: " + auth.status)
 }
 
-// Source: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
-function useForceUpdate() {
-    const [, setValue] = useState(0) // integer state
-    return () => setValue(value => ++value) // update the state to force render
-}
-
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-class AuthChecker extends React.Component {
-    render() {
-        var child = this.props.children
-        if (this.props.auth) {
-            child = <Redirect to="/"/>
-        }
-        return (
-            <>
-                {child}
-            </>
-        )
-    }
+const AuthChecker = props => {
+  const user = useSelector(state => state.user.value);
+  var child = props.children
+  if (user) {
+      child = <Redirect to="/"/>
+  }
+  return (
+      <>
+          {child}
+      </>
+  )
 }
 
 export default NoAuthRoute

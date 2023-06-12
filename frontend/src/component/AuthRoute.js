@@ -1,58 +1,66 @@
 import React, { useState }from 'react'
 import { Redirect } from 'react-router-dom'
-import AuthContext from '../authContext'
 import Loading from "./Loading"
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "./../reducers/user"
+import { setAuthPending, setAuthComplete, clearSignOut } from "./../reducers/auth"
+import api from './../api'
 
 // AuthRoute ensures that authentication has been attempted.
 // If authentication was successful, proceeds to the given route.
 // If authentication fails, redirects to the sign in page.
 const AuthRoute = ({component: Component, ...rest}) => {
-    const forceUpdate = useForceUpdate()
+  const auth = useSelector(state => state.auth.value);
+  const dispatch = useDispatch();
+
+  if (auth.status == "") {
+    api.GetUser()
+    .then(response => {
+      if (response.ok) {
+        dispatch(updateUser(response.body.data)) // Update user state
+      } else {
+        console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+      }
+      dispatch(setAuthComplete())
+    })
+    .catch(e => {
+      console.log(e)
+    })
+    dispatch(setAuthPending())
+    dispatch(clearSignOut())
+
+    return (<Loading/>)
+  }
+
+  if (auth.status == "PENDING") {
+    return (<Loading/>)
+  }
+
+  if (auth.status == "COMPLETE") {
     return (
-        <AuthContext.Consumer>
-            {auth => { // defined in index.js
-                if (!auth.attempted) {
-                    Promise.all([auth.User(), wait(0)]) // add a wait time to force a minimum load time
-                    .then(() => forceUpdate())
-                    return (<Loading/>)
-                }
-
-                return (
-                <AuthChecker user={auth.user} redirect={rest.redirect}>
-                    <Component user={auth.user} {...rest}/>
-                </AuthChecker>
-            )}}
-        </AuthContext.Consumer>
-    )
-}
-
-// Source: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
-function useForceUpdate() {
-  const [, setValue] = useState(0) // integer state
-  return () => setValue(value => ++value) // update the state to force render
-}
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-class AuthChecker extends React.Component {
-  render() {
-    var noAuthRedirect = this.props.redirect ? this.props.redirect : "/sign-in"
-    var child = this.props.children
-    if (!this.props.user) {
-      child = <Redirect to={noAuthRedirect}/>
-    } else if (!completedSetup(this.props.user) && window.location.pathname != "/new-user") { // Avoid infinite redirect loop
-      child = <Redirect to={"/new-user"}/>
-    }
-    return (
-      <>
-        {child}
-      </>
+      <AuthChecker redirect={rest.redirect}>
+          <Component {...rest}/>
+      </AuthChecker>
     )
   }
+
+  console.error("unknown auth status: " + auth.status)  
+}
+
+const AuthChecker = props => {
+  const user = useSelector(state => state.user.value);
+  var noAuthRedirect = props.redirect ? props.redirect : "/sign-in"
+  var child = props.children
+  if (!user) {
+    child = <Redirect to={noAuthRedirect}/>
+  } else if (!completedSetup(user) && window.location.pathname != "/new-user") { // Avoid infinite redirect loop
+    child = <Redirect to={"/new-user"}/>
+  }
+  return (
+    <>
+      {child}
+    </>
+  )
 }
 
 function completedSetup(user) {

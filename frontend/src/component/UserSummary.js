@@ -11,7 +11,8 @@ import api, {
   ERR_UNEXPECTED,
 } from "../api"
 
-export default class UserSummary extends React.Component {
+
+class UserSummary extends React.Component {
   constructor(props){
     super(props);
   }
@@ -295,3 +296,5 @@ class RightSummary extends React.Component {
 function nbsp(str) {
   return str.replace(/ /g, "\u00a0")
 }
+
+export default UserSummary;

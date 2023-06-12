@@ -1,38 +1,42 @@
 import React, { useState }from 'react'
 import { Redirect } from 'react-router-dom'
-import AuthContext from '../authContext'
 import Loading from "./Loading"
-
+import { clearAuth, setSignOutPending, setSignOutComplete } from "./../reducers/auth"
+import { useSelector, useDispatch } from "react-redux";
+import api from './../api'
+import { updateUser } from "./../reducers/user"
 
 
 // SignOutRoute calls Sign Out on the backend and then redirects to the sign in page.
 const SignOutRoute = () => {
-    const forceUpdate = useForceUpdate()
-    return (
-        <AuthContext.Consumer>
-            {auth => { // defined in index.js
-                if (!auth.signOutAttempted) {
-                    Promise.all([auth.SignOut(), wait(0)]) // add a wait time to force a minimum load time
-                    .then(() => forceUpdate())
-                    return (<Loading/>)
-                }
+  const auth = useSelector(state => state.auth.value);
+  const dispatch = useDispatch();
 
-                return (
-                    <Redirect to={"/sign-in"}/>
-                )
-            }}
-        </AuthContext.Consumer>
-    )
-}
+  if (auth.signOutStatus == "") {
+      api.SignOut()
+      .then(response => {
+        dispatch(updateUser(null)) // Update user state
+        dispatch(setSignOutComplete())
+      })
+      .catch(e => {
+        console.log(e)
+      })
+      dispatch(setSignOutPending())
+      dispatch(clearAuth())
+      return (<Loading/>)
+  }
 
-// Source: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
-function useForceUpdate() {
-  const [, setValue] = useState(0) // integer state
-  return () => setValue(value => ++value) // update the state to force render
-}
+  if (auth.signOutStatus == "PENDING") {
+      return (<Loading/>)
+  }
 
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  if (auth.signOutStatus == "COMPLETE") {
+      return (
+        <Redirect to={"/sign-in"}/>
+      )
+  }
+
+  console.error("unknown auth status: " + auth.status)  
 }
 
 export default SignOutRoute

@@ -9,20 +9,33 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import logo from './../assets/logo100.png'
-import AuthContext from '../authContext'
 import Loading from "./Loading"
 import Fade from 'react-bootstrap/Fade'
 import FormGroup from "react-bootstrap/esm/FormGroup"
 import api, { 
   ERR_UNEXPECTED,
 } from "../api"
+import { connect } from "react-redux";
+import { clearAuth } from "./../reducers/auth"
 
-export default class NewUser extends React.Component {
+function mapStateToProps(state) {
+  const user = state.user.value
+  return {
+    user
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearAuth: () => dispatch(clearAuth())
+  }
+};
+
+class NewUser extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      user: this.props.user,
       page: 1,
     }
 
@@ -39,15 +52,15 @@ export default class NewUser extends React.Component {
   }
 
   render() {
-    if (completedSetup(this.state.user)) {
+    if (completedSetup(this.props.user)) {
         return <Redirect to={{pathname: '/'}}/>
     }
 
     let content
     if (this.state.page == 1){
-      content = <Page1 number={this.state.user.number} handleNext={this.handleNext}/>
+      content = <Page1 number={this.props.user.number} handleNext={this.handleNext}/>
     } else if (this.state.page == 2) {
-      content = <Page2 number={this.state.user.number} handlePrevious={this.handlePrevious}/>
+      content = <Page2 number={this.props.user.number} handlePrevious={this.handlePrevious}/>
     }
     return (
       <>
@@ -87,7 +100,7 @@ class Page1 extends React.Component {
   }
 }
 
-class Page2 extends React.Component {
+const Page2 = connect(mapStateToProps, mapDispatchToProps)(class Page2 extends React.Component {
   constructor(props){
     super(props);
 
@@ -205,6 +218,7 @@ class Page2 extends React.Component {
     api.UpdateUser(this.fullNameInputRef.value, this.usernameInputRef.value)
     .then(response => {
       if (response.ok) {
+        this.props.clearAuth()
         this.setState({success: true})
       }
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
@@ -217,12 +231,7 @@ class Page2 extends React.Component {
   render() {
     if (this.state.success) {
       return(
-        <AuthContext.Consumer>
-          {auth => { // defined in index.js
-              auth.attempted = false   
-              return (<Redirect to={"/new-user"}/>)
-          }}
-        </AuthContext.Consumer>
+        <Redirect to={"/"}/>
       )
     }
     return (
@@ -261,7 +270,7 @@ class Page2 extends React.Component {
         </>
     )
   }
-}
+})
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -270,3 +279,5 @@ function capitalizeFirstLetter(string) {
 function completedSetup(user) {
   return !user.username.startsWith("_") // If the username starts with an underscore, we know they haven't set up their name and username yet
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewUser)

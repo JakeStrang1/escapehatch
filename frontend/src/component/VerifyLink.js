@@ -1,10 +1,34 @@
 import React from "react";
 import api from "../api"
+import { connect } from "react-redux";
+import { clearAuth } from "./../reducers/auth"
+import { updateUser } from "./../reducers/user"
 
-export default class NameForm extends React.Component {
+function mapStateToProps(state) {
+  const user = state.user.value
+  const auth = state.auth.value
+  return {
+    auth,
+    user
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearAuth: () => dispatch(clearAuth()),
+    updateUser: () => dispatch(updateUser())
+  }
+};
+
+class VerifyLink extends React.Component {
   constructor(props) {
     super(props)
     this.state = {value: ''}
+
+    if (this.props.auth.status != "") {
+      this.props.clearAuth()
+      this.props.updateUser(null)
+    }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,3 +57,5 @@ export default class NameForm extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyLink)
