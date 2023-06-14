@@ -28,7 +28,7 @@ const authSlice = createSlice({
         },
         clearSignOut(state) {
             state.value.signOutStatus = ""
-        }
+        },
     }
 })
 

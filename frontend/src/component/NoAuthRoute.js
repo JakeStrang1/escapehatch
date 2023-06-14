@@ -13,14 +13,10 @@ const NoAuthRoute = ({component: Component, ...rest}) => {
   const auth = useSelector(state => state.auth.value);
   const dispatch = useDispatch();
 
-  console.log("a/c/f")
-
   if (auth.status == "") {
-    console.log("b")
     api.GetUser()
     .then(response => {
       if (response.ok) {
-        console.log("e")
         dispatch(updateUser(response.body.data)) // Update user state
       } else {
         console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
@@ -37,12 +33,10 @@ const NoAuthRoute = ({component: Component, ...rest}) => {
   }
 
   if (auth.status == "PENDING") {
-    console.log("d")
     return (<Loading/>)
   }
 
   if (auth.status == "COMPLETE") {
-    console.log("g")
     return (
       <AuthChecker redirect={rest.redirect}>
           <Component {...rest}/>

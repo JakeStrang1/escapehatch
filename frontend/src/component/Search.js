@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
+import { connect } from './../reducers'
 
 import { Redirect, Link } from 'react-router-dom'
 import api, {
@@ -125,6 +126,20 @@ class SearchResult extends React.Component {
 }
 
 class BookResult extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      userCount: this.props.result.user_count,
+    }
+
+    this.incrementUserCount = this.incrementUserCount.bind(this)
+  }
+
+  incrementUserCount() {
+    this.setState({userCount: this.state.userCount+1})
+  }
+
   render() {
     return (
       <>
@@ -135,8 +150,8 @@ class BookResult extends React.Component {
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{this.props.result.author}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
-            <AddButton itemId={this.props.result.id}/>
+            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
           </div>
         </div>
       </>
@@ -145,6 +160,20 @@ class BookResult extends React.Component {
 }
 
 class MovieResult extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      userCount: this.props.result.user_count,
+    }
+
+    this.incrementUserCount = this.incrementUserCount.bind(this)
+  }
+
+  incrementUserCount() {
+    this.setState({userCount: this.state.userCount+1})
+  }
+
   render() {
     return (
       <>
@@ -155,8 +184,8 @@ class MovieResult extends React.Component {
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
-            <AddButton itemId={this.props.result.id}/>
+            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
           </div>
         </div>
       </>
@@ -165,6 +194,20 @@ class MovieResult extends React.Component {
 }
 
 class TVSeriesResult extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      userCount: this.props.result.user_count,
+    }
+
+    this.incrementUserCount = this.incrementUserCount.bind(this)
+  }
+
+  incrementUserCount() {
+    this.setState({userCount: this.state.userCount+1})
+  }
+
   render() {
     return (
       <>
@@ -175,8 +218,8 @@ class TVSeriesResult extends React.Component {
             <div className="result-details">{this.props.result.tv_series_start_year} &ndash; {this.props.result.tv_series_end_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.props.result.user_count} {peopleOrPerson(this.props.result.user_count)}</div>
-            <AddButton itemId={this.props.result.id}/>
+            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
           </div>
         </div>
       </>
@@ -184,7 +227,7 @@ class TVSeriesResult extends React.Component {
   }
 }
 
-class AddButton extends React.Component {
+const AddButton = connect(class AddButton extends React.Component {
   constructor(props){
     super(props);
 
@@ -193,29 +236,63 @@ class AddButton extends React.Component {
     }
 
     this.handleAddToShelf = this.handleAddToShelf.bind(this)
+    this.LoadButton = this.LoadButton.bind(this)
+    this.AddButton = this.AddButton.bind(this)
+    this.AddedButton = this.AddedButton.bind(this)
   }
 
   handleAddToShelf(e) {
     e.preventDefault()
     api.Data(api.AddItem(e.target.id))
-    .then(item => {
+    .then(() => api.Data(api.GetUser()))
+    .then(user => {
       this.setState({loading: false})
+      this.props.updateUser(user)
+      this.props.incrementUserCount()
     })
     this.setState({loading: true})
   }
 
-  render() {
+  LoadButton = props => {
     return (
-      <>
-        <Form id={this.props.itemId} onSubmit={!this.state.loading ? this.handleAddToShelf : null}>
-          <Button type="submit" disabled={this.state.loading} className="orange-btn">
-            {this.state.loading ? 'Loading...' : 'Add to shelf'}
+      <Form id={props.itemId} onSubmit={null}>
+          <Button type="submit" disabled className="orange-btn">
+            Loading...
           </Button>
-        </Form>
-      </>
+      </Form>
     )
   }
-}
+
+  AddButton = props => {
+    return (
+      <Form id={props.itemId} onSubmit={props.handleAddToShelf}>
+        <Button type="submit" className="orange-btn">
+          Add to shelf
+        </Button>
+      </Form>
+    )
+  }
+
+  AddedButton = props => {
+    return (
+      <Form id={props.itemId} onSubmit={null}>
+        <Button type="submit" disabled className="orange-btn">
+          Added to shelf
+        </Button>
+      </Form>
+    )
+  }
+
+  render() {
+    if (this.state.loading) {
+      return (<this.LoadButton itemId={this.props.itemId}/>)
+    }
+    if (userHasItem(this.props.user, this.props.itemId)) {
+      return (<this.AddedButton itemId={this.props.itemId}/>)
+    }
+    return (<this.AddButton itemId={this.props.itemId} handleAddToShelf={this.handleAddToShelf}/>)
+  }
+})
 
 function formatActors(actors) {
   return actors.join(", ")
@@ -226,4 +303,23 @@ function peopleOrPerson(num) {
     return "person"
   }
   return "people"
+}
+
+function userHasItem(user, itemId) {
+  if (!user.shelves) {
+    return false
+  }
+
+  for (let i = 0; i < user.shelves.length; i++) {
+    if (!user.shelves[i]?.items) {
+      continue
+    }
+    for (let j = 0; j < user.shelves[i].items.length; j++) {
+      if (user.shelves[i].items[j].item_id == itemId) {
+        return true
+      }
+    }
+  }
+
+  return false
 }

@@ -13,6 +13,9 @@ const AuthRoute = ({component: Component, ...rest}) => {
   const auth = useSelector(state => state.auth.value);
   const dispatch = useDispatch();
 
+  // let refresh = (window.performance && performance.navigation.type == 1) // Detect page refresh vs. navigation
+  // TODO: how to avoid an infinite loop situation while using this?
+
   if (auth.status == "") {
     api.GetUser()
     .then(response => {
