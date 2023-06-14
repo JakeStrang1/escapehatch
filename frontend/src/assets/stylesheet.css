@@ -483,6 +483,14 @@ h1, h2, h3, h4, h5, h6, p {
     max-width: 700px;
 }
 
+.no-results-header {
+    font-size: 1.3em;
+}
+
+.no-results-text {
+    font-size: 0.8em;
+}
+
 @media only screen and (min-width: 576px) {
     .result-title {
         font-size: 1.3em;
@@ -514,6 +522,14 @@ h1, h2, h3, h4, h5, h6, p {
 
     .result-media-type {
         font-size: 1.2em;
+    }
+
+    .no-results-header {
+        font-size: 1.8em;
+    }
+    
+    .no-results-text {
+        font-size: 1em;
     }
 }
 

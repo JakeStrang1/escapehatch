@@ -80,11 +80,29 @@ class SearchResults extends React.Component {
                   {this.props.results.map((result, index) => {
                     return <SearchResult key={index} result={result}/>
                   })}
+                  <ResultsFooter numResults={this.props.results.length}/>
                 </Col>
               </Row>
             </Col>
           </Row>
         </Container>
+    )
+  }
+}
+
+class ResultsFooter extends React.Component {
+  NoResults = "There aren't any results for that..."
+  NotIt = "Can't find what you're looking for?"
+
+  render() {
+    return (
+      <>
+          <Col className="pt-5 pb-5 d-flex flex-column text-center align-items-center justify-content-center">
+            <h3 className="no-results-header">{this.props.numResults == 0 ? this.NoResults : this.NotIt}</h3> 
+            <p className="orange mt-3 no-results-text">You can add it here!</p>
+            <p className="paragraph-column no-results-text">Our community gets stronger each time you add a new show, movie, or book. It only takes a minute to do! We also keep track of your contributions so you can get credit for them!</p>
+          </Col>
+      </>
     )
   }
 }
