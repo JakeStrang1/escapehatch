@@ -261,7 +261,7 @@ class Verify extends React.Component {
 
   render() {
     if (this.state.submit) {
-      return <Redirect to="/" push={true}/>
+      return <Redirect push to="/"/>
     }
     if (this.state.errorPage) {
       return <Redirect push to={{pathname: '/oh-no', state: {errorCode: this.state.errorCode, errorMessage: this.state.errorMessage}}}/>

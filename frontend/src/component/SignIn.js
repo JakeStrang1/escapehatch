@@ -127,10 +127,10 @@ export default class SignIn extends React.Component {
 
   render() {
     if (this.state.submit) {
-      return <Redirect to={{pathname: '/verify', state: {email: this.state.email, fromSignIn: true}}}/>
+      return <Redirect push to={{pathname: '/verify', state: {email: this.state.email, fromSignIn: true}}}/>
     }
     if (this.state.errorPage) {
-      return <Redirect to={{pathname: '/oh-no', state: {errorCode: this.state.errorCode, errorMessage: this.state.errorMessage}}}/>
+      return <Redirect push to={{pathname: '/oh-no', state: {errorCode: this.state.errorCode, errorMessage: this.state.errorMessage}}}/>
     }
     const ErrorMessage = this.state.ErrorComponent
     const HelpText = this.state.HelpTextComponent

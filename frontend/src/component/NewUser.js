@@ -231,7 +231,7 @@ const Page2 = connect(mapStateToProps, mapDispatchToProps)(class Page2 extends R
   render() {
     if (this.state.success) {
       return(
-        <Redirect to={"/"}/>
+        <Redirect push to={"/"}/>
       )
     }
     return (

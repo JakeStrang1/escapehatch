@@ -127,10 +127,10 @@ export default class SignUp extends React.Component {
 
   render() {
     if (this.state.submit) {
-      return <Redirect to={{pathname: '/verify', state: {email: this.state.email}}}/>
+      return <Redirect push to={{pathname: '/verify', state: {email: this.state.email}}}/>
     }
     if (this.state.errorPage) {
-      return <Redirect to={{pathname: '/oh-nooo', state: {errorCode: this.state.errorCode, errorMessage: this.state.errorMessage}}}/>
+      return <Redirect push to={{pathname: '/oh-nooo', state: {errorCode: this.state.errorCode, errorMessage: this.state.errorMessage}}}/>
     }
     const ErrorMessage = this.state.ErrorComponent
     const HelpText = this.state.HelpTextComponent
