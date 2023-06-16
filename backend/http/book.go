@@ -31,7 +31,7 @@ func (b *BookAPI) BindMultipart(c *gin.Context) error {
 	}
 
 	if len(form.Value["title"]) > 0 {
-		b.Author = &form.Value["title"][0]
+		b.Title = &form.Value["title"][0]
 	}
 
 	if len(form.Value["author"]) > 0 {

@@ -295,8 +295,16 @@ h1, h2, h3, h4, h5, h6, p {
     opacity: 1; /* Firefox */
 }
 
+.large-input {
+    max-width: 500px;
+}
+
 .medium-input {
     max-width: 300px;
+}
+
+.small-input {
+    max-width: 100px;
 }
 
 .paragraph-column {

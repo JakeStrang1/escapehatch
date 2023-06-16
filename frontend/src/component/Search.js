@@ -107,7 +107,7 @@ class ResultsFooter extends React.Component {
   }
 }
 
-class SearchResult extends React.Component {
+export class SearchResult extends React.Component {
   render() {
     return (
       <>
@@ -120,11 +120,11 @@ class SearchResult extends React.Component {
               function () {
                 switch(this.props.result.media_type) {
                   case "book":
-                    return <BookResult result={this.props.result}/>
+                    return <BookResult result={this.props.result} isPreview={this.props.isPreview}/>
                   case "movie":
-                    return <MovieResult result={this.props.result}/>
+                    return <MovieResult result={this.props.result} isPreview={this.props.isPreview}/>
                   case "tv_series":
-                    return <TVSeriesResult result={this.props.result}/>
+                    return <TVSeriesResult result={this.props.result} isPreview={this.props.isPreview}/>
                   default:
                     console.error("unknown type: " + this.props.result.media_type)
                     return (<></>)
@@ -167,9 +167,19 @@ class BookResult extends React.Component {
             <div className="result-title">{this.props.result.description}</div>
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{this.props.result.author}</div>
           </div>
-          <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
-            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+          <div className="result-stat-box"> 
+            {
+              function() {
+                if (!this.props.isPreview) {
+                  return (
+                    <>
+                      <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+                      <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+                    </>
+                  )
+                }
+              }.bind(this)()
+            }
           </div>
         </div>
       </>
@@ -202,8 +212,18 @@ class MovieResult extends React.Component {
             <div className="result-details">{this.props.result.published_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
-            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+            {
+              function() {
+                if (!this.props.isPreview) {
+                  return (
+                    <>
+                      <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+                      <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+                    </>
+                  )
+                }
+              }.bind(this)()
+            }
           </div>
         </div>
       </>
@@ -236,8 +256,18 @@ class TVSeriesResult extends React.Component {
             <div className="result-details">{this.props.result.tv_series_start_year} &ndash; {this.props.result.tv_series_end_year}&nbsp;&nbsp;•&nbsp;&nbsp;{formatActors(this.props.result.lead_actors)}</div>
           </div>
           <div className="result-stat-box">
-            <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
-            <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+            {
+              function() {
+                if (!this.props.isPreview) {
+                  return (
+                    <>
+                      <div className="result-user-count">Added by {this.state.userCount} {peopleOrPerson(this.state.userCount)}</div>
+                      <AddButton itemId={this.props.result.id} incrementUserCount={this.incrementUserCount}/>
+                    </>
+                  )
+                }
+              }.bind(this)()
+            }
           </div>
         </div>
       </>

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import NoAuthRoute from "./component/NoAuthRoute"
 import AuthRoute from "./component/AuthRoute"
+import AddNewItem from "./component/AddNewItem"
 import NewUser from "./component/NewUser"
 import SignIn from "./component/SignIn"
 import SignUp from "./component/SignUp"
@@ -67,6 +68,7 @@ ReactDOM.render(
             <AuthRoute exact path="/" redirect="/sign-up" component={Home}/>
             <AuthRoute path="/search" component={Search}/>
             <AuthRoute path="/followers" component={Followers}/>
+            <AuthRoute path="/add-new" component={AddNewItem}/>
             <SignOutRoute path="/sign-out"/>
             <Redirect to={{pathname: "/oh-no", state: { errorCode: "not_found"}}}/>
           </Switch>

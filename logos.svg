@@ -208,16 +208,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="-2530.0281"
-     inkscape:cy="137.17871"
+     inkscape:zoom="0.5"
+     inkscape:cx="-2705"
+     inkscape:cy="975"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:snap-global="false"
      inkscape:showpageshadow="2"
@@ -3691,24 +3691,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan25521"><tspan
+           id="tspan3829"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25519">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan3827">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan25525"><tspan
+           id="tspan3833"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25523">shows you're into so your </tspan></tspan><tspan
+             id="tspan3831">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan25529"><tspan
+           id="tspan3837"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25527">friends can see. This could </tspan></tspan><tspan
+             id="tspan3835">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan25533"><tspan
+           id="tspan3841"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25531">be big.&quot;</tspan></tspan></text>
+             id="tspan3839">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3832,24 +3832,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan25537"><tspan
+           id="tspan3845"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25535">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan3843">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan25541"><tspan
+           id="tspan3849"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25539">shows you're into so your </tspan></tspan><tspan
+             id="tspan3847">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan25545"><tspan
+           id="tspan3853"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25543">friends can see. This could </tspan></tspan><tspan
+             id="tspan3851">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan25549"><tspan
+           id="tspan3857"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan25547">be big.&quot;</tspan></tspan></text>
+             id="tspan3855">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4871,6 +4871,35 @@
            id="path1935"
            sodipodi:nodetypes="cccc" />
       </g>
+    </g>
+    <g
+       id="g3009"
+       transform="translate(4.7625,-68.791667)"
+       inkscape:export-filename="frontend\src\assets\invalid.png"
+       inkscape:export-xdpi="35.955055"
+       inkscape:export-ydpi="35.955055">
+      <rect
+         style="fill:#ffffff;stroke:none;stroke-width:3.365;stroke-opacity:0.631373"
+         id="rect2043"
+         width="141.28749"
+         height="141.28749"
+         x="-915.45831"
+         y="231.24583" />
+      <path
+         id="path2205"
+         style="color:#000000;fill:#cccccc;-inkscape-stroke:none"
+         d="m -915.45833,231.24583 v 6.66471 l 6.66471,-6.66471 z m 23.10246,0 -23.10246,23.10247 v 11.12335 l 34.22581,-34.22582 z m 27.56111,0 -50.66357,50.66358 v 11.12283 l 61.78641,-61.78641 z m 27.56059,0 -78.22416,78.22417 v 11.12283 l 89.347,-89.347 z m 27.56059,0 -105.78475,105.78476 v 11.12335 l 116.90811,-116.90811 z m 27.56111,0 -133.34586,133.34587 v 7.94163 h 3.1812 l 138.1063,-138.1063 v -3.1812 z m 7.94164,19.61896 -121.66855,121.66854 h 11.12284 l 110.54571,-110.5457 z m 0,27.56059 -94.10795,94.10795 h 11.12335 l 82.9846,-82.9846 z m 0,27.56111 -66.54685,66.54684 h 11.12284 l 55.42401,-55.424 z m 0,27.56059 -38.98625,38.98625 h 11.12283 l 27.86342,-27.86341 z m 0,27.56059 -11.42566,11.42566 h 11.12335 l 0.30231,-0.3023 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="-890.05835"
+         y="305.85831"
+         id="text2099"><tspan
+           sodipodi:role="line"
+           id="tspan2097"
+           style="font-weight:bold;stroke-width:0.264583"
+           x="-890.05835"
+           y="305.85831">Image is invalid</tspan></text>
     </g>
   </g>
 </svg>

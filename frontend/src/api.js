@@ -160,6 +160,96 @@ api.AddItem = itemId => {
     .then(FormatResponse)
 }
 
+api.CreateBook = (body) => {
+    if (body.image_url) {
+        return fetch(host + '/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
+        })
+        .then(FormatResponse)
+    } else {
+        const formData  = new FormData()
+        formData.append("image_file", body.image_file)
+        formData.append("title", body.title)
+        formData.append("author", body.author)
+        formData.append("published_year", body.published_year)
+        formData.append("is_series", body.is_series)
+        formData.append("series_title", body.series_title)
+        formData.append("sequence_number", body.sequence_number)
+
+        return fetch(host + '/books', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        })
+        .then(FormatResponse)
+    }
+}
+
+api.CreateMovie = (body) => {
+    if (body.image_url) {
+        return fetch(host + '/movies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
+        })
+        .then(FormatResponse)
+    } else {
+        const formData  = new FormData()
+        formData.append("image_file", body.image_file)
+        formData.append("title", body.title)
+        formData.append("lead_actors", body.lead_actors[0])
+        formData.append("lead_actors", body.lead_actors[1])
+        formData.append("published_year", body.published_year)
+        formData.append("is_series", body.is_series)
+        formData.append("series_title", body.series_title)
+        formData.append("sequence_number", body.sequence_number)
+
+        return fetch(host + '/movies', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        })
+        .then(FormatResponse)
+    }
+}
+
+api.CreateTvSeries = (body) => {
+    if (body.image_url) {
+        return fetch(host + '/tv-series', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
+        })
+        .then(FormatResponse)
+    } else {
+        const formData  = new FormData()
+        formData.append("image_file", body.image_file)
+        formData.append("title", body.title)
+        formData.append("lead_actors", body.lead_actors[0])
+        formData.append("lead_actors", body.lead_actors[1])
+        formData.append("tv_series_start_year", body.tv_series_start_year)
+        formData.append("tv_series_end_year", body.tv_series_end_year)
+
+        return fetch(host + '/tv-series', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        })
+        .then(FormatResponse)
+    }
+}
+
 api.Search = (searchText) => {
     return fetch(host + '/search?search=' + encodeURIComponent(searchText), {
         method: 'GET',
