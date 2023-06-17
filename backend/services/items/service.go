@@ -49,21 +49,24 @@ func GetPage(filter Filter) ([]any, *pages.PageResult, error) {
 			book := newBook(itemStat.ItemID)
 			err = GetBookByID(&book)
 			if err != nil {
-				return nil, nil, err
+				// Skip if not found
+				continue
 			}
 			results = append(results, &book)
 		case MediaTypeMovie:
 			movie := newMovie(itemStat.ItemID)
 			err = GetMovieByID(&movie)
 			if err != nil {
-				return nil, nil, err
+				// Skip if not found
+				continue
 			}
 			results = append(results, &movie)
 		case MediaTypeTVSeries:
 			tvSeries := newTVSeries(itemStat.ItemID)
 			err = GetTVSeriesByID(&tvSeries)
 			if err != nil {
-				return nil, nil, err
+				// Skip if not found
+				continue
 			}
 			results = append(results, &tvSeries)
 		default:

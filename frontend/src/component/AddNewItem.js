@@ -14,6 +14,7 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import { connect } from "./../reducers";
 import invalidImage from './../assets/invalid.png'
+import { cloneDeep } from 'lodash-es'
 import api, { 
   ERR_UNEXPECTED,
 } from "../api"
@@ -22,6 +23,23 @@ import api, {
 class AddNewItem extends React.Component {
   constructor(props){
     super(props);
+
+    this.defaultPreview = {
+      id: "preview",
+      media_type: "tv_series",
+      image_url: invalidImage,
+      user_count: 1,
+      description: "Title",
+      title: "Title",
+      author: "Author",
+      published_year: "2000",
+      is_series: false,
+      series_title: "Series Title",
+      sequence_number: "1",
+      lead_actors: ["Actor 1", "Actor 2"],
+      tv_series_start_year: "2000",
+      tv_series_end_year: "Present",
+    }
 
     this.state = {
       type: "TV Series",
@@ -33,22 +51,7 @@ class AddNewItem extends React.Component {
       submitting: false,
       success: false,
       imageFile: null,
-      preview: {
-        id: "preview",
-        media_type: "tv_series",
-        image_url: invalidImage,
-        user_count: 1,
-        description: "Title",
-        title: "Title",
-        author: "Author",
-        published_year: "2000",
-        is_series: false,
-        series_title: "Series Title",
-        sequence_number: "1",
-        lead_actors: ["Actor 1", "Actor 2"],
-        tv_series_start_year: "2000",
-        tv_series_end_year: "Present",
-      }
+      preview: cloneDeep(this.defaultPreview)
     }
 
     this.formRefs = {
@@ -68,7 +71,8 @@ class AddNewItem extends React.Component {
       imageResult: React.createRef()
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
+    this.handleCreateAndAdd = this.handleCreateAndAdd.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleImageType = this.handleImageType.bind(this)
@@ -80,27 +84,16 @@ class AddNewItem extends React.Component {
     this.bookBody = this.bookBody.bind(this)
     this.movieBody = this.movieBody.bind(this)
     this.clearForm = this.clearForm.bind(this)
+    this.getPreview = this.getPreview.bind(this)
   }
 
   // handleChange creates a "preview" result and keeps it updated on every change to the form
   handleChange() {
-    console.log("preview")
-    let preview = {
-      id: "preview",
-      media_type: "",
-      image_url: invalidImage,
-      user_count: 1,
-      description: "",
-      title: "Title",
-      author: "Author",
-      published_year: "2000",
-      is_series: false,
-      series_title: "Series Title",
-      sequence_number: "1",
-      lead_actors: ["Actor 1", "Actor 2"],
-      tv_series_start_year: "2000",
-      tv_series_end_year: "Present",
-    }
+    this.setState({preview: this.getPreview()})
+  }
+
+  getPreview() {
+    let preview = cloneDeep(this.defaultPreview)
 
     if (this.formRefs.imageResult?.current?.src && this.formRefs.imageResult.current.src != window.location.href) {
       preview.image_url = this.formRefs.imageResult.current.src
@@ -148,7 +141,7 @@ class AddNewItem extends React.Component {
       preview.tv_series_end_year = this.formRefs.endYear.current.value.trim()
     }
 
-    if (this.formRefs.mediaType?.current?.value.trim()) {
+    if (this.formRefs.mediaType?.current) {
       let mediaType = this.formRefs.mediaType.current.value.trim()
       switch (mediaType) {
         case "TV Series":
@@ -185,10 +178,10 @@ class AddNewItem extends React.Component {
       }
     }
 
-    this.setState({preview: preview})
+    return preview
   }
 
-  handleSubmit(e) {
+  handleCreate(e, add) {
     e.preventDefault()
     this.setState({submitting: true, success: false, errorMessage: "", validate: true})
 
@@ -226,13 +219,19 @@ class AddNewItem extends React.Component {
       window.scrollTo(0, 0)
 
       if (res.ok) {
+        this.clearForm()
+
         this.setState({
           submitting: false,
           success: true,
           errorMessage: "",
-          validate: false
+          validate: false,
+          preview: this.getPreview() // Form must be cleared first
         })
-        this.clearForm()
+        
+        if (add) {
+          api.AddItem(res.body.data.id)
+        }
         return
       }
 
@@ -243,6 +242,10 @@ class AddNewItem extends React.Component {
       })
       console.log("Status: " + res.status + ", Code: " + res.errorCode + ", Message: " + res.errorMessage)
     })
+  }
+
+  handleCreateAndAdd(e) {
+    this.handleCreate(e, true)
   }
 
   tvSeriesBody() {
@@ -475,9 +478,9 @@ class AddNewItem extends React.Component {
   }
 
   handleTypeChange(e) {
-    this.handleChange()
     this.setState({type: e.target.value})
     this.clearForm()
+    this.handleChange()
   }
 
   handleImageType(e) {
@@ -736,8 +739,11 @@ class AddNewItem extends React.Component {
                 <Col xs={0} lg={4} className="d-flex text-right align-items-center justify-content-end">
                 </Col>
                 <Col xs={12} lg={7}>
-                  <Button variant="primary" className="orange-btn mt-4" type="submit" disabled={this.state.submitting} onClick={!this.state.submitting ? this.handleSubmit : null}>
+                  <Button variant="primary" className="orange-btn mt-4" type="submit" disabled={this.state.submitting} onClick={!this.state.submitting ? this.handleCreate : null}>
                     {this.state.submitting ? 'Loading…' : 'Create'}
+                  </Button>
+                  <Button variant="secondary" className="mt-4 ml-3" type="submit" disabled={this.state.submitting} onClick={!this.state.submitting ? this.handleCreateAndAdd : null}>
+                    {this.state.submitting ? 'Loading…' : 'Create and Add To Shelf'}
                   </Button>
                 </Col>
               </Row>
