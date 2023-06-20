@@ -68,7 +68,7 @@ class SearchBar extends React.Component {
               <Col>
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <Form className="search-form" onSubmit={this.props.handleSearchSubmit} onChange={this.props.handleSearchChange}>
-                    <Form.Group controlId="formEmail" className="mb-0 mt-2">
+                    <Form.Group className="mb-0 mt-2">
                       <Form.Label className="sr-only">
                         Search
                       </Form.Label>

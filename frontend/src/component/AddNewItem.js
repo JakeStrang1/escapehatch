@@ -230,7 +230,11 @@ class AddNewItem extends React.Component {
         })
         
         if (add) {
-          api.AddItem(res.body.data.id)
+          api.Data(api.AddItem(res.body.data.id))
+          .then(() => api.Data(api.GetUser()))
+          .then(user => {
+            this.props.updateUser(user)
+          })
         }
         return
       }

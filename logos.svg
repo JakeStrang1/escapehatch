@@ -208,16 +208,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="-2705"
-     inkscape:cy="975"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="-2604.9814"
+     inkscape:cy="721.24892"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:snap-global="false"
      inkscape:showpageshadow="2"
@@ -3691,24 +3691,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan3829"><tspan
+           id="tspan5331"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3827">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan5329">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan3833"><tspan
+           id="tspan5335"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3831">shows you're into so your </tspan></tspan><tspan
+             id="tspan5333">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan3837"><tspan
+           id="tspan5339"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3835">friends can see. This could </tspan></tspan><tspan
+             id="tspan5337">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan3841"><tspan
+           id="tspan5343"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3839">be big.&quot;</tspan></tspan></text>
+             id="tspan5341">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3832,24 +3832,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan3845"><tspan
+           id="tspan5347"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3843">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan5345">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan3849"><tspan
+           id="tspan5351"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3847">shows you're into so your </tspan></tspan><tspan
+             id="tspan5349">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan3853"><tspan
+           id="tspan5355"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3851">friends can see. This could </tspan></tspan><tspan
+             id="tspan5353">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan3857"><tspan
+           id="tspan5359"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan3855">be big.&quot;</tspan></tspan></text>
+             id="tspan5357">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4901,5 +4901,21 @@
            x="-890.05835"
            y="305.85831">Image is invalid</tspan></text>
     </g>
+    <path
+       id="path1939"
+       style="color:#000000;fill:#ffffff;stroke-width:1;-inkscape-stroke:none;fill-opacity:0.24647886"
+       d="m -645.38732,209.7784 -7.06906,6.70569 21.13848,33.79626 -20.76431,32.29858 6.69489,8.19854 25.41654,-40.49712 z"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:export-filename="frontend\src\assets\scroll-right-fade.png"
+       inkscape:export-xdpi="15.679191"
+       inkscape:export-ydpi="15.679191" />
+    <path
+       id="path1939-9"
+       style="color:#000000;fill:#ffffff;stroke-width:1;-inkscape-stroke:none;fill-opacity:0.24705882"
+       d="m -682.30598,208.70258 7.06906,6.70569 -21.13848,33.79626 20.76431,32.29858 -6.69489,8.19854 -25.41654,-40.49712 z"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:export-filename="frontend\src\assets\scroll-left-fade.png"
+       inkscape:export-xdpi="15.679191"
+       inkscape:export-ydpi="15.679191" />
   </g>
 </svg>

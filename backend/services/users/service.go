@@ -184,7 +184,7 @@ func AddBook(userID string, shelfItem ShelfItem, result *User) error {
 		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
 	}
 
-	shelf := Shelf{Name: "book"}
+	shelf := Shelf{Name: "Books"}
 	ok := result.GetShelfByName(&shelf)
 	if !ok {
 		err = result.AddShelf(&shelf)
@@ -221,7 +221,7 @@ func AddMovie(userID string, shelfItem ShelfItem, result *User) error {
 		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
 	}
 
-	shelf := Shelf{Name: "movie"}
+	shelf := Shelf{Name: "Movies"}
 	ok := result.GetShelfByName(&shelf)
 	if !ok {
 		err = result.AddShelf(&shelf)
@@ -258,7 +258,7 @@ func AddTVSeries(userID string, shelfItem ShelfItem, result *User) error {
 		return &errors.Error{Code: errors.Invalid, Message: "you have already added this item"}
 	}
 
-	shelf := Shelf{Name: "tv_series"}
+	shelf := Shelf{Name: "TV Series"}
 	ok := result.GetShelfByName(&shelf)
 	if !ok {
 		err = result.AddShelf(&shelf)
