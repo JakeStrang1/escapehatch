@@ -3,6 +3,11 @@ a {
     text-decoration: underline;
 }
 
+html {
+    /* Prevent vertical scrollbar from pushing content */
+    scrollbar-gutter: stable;
+}
+
 body {
     background-color:#000000;
     overflow-x: clip;
@@ -76,7 +81,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .navbar-search {
-    height: 115px;
+    height: 116px;
 }
 
 .navbar-brand {
