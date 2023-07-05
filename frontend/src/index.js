@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: [thunk]
 });
 
@@ -55,7 +55,7 @@ const persistor = persistStore(store)
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
         <Router>
           <Switch>
             <NoAuthRoute path="/sign-up" component={SignUp}/>
@@ -73,7 +73,7 @@ ReactDOM.render(
             <Redirect to={{pathname: "/oh-no", state: { errorCode: "not_found"}}}/>
           </Switch>
         </Router>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
