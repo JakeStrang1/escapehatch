@@ -57,7 +57,8 @@ class Shelf extends React.Component {
     this.state = {
       leftMax: true,
       rightMax: true,
-      mouseOverShelf: false
+      mouseOverShelf: false,
+      previousWidth: 0
     }
 
     this.scrollLeftMouseOver = this.scrollLeftMouseOver.bind(this)
@@ -72,7 +73,16 @@ class Shelf extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({previousWidth: this.shelfRef.current.scrollWidth})
     this.onScroll() // initialize scroll button state
+  }
+
+  componentDidUpdate() {
+    // Otherwise the side scroll buttons may not appear on page load
+    if (this.state.previousWidth != this.shelfRef.current.scrollWidth) {
+      this.setState({previousWidth: this.shelfRef.current.scrollWidth})
+      this.onScroll() // recalculate scroll button state
+    }
   }
 
   scrollLeftMouseOver() {

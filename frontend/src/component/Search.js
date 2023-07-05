@@ -23,6 +23,7 @@ export default class Search extends React.Component {
     super(props);
 
     this.state = {
+      authError: false,
       results: [],
       search: ""
     }
@@ -35,9 +36,17 @@ export default class Search extends React.Component {
   }
 
   GetDefaultResults() {
-    api.Data(api.GetItems())
-    .then(items => {
-      this.setState({results: items})
+    api.GetItems()
+    .then(response => {
+      if (response.ok) {
+        this.setState({results: response.body.data})
+        return
+      }
+      
+      if (response.status == 401) {
+        this.setState({authError: true})
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
     })
   }
 
@@ -60,6 +69,9 @@ export default class Search extends React.Component {
   }
 
   render() {
+    if (this.state.authError) {
+      return <Redirect to="/sign-out"/>
+    }
     return (
       <>
         <NavBar searchCurrent={true} searchText="Find a show, movie, or book" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
