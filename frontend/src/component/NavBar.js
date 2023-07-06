@@ -2,6 +2,8 @@ import React from "react"
 import Container from 'react-bootstrap/Container'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Navbar from 'react-bootstrap/Navbar'
@@ -20,8 +22,15 @@ export default class NavBar extends React.Component {
     this.homeClass = this.props.homeCurrent ? "home-nav-current" : "home-nav" // Orange vs gray icon
     this.searchClass = this.props.searchCurrent ? "search-nav-current" : "search-nav"
     this.friendsClass = this.props.friendsCurrent ? "friends-nav-current" : "friends-nav"
+    this.searchBar = this.props.searchCurrent
+    this.friendsBar = this.props.friendsCurrent
 
-    this.navSearchClass = this.props.searchCurrent ? "navbar-search" : ""
+    this.navSearchClass = ""
+    if (this.searchBar) {
+      this.navSearchClass = "navbar-search"
+    } else if (this.friendsBar) {
+      this.navSearchClass = "navbar-friends"
+    }
   }
 
   render() {
@@ -45,8 +54,10 @@ export default class NavBar extends React.Component {
             </Row>
             {
               function () {
-                if (this.props.searchCurrent) {
+                if (this.searchBar) {
                   return <SearchBar searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
+                } else if (this.friendsBar) {
+                  return <FriendsBar  searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
                 }
               }.bind(this)()
             }
@@ -61,8 +72,8 @@ class SearchBar extends React.Component {
   render() {
     return (
       // <Container className={this.props.className} fluid>
-        <Row>
-          <Col xs={12} style={{backgroundColor:"black"}} className="pl-4">
+        <Row style={{backgroundColor:"black"}} >
+          <Col xs={12} style={{backgroundColor:"black"}}  className="pl-4">
             <Row>
               <Col sm={1} md={2} lg={3} xl={4}></Col>
               <Col>
@@ -98,6 +109,37 @@ class SearchBar extends React.Component {
           </Col>
         </Row>
       // </Container>
+    )
+  }
+}
+
+class FriendsBar extends React.Component {
+  render() {
+    return (
+      <Row className="full-width">
+        <Col xs={12}>
+          <Row>
+            <Col style={{backgroundColor:"#222"}}>
+              <Row>
+                <Col xs={12} md={10} lg={8} xl={6} className="mx-auto">
+                  <Nav justify className="justify-content-center friend-tabs" variant="tabs" defaultActiveKey="/followers">
+                    <Nav.Item>
+                      <Nav.Link href="/followers" className="friend-tab">1000 Followers</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href="/following" className="friend-tab">1200 Following</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link href="/find-users" className="friend-tab">Find new</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <SearchBar searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
+        </Col>
+      </Row>
     )
   }
 }

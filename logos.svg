@@ -208,16 +208,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="-2604.9814"
-     inkscape:cy="721.24892"
+     inkscape:zoom="4"
+     inkscape:cx="-1200.875"
+     inkscape:cy="349.125"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:snap-global="false"
      inkscape:showpageshadow="2"
@@ -3691,24 +3691,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan5331"><tspan
+           id="tspan4242"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5329">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan4240">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan5335"><tspan
+           id="tspan4246"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5333">shows you're into so your </tspan></tspan><tspan
+             id="tspan4244">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan5339"><tspan
+           id="tspan4250"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5337">friends can see. This could </tspan></tspan><tspan
+             id="tspan4248">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan5343"><tspan
+           id="tspan4254"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5341">be big.&quot;</tspan></tspan></text>
+             id="tspan4252">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3832,24 +3832,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan5347"><tspan
+           id="tspan4258"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5345">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan4256">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan5351"><tspan
+           id="tspan4262"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5349">shows you're into so your </tspan></tspan><tspan
+             id="tspan4260">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan5355"><tspan
+           id="tspan4266"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5353">friends can see. This could </tspan></tspan><tspan
+             id="tspan4264">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan5359"><tspan
+           id="tspan4270"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan5357">be big.&quot;</tspan></tspan></text>
+             id="tspan4268">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4604,14 +4604,6 @@
          id="path28721"
          sodipodi:nodetypes="ccccc" />
     </g>
-    <path
-       inkscape:connector-curvature="0"
-       id="path4661-7-5-4"
-       d="m -320.12072,85.416624 v 10.53476 c -1.31373,-0.0253 -2.33117,-0.38712 -3.04581,-1.0914 -0.7413,-0.73055 -1.11156,-1.76697 -1.11156,-3.10989 0,-0.66609 0.13397,-1.32697 0.40256,-1.98231 0.26858,-0.65534 0.64465,-1.2408 1.1281,-1.75648 -0.53633,-0.49014 -1.67047,-1.66698 -2.15957,-2.15956 -0.795,0.82724 -1.41263,1.75658 -1.85311,2.78794 -0.42973,1.03136 -0.6444,2.0683 -0.6444,3.11041 0,1.54704 0.29009,2.86828 0.87023,3.9641 0.58014,1.09582 1.42879,1.93392 2.54608,2.51406 1.07628,0.54326 2.36551,0.8241 3.86231,0.84904 v 1.846396 c 0.88195,-2.6e-4 1.76388,-5.3e-4 2.64584,0 v -1.852596 c 1.42117,-0.0545 2.65287,-0.32424 3.69279,-0.8108 1.17103,-0.55866 2.06241,-1.36407 2.67477,-2.41691 0.61237,-1.05285 0.91881,-2.32081 0.91881,-3.80339 0,-1.39663 -0.34916,-2.58917 -1.04748,-3.57756 -0.69831,-0.98838 -1.70836,-1.74051 -3.02979,-2.25619 -1.32143,-0.52643 -2.90586,-0.78962 -4.75371,-0.78962 z m 2.64272,3.12643 c 1.36442,0.0967 2.42298,0.45113 3.17501,1.0635 0.76278,0.60163 1.14412,1.41282 1.14412,2.43344 0,1.24623 -0.40823,2.21303 -1.22473,2.9006 -0.747,0.61923 -1.78087,0.95188 -3.0944,1.00459 z"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       inkscape:export-filename="frontend\src\assets\logo100.png"
-       inkscape:export-xdpi="147.58173"
-       inkscape:export-ydpi="147.58173" />
     <g
        id="g3042"
        transform="translate(-5.2916665,12.170833)"
@@ -4917,5 +4909,26 @@
        inkscape:export-filename="frontend\src\assets\scroll-left-fade.png"
        inkscape:export-xdpi="15.679191"
        inkscape:export-ydpi="15.679191" />
+    <g
+       id="g3418"
+       inkscape:export-filename="frontend\src\assets\logo256.jpg"
+       inkscape:export-xdpi="147.58173"
+       inkscape:export-ydpi="147.58173">
+      <rect
+         style="fill:#000000;fill-opacity:0.99711;stroke-width:7.465;stroke-opacity:0.631373"
+         id="rect2824"
+         width="18.520834"
+         height="18.520834"
+         x="-328.08334"
+         y="83.013016" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4661-7-5-4"
+         d="m -319.96169,86.386413 v 9.077196 c -1.13197,-0.0218 -2.00864,-0.333559 -2.6244,-0.940397 -0.63874,-0.629473 -0.95777,-1.522496 -0.95777,-2.679613 0,-0.573931 0.11543,-1.143373 0.34686,-1.708042 0.23142,-0.564669 0.55546,-1.069126 0.97202,-1.513458 -0.46212,-0.422325 -1.43935,-1.43634 -1.86077,-1.860768 -0.68501,0.712785 -1.21719,1.513544 -1.59672,2.402207 -0.37028,0.888664 -0.55525,1.782135 -0.55525,2.680061 0,1.332995 0.24996,2.471432 0.74983,3.415637 0.49987,0.944205 1.23111,1.666347 2.19381,2.16622 0.92737,0.468096 2.03823,0.71008 3.32793,0.731569 v 1.590937 c 0.75993,-2.24e-4 1.51984,-4.56e-4 2.27977,0 v -1.596279 c 1.22454,-0.04696 2.28582,-0.279379 3.18186,-0.69862 1.00901,-0.481365 1.77706,-1.17534 2.3047,-2.082512 0.52764,-0.90718 0.79168,-1.999708 0.79168,-3.277162 0,-1.203395 -0.30085,-2.230938 -0.90255,-3.082577 -0.60169,-0.85163 -1.47199,-1.499697 -2.61059,-1.944029 -1.1386,-0.453594 -2.50382,-0.68037 -4.096,-0.68037 z m 2.27708,2.693865 c 1.17564,0.08332 2.08774,0.388713 2.73572,0.916356 0.65724,0.51839 0.98582,1.217346 0.98582,2.096755 0,1.073805 -0.35175,1.906841 -1.05528,2.49928 -0.64364,0.533555 -1.53447,0.82018 -2.66626,0.865597 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.0036px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;letter-spacing:0px;word-spacing:0px;fill:#ffa52a;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         inkscape:export-filename="frontend\src\assets\logo100.png"
+         inkscape:export-xdpi="147.58173"
+         inkscape:export-ydpi="147.58173" />
+    </g>
   </g>
 </svg>

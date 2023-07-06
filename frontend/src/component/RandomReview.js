@@ -98,7 +98,7 @@ var reviews = [
   },
   {
     stars: 5,
-    body: "I thought it was just for shows so I was surprised to see movies and book there too. Way to over deliver! Now I don't know where to begin. Maybe with books?",
+    body: "I thought it was just for shows so I was surprised to see movies and books there too. Way to over deliver! Now I don't know where to begin. Maybe with books?",
     author: "User",
     explanatory: false
   },

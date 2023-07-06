@@ -84,6 +84,10 @@ h1, h2, h3, h4, h5, h6, p {
     height: 116px;
 }
 
+.navbar-friends {
+    height: 166.5px;
+}
+
 .navbar-brand {
     margin: 0;
     padding: 0;
@@ -606,4 +610,42 @@ h1, h2, h3, h4, h5, h6, p {
 
 .scroll-arrow {
     flex-grow: 0;
+}
+
+.friend-tabs {
+    border-bottom: none!important;
+}
+
+.friend-tab {
+    border-bottom-style: solid!important;
+    border-bottom-width: 2px!important;
+    border-bottom-color: rgb(222, 226, 230)!important;
+    border-radius: 0px!important;
+    color: white!important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.8em;
+}
+
+@media only screen and (min-width: 768px) {
+    .friend-tab {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 1em;
+    }
+
+    .navbar-friends {
+        height: 182px;
+    }
+} 
+
+.friend-tab.active {
+    background-color: black!important;
+    border-bottom-color: black!important;
+}
+
+.full-width {
+    width: 100vw;
+    margin-left: -31px;
+    margin-right: -31px;
 }

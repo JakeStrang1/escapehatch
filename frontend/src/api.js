@@ -160,6 +160,17 @@ api.AddItem = itemId => {
     .then(FormatResponse)
 }
 
+api.GetFollowers = (userId) => {
+    return fetch(host + '/users/' + userId + '/followers', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
 api.CreateBook = (body) => {
     if (body.image_url) {
         return fetch(host + '/books', {
