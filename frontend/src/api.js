@@ -160,8 +160,52 @@ api.AddItem = itemId => {
     .then(FormatResponse)
 }
 
+api.FollowUser = userId => {
+    return fetch(host + '/users/' + userId + "/follow", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then(FormatResponse)
+}
+
+api.UnfollowUser = userId => {
+    return fetch(host + '/users/' + userId + "/unfollow", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then(FormatResponse)
+}
+
+api.RemoveUser = userId => {
+    return fetch(host + '/users/' + userId + "/remove", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then(FormatResponse)
+}
+
 api.GetFollowers = (userId) => {
     return fetch(host + '/users/' + userId + '/followers', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
+api.GetFollowing = (userId) => {
+    return fetch(host + '/users/' + userId + '/following', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

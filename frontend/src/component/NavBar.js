@@ -55,9 +55,9 @@ export default class NavBar extends React.Component {
             {
               function () {
                 if (this.searchBar) {
-                  return <SearchBar searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
+                  return <SearchBar {... this.props}/>
                 } else if (this.friendsBar) {
-                  return <FriendsBar  searchText={this.props.searchText} handleSearchSubmit={this.props.handleSearchSubmit} handleSearchChange={this.props.handleSearchChange}/>
+                  return <FriendsBar {... this.props}/>
                 }
               }.bind(this)()
             }
@@ -122,12 +122,12 @@ class FriendsBar extends React.Component {
             <Col style={{backgroundColor:"#222"}}>
               <Row>
                 <Col xs={12} md={10} lg={8} xl={6} className="mx-auto">
-                  <Nav justify className="justify-content-center friend-tabs" variant="tabs" defaultActiveKey="/followers">
+                  <Nav justify className="justify-content-center friend-tabs" variant="tabs" defaultActiveKey={window.location.pathname}>
                     <Nav.Item>
-                      <Nav.Link href="/followers" className="friend-tab">1000 Followers</Nav.Link>
+                      <Nav.Link href="/followers" className="friend-tab">{this.props.followerCount + " Followers"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link href="/following" className="friend-tab">1200 Following</Nav.Link>
+                      <Nav.Link href="/following" className="friend-tab">{this.props.followingCount + " Following"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link href="/find-users" className="friend-tab">Find new</Nav.Link>

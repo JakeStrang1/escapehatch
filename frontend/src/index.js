@@ -68,6 +68,8 @@ ReactDOM.render(
             <AuthRoute exact path="/" redirect="/sign-up" component={Home}/>
             <AuthRoute path="/search" component={Search}/>
             <AuthRoute path="/followers" component={Followers}/>
+            <AuthRoute path="/following" component={Followers}/>
+            <AuthRoute path="/find-users" component={Followers}/>
             <AuthRoute path="/add-new" component={AddNewItem}/>
             <SignOutRoute path="/sign-out"/>
             <Redirect to={{pathname: "/oh-no", state: { errorCode: "not_found"}}}/>
