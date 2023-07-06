@@ -18,8 +18,9 @@ type UserUpdate struct {
 
 type User struct {
 	db.DefaultModel `db:",inline"`
+	ShortID         string     `db:"short_id"` // Unique, a shorter ID used for convenience e.g. in urls. Never used as a foreign key in DB.
 	Email           string     `db:"email"`    // Unique
-	Username        string     `db:"username"` // Unique, not yet implemented
+	Username        string     `db:"username"` // Unique
 	Number          int        `db:"number"`   // Unique, number indicating how early you were to the platform (#1, #2, #3, etc..)
 	FullName        string     `db:"full_name"`
 	Shelves         []Shelf    `db:"shelves"`

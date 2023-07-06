@@ -33,6 +33,10 @@ func Create(document *User) error {
 		return err
 	}
 
+	err = db.EnsureUniqueIndex(&User{}, []string{"short_id"})
+	if err != nil {
+		return err
+	}
 	err = db.EnsureUniqueIndex(&User{}, []string{"email"})
 	if err != nil {
 		return err
@@ -59,6 +63,8 @@ func Create(document *User) error {
 	if document.Username == "" {
 		document.Username = GenerateDefaultUsername()
 	}
+
+	document.ShortID = GenerateShortID()
 
 	err = db.Create(document)
 	if err != nil {
@@ -423,6 +429,18 @@ func GenerateDefaultUsername() string {
 		username = username + string(letters[rand.Intn(len(letters))])
 	}
 	return username
+}
+
+// GenerateShortID returns a random string that can be used as a convenience ID for a user.
+// The rules for generating short IDs will probably change over time.
+func GenerateShortID() string {
+	// Current format: 6 character string using uppercase, lowercase and digits. Some characters removed to avoid confusion.
+	shortID := ""
+	letters := "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ23456789" // 1, l, O, and 0 removed because very similar looking
+	for i := 0; i < 6; i++ {
+		shortID = shortID + string(letters[rand.Intn(len(letters))])
+	}
+	return shortID
 }
 
 func ValidateUsername(username string) error {

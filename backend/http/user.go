@@ -11,6 +11,7 @@ import (
 
 type UserAPI struct {
 	DefaultModelAPI `json:",inline"`
+	ShortID         *string    `json:"short_id"`
 	Email           *string    `json:"email"`
 	Username        *string    `json:"username"`
 	Number          *int       `json:"number"`
@@ -250,6 +251,7 @@ func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
 func ToUserAPI(selfID string, user users.User) UserAPI {
 	return UserAPI{
 		DefaultModelAPI: ToDefaultModelAPI(user.DefaultModel),
+		ShortID:         &user.ShortID,
 		Email:           &user.Email,
 		Username:        &user.Username,
 		Number:          &user.Number,
