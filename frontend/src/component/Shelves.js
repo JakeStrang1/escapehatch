@@ -31,7 +31,7 @@ export default class Shelves extends React.Component {
             <Col xs={12} className="">
               <Row>
                 <Col className="ml-0 mr-0 pl-0 pr-0 mt-4">
-                  {this.props.user.shelves.map((shelf, index) => {
+                  {this.props.user.shelves.filter(shelf => shelf.items.length > 0).map((shelf, index) => {
                     return <Shelf key={index} shelf={shelf}/>
                   })}
                 </Col>

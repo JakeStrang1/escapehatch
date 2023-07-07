@@ -60,7 +60,7 @@ func Router(config Config) *gin.Engine {
 
 	// Users
 	r.GET("/users", DefaultAccessPolicy, http.GetUsers)
-	r.GET("/users/:id", DefaultAccessPolicy, http.GetUser)
+	r.GET("/users/:id", http.AccessPolicyUsersCannotOverrideSelf, http.GetUser) // Don't require being logged in
 	r.PATCH("/users/:id", DefaultAccessPolicy, http.AccessPolicyUsersCannotOverrideID, http.UpdateUser)
 	r.POST("/users/:id/follow", DefaultAccessPolicy, http.FollowUser)
 	r.POST("/users/:id/unfollow", DefaultAccessPolicy, http.UnfollowUser)

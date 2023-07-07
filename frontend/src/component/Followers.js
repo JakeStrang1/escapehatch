@@ -232,7 +232,7 @@ export class UserResult extends React.Component {
     return (
       <>
         <Row className="pt-3 pb-3">
-          <Col>
+          <Col as="a" href={"/users/" + this.props.result.id}>
             <Row>
               <Col>
                 <div style={{color: "white"}}>{this.props.result.username}</div>
@@ -244,7 +244,7 @@ export class UserResult extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="text-right">
+          <Col xs="auto">
             {
               function () {
                 if (this.props.result.self) {
@@ -273,7 +273,7 @@ export class FollowerResult extends React.Component {
     return (
       <>
         <Row className="pt-3 pb-3">
-          <Col>
+          <Col as="a" href={"/users/" + this.props.result.follower_user_id}>
             <Row>
               <Col>
                 <div style={{color: "white"}}>{this.props.result.follower_username}</div>
@@ -285,7 +285,7 @@ export class FollowerResult extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="text-right">
+          <Col xs="auto">
             <ActionButton action="remove" userId={this.props.result.follower_user_id}/>
           </Col>
         </Row>
@@ -302,7 +302,7 @@ export class FollowingResult extends React.Component {
     return (
       <>
         <Row className="pt-3 pb-3">
-          <Col>
+        <Col as="a" href={"/users/" + this.props.result.target_user_id}>
             <Row>
               <Col>
                 <div style={{color: "white"}}>{this.props.result.target_username}</div>
@@ -314,7 +314,7 @@ export class FollowingResult extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="text-right">
+          <Col xs="auto">
             <ActionButton action="unfollow" userId={this.props.result.target_user_id}/>
           </Col>
         </Row>

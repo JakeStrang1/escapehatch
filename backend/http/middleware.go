@@ -14,7 +14,7 @@ const UserIDQuery = "userID" // An optional query param that can be provided to 
 
 func Authenticate(c *gin.Context) {
 	sessionToken, err := c.Cookie("SID")
-	if errors.Is(err, http.ErrNoCookie) {
+	if errors.Is(err, http.ErrNoCookie) || sessionToken == "" {
 		// Error(c, &errors.Error{Code: errors.Unauthenticated, Message: "please sign in", Err: err}) // This is the old response
 		c.Set(CtxKeyEntity, NewAnonymousEntity())
 		return

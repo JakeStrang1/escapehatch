@@ -122,8 +122,11 @@ api.GetUsers = (search) => {
     .then(FormatResponse)
 }
 
-api.GetUser = () => {
-    return fetch(host + '/users/me', {
+api.GetUser = (userId) => {
+    if (!userId) {
+        userId = "me" // Fetch self user
+    }
+    return fetch(host + '/users/' + userId, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

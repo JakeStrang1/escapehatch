@@ -80,12 +80,17 @@ func GetUsers(c *gin.Context) {
 	ReturnMany(c, ToUserAPIs(userID, results), *pageInfo)
 }
 
+// Note: This is a publicly available endpoint
 func GetUser(c *gin.Context) {
 	id := c.Param("id")
 	userID := c.GetString(CtxKeyUserID)
 
 	// Special case
 	if id == "me" {
+		if userID == "" {
+			Error(c, &errors.Error{Code: errors.Invalid, Message: "cannot use 'me' in url unless signed in"})
+			return
+		}
 		id = userID
 	}
 

@@ -19,6 +19,7 @@ import VerifyLink from "./component/VerifyLink"
 import Home from "./component/Home"
 import Search from "./component/Search"
 import Followers from "./component/Followers"
+import User from "./component/User"
 import ErrorPage from "./component/ErrorPage"
 // import Cookies from 'js-cookie';
 import api from './api'
@@ -64,6 +65,7 @@ ReactDOM.render(
             <Route path="/verify-link" component={VerifyLink}/>
             <Route path="/not-you" component={NotYou}/>
             <Route path="/oh-no" component={ErrorPage}/>
+            <Route exact path="/users/:id" component={User}/>
             <AuthRoute path="/new-user" component={NewUser}/>
             <AuthRoute exact path="/" redirect="/sign-up" component={Home}/>
             <AuthRoute path="/search" component={Search}/>
