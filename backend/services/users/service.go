@@ -366,8 +366,8 @@ func GetCount(filter Filter) (int, error) {
 }
 
 func GetByID(id string, result *User) error {
-	result.ID = id
-	err := db.GetByID(result)
+	// Fetch by either _id or short_id
+	err := db.GetOne(db.M{"$or": []db.M{{"_id": id}, {"short_id": id}}}, result)
 	if err != nil {
 		return err
 	}

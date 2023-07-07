@@ -119,7 +119,7 @@ class FriendsBar extends React.Component {
       <Row className="full-width">
         <Col xs={12}>
           <Row>
-            <Col style={{backgroundColor:"#222"}}>
+            <Col style={{backgroundColor:"#222"}} className="pt-2">
               <Row>
                 <Col xs={12} md={10} lg={8} xl={6} className="mx-auto">
                   <Nav justify className="justify-content-center friend-tabs" variant="tabs" defaultActiveKey={window.location.pathname}>

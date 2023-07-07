@@ -12,7 +12,7 @@ import (
 type UserAPI struct {
 	DefaultModelAPI `json:",inline"`
 	ShortID         *string    `json:"short_id"`
-	Email           *string    `json:"email"`
+	Email           *string    `json:"email"` // Email will be redacted when a user is requesting a different user
 	Username        *string    `json:"username"`
 	Number          *int       `json:"number"`
 	FullName        *string    `json:"full_name"`
@@ -249,10 +249,16 @@ func ToUserAPIs(selfID string, dbUsers []users.User) []UserAPI {
 }
 
 func ToUserAPI(selfID string, user users.User) UserAPI {
+	// Redact email unless self
+	email := ""
+	if user.ID == selfID {
+		email = user.Email
+	}
+
 	return UserAPI{
 		DefaultModelAPI: ToDefaultModelAPI(user.DefaultModel),
 		ShortID:         &user.ShortID,
-		Email:           &user.Email,
+		Email:           &email,
 		Username:        &user.Username,
 		Number:          &user.Number,
 		FullName:        &user.FullName,

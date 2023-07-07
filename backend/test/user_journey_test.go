@@ -104,6 +104,14 @@ func (s *Suite) TestUserJourney() {
 	s.Assert().Equal(2, int(gjson.Get(response.Body, "data.number").Int()))
 	userID2 := gjson.Get(response.Body, "data.id").String()
 	s.Assert().True(userID2 != "")
+	user2ShortID := gjson.Get(response.Body, "data.short_id").String()
+	s.Assert().True(user2ShortID != "")
+
+	// Get user2 by short_id as user1
+	response = s.Get(fmt.Sprintf("/users/%s", user2ShortID), withUser1Cookie)
+	s.Assert().Equal(200, response.Status)
+	s.Assert().Equal(userID2, gjson.Get(response.Body, "data.id").String())
+	s.Assert().Empty(gjson.Get(response.Body, "data.email").String()) // Ensure email is redacted when requesting a different user
 
 	// Update user1
 	userBody := http.UserAPI{
