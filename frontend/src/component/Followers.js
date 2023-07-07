@@ -20,9 +20,11 @@ export default class Followers extends React.Component {
     super(props);
 
     this.state = {
+      showingSearchResult: false,
       authError: false,
       followers: [],
       following: [],
+      newUsers: [],
       search: "",
       followerCount: 0,
       followingCount: 0,
@@ -39,7 +41,11 @@ export default class Followers extends React.Component {
     api.GetFollowers("me") // TODO: Fetch more than just the first page of results!
     .then(response => {
       if (response.ok) {
-        this.setState({followers: response.body.data, followerCount: response.body.pages.per_page * response.body.pages.total_pages})
+        this.setState({
+          followers: response.body.data,
+          followerCount: response.body.pages.per_page * response.body.pages.total_pages,
+          showingSearchResult: false
+        })
         return
       }
       
@@ -52,7 +58,11 @@ export default class Followers extends React.Component {
     api.GetFollowing("me") // TODO: Fetch more than just the first page of results!
     .then(response => {
       if (response.ok) {
-        this.setState({following: response.body.data, followingCount: response.body.pages.per_page * response.body.pages.total_pages})
+        this.setState({
+          following: response.body.data, 
+          followingCount: response.body.pages.per_page * response.body.pages.total_pages,
+          showingSearchResult: false
+        })
         return
       }
       
@@ -75,10 +85,19 @@ export default class Followers extends React.Component {
       return
     }
 
-    // api.Data(api.Search(this.state.search))
-    // .then(items => {
-    //   this.setState({results: items})
-    // })
+    let req
+
+    switch(window.location.pathname) {
+      case "/followers":
+        api.Data(api.GetFollowers("me", this.state.search)).then(results => this.setState({followers: results, showingSearchResult: true}))
+      case "/following":
+        api.Data(api.GetFollowing("me", this.state.search)).then(results => this.setState({following: results, showingSearchResult: true}))
+      case "/find-users":
+        api.Data(api.GetUsers(this.state.search)).then(results => this.setState({newUsers: results, showingSearchResult: true}))
+      default:
+        console.error("unknown url: " + window.location.pathname)
+        return
+    }
   }
 
   render() {
@@ -89,9 +108,9 @@ export default class Followers extends React.Component {
           function () {
             switch(window.location.pathname) {
               case "/followers":
-                return <FollowerResults results={this.state.followers}/>
+                return <FollowerResults results={this.state.followers} showingSearchResult={this.state.showingSearchResult}/>
               case "/following":
-                return <FollowingResults results={this.state.following}/>
+                return <FollowingResults results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
               case "/find-users":
                 return (<></>)
               default:
@@ -114,7 +133,9 @@ class FollowerResults extends React.Component {
             <Col xs={12} className="">
               <Row>
                 <Col xs={6} className="mx-auto mt-4">
-                  <h3>Your Followers</h3>
+                  <h3>
+                    {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
+                  </h3>
                   {this.props.results.map((result, index) => {
                     return <FollowerResult key={index} result={result}/>
                   })}
@@ -135,7 +156,9 @@ class FollowingResults extends React.Component {
             <Col xs={12} className="">
               <Row>
                 <Col xs={6} className="mx-auto mt-4">
-                  <h3>Users You Follow</h3>
+                  <h3>
+                    {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
+                  </h3>
                   {this.props.results.map((result, index) => {
                     return <FollowingResult key={index} result={result}/>
                   })}

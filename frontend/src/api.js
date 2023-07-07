@@ -100,6 +100,21 @@ api.NotYou = (secret, emailHash, doNotContact) => {
     .then(FormatResponse)
 }
 
+api.GetUsers = (search) => {
+    let searchQuery = ""
+    if (search) {
+        searchQuery = "?search=" + encodeURIComponent(search)
+    }
+    return fetch(host + '/users' + searchQuery, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    })
+    .then(FormatResponse)
+}
+
 api.GetUser = () => {
     return fetch(host + '/users/me', {
         method: 'GET',
@@ -193,8 +208,12 @@ api.RemoveUser = userId => {
     .then(FormatResponse)
 }
 
-api.GetFollowers = (userId) => {
-    return fetch(host + '/users/' + userId + '/followers', {
+api.GetFollowers = (userId, search) => {
+    let searchQuery = ""
+    if (search) {
+        searchQuery = "?search=" + encodeURIComponent(search)
+    }
+    return fetch(host + '/users/' + userId + '/followers' + searchQuery, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -204,8 +223,12 @@ api.GetFollowers = (userId) => {
     .then(FormatResponse)
 }
 
-api.GetFollowing = (userId) => {
-    return fetch(host + '/users/' + userId + '/following', {
+api.GetFollowing = (userId, search) => {
+    let searchQuery = ""
+    if (search) {
+        searchQuery = "?search=" + encodeURIComponent(search)
+    }
+    return fetch(host + '/users/' + userId + '/following' + searchQuery, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
