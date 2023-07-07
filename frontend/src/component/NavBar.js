@@ -130,7 +130,7 @@ class FriendsBar extends React.Component {
                       <Nav.Link href="/following" className="friend-tab">{this.props.followingCount + " Following"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link href="/find-users" className="friend-tab">Find new</Nav.Link>
+                      <Nav.Link href="/find-users" className="friend-tab">Discover</Nav.Link>
                     </Nav.Item>
                   </Nav>
                 </Col>

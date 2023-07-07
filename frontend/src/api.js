@@ -101,11 +101,18 @@ api.NotYou = (secret, emailHash, doNotContact) => {
 }
 
 api.GetUsers = (search) => {
-    let searchQuery = ""
+    let queries = []
+  
     if (search) {
-        searchQuery = "?search=" + encodeURIComponent(search)
+      queries.push("search=" + encodeURIComponent(search))
     }
-    return fetch(host + '/users' + searchQuery, {
+
+    let queryString = ""
+    if (queries.length > 0) {
+      queryString = "?" + queries.join("&")
+    }
+
+    return fetch(host + '/users' + queryString, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

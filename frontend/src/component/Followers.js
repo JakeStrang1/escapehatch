@@ -71,6 +71,23 @@ export default class Followers extends React.Component {
       }
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
     })
+
+    api.GetUsers() // TODO: Fetch more than just the first page of results!
+    .then(response => {
+      if (response.ok) {
+        let filteredResults = response.body.data.filter(result => !result.followed_by_you && !result.self) // Only include users not already followed
+        this.setState({
+          newUsers: filteredResults,
+          showingSearchResult: false
+        })
+        return
+      }
+      
+      if (response.status == 401) {
+        this.setState({authError: true})
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
   }
 
   handleSearchChange(e) {
@@ -112,15 +129,37 @@ export default class Followers extends React.Component {
               case "/following":
                 return <FollowingResults results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
               case "/find-users":
-                return (<></>)
+                return <FindUsersResults results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
               default:
                 console.error("unknown url: " + window.location.pathname)
                 return (<></>)
             }
           }.bind(this)()
         }
-        {/* <SearchResults results={this.state.results}/> */}
       </>
+    )
+  }
+}
+
+class FindUsersResults extends React.Component {
+  render() {
+    return (
+      <Container className={this.props.className} fluid>
+          <Row>
+            <Col xs={12} className="">
+              <Row>
+                <Col xs={6} className="mx-auto mt-4">
+                  <h3>
+                    {this.props.showingSearchResult ? "Search results..." : "People You May Know"}
+                  </h3>
+                  {this.props.results.map(result => {
+                    return <UserResult key={result.id} result={result}/>
+                  })}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
     )
   }
 }
@@ -136,8 +175,8 @@ class FollowerResults extends React.Component {
                   <h3>
                     {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
                   </h3>
-                  {this.props.results.map((result, index) => {
-                    return <FollowerResult key={index} result={result}/>
+                  {this.props.results.map(result => {
+                    return <FollowerResult key={result.follower_user_id} result={result}/>
                   })}
                 </Col>
               </Row>
@@ -159,8 +198,8 @@ class FollowingResults extends React.Component {
                   <h3>
                     {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
                   </h3>
-                  {this.props.results.map((result, index) => {
-                    return <FollowingResult key={index} result={result}/>
+                  {this.props.results.map(result => {
+                    return <FollowingResult key={result.target_user_id} result={result}/>
                   })}
                 </Col>
               </Row>
@@ -183,6 +222,47 @@ class ResultsFooter extends React.Component {
             <p className="orange mt-3 no-results-text"><a href="/add-new">You can add it here!</a></p>
             <p className="paragraph-column no-results-text">Our community gets stronger each time you add a new show, movie, or book. It only takes a minute to do! We also keep track of your contributions so you can get credit for them!</p>
           </Col>
+      </>
+    )
+  }
+}
+
+export class UserResult extends React.Component {
+  render() {
+    return (
+      <>
+        <Row className="pt-3 pb-3">
+          <Col>
+            <Row>
+              <Col>
+                <div style={{color: "white"}}>{this.props.result.username}</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div style={{color: "#666"}}>{this.props.result.full_name}</div>
+              </Col>
+            </Row>
+          </Col>
+          <Col className="text-right">
+            {
+              function () {
+                if (this.props.result.self) {
+                  return (<ActionButton action="self" userId={this.props.result.id}/>)
+                } else if (this.props.result.followed_by_you) {
+                  return (<ActionButton action="unfollow" userId={this.props.result.id}/>)
+                } else if (this.props.result.follows_you) {
+                  return (<ActionButton action="follow back" userId={this.props.result.id}/>)
+                } else {
+                  return (<ActionButton action="follow" userId={this.props.result.id}/>)
+                }
+              }.bind(this)()
+            }
+          </Col>
+        </Row>
+        <Row>
+          <Col className="search-result"></Col>
+        </Row>
       </>
     )
   }
@@ -264,6 +344,8 @@ const ActionButton = connect(class ActionButton extends React.Component {
     this.FollowButton = this.FollowButton.bind(this)
     this.RemoveButton = this.RemoveButton.bind(this)
     this.RemovedButton = this.RemovedButton.bind(this)
+    this.FollowBackButton = this.FollowBackButton.bind(this)
+    this.SelfButton = this.SelfButton.bind(this)
   }
 
   handleUnfollow(e) {
@@ -353,6 +435,26 @@ const ActionButton = connect(class ActionButton extends React.Component {
     )
   }
 
+  FollowBackButton = props => {
+    return (
+      <Form id={props.userId}   onSubmit={props.handleFollow}>
+        <Button type="submit" className="orange-btn">
+          Follow back
+        </Button>
+      </Form>
+    )
+  }
+
+  SelfButton = props => {
+    return (
+      <Form id={props.userId} onSubmit={null}>
+        <Button type="submit" disabled variant="dark">
+          This is you
+        </Button>
+      </Form>
+    )
+  }
+
   render() {
     if ((this.state.action == "unfollow" || this.state.action == "remove") && this.state.loading) {
       return (<this.UnfollowLoadButton {...this.props}/>)
@@ -371,6 +473,12 @@ const ActionButton = connect(class ActionButton extends React.Component {
     }
     if (this.state.action == "follow") {
       return (<this.FollowButton {...this.props} handleFollow={this.handleFollow}/>)
+    }
+    if (this.state.action == "follow back") {
+      return (<this.FollowBackButton {...this.props} handleFollow={this.handleFollow}/>)
+    }
+    if (this.state.action == "self") {
+      return (<this.SelfButton {...this.props}/>)
     }
     return (<></>)
   }

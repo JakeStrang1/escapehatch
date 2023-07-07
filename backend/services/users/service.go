@@ -353,6 +353,10 @@ func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 		return nil, err
 	}
 
+	for i := range *results {
+		hydrate(&(*results)[i])
+	}
+
 	return &pages.PageResult{
 		Page:       page,
 		PerPage:    pageSize,
