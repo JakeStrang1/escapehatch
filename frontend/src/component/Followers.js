@@ -148,7 +148,7 @@ class FindUsersResults extends React.Component {
           <Row>
             <Col xs={12} className="">
               <Row>
-                <Col xs={6} className="mx-auto mt-4">
+                <Col xs={12} sm={10} md={8} lg={6} className="mx-auto mt-4">
                   <h3>
                     {this.props.showingSearchResult ? "Search results..." : "People You May Know"}
                   </h3>
@@ -171,7 +171,7 @@ class FollowerResults extends React.Component {
           <Row>
             <Col xs={12} className="">
               <Row>
-                <Col xs={6} className="mx-auto mt-4">
+                <Col xs={12} sm={10} md={8} lg={6} className="mx-auto mt-4">
                   <h3>
                     {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
                   </h3>
@@ -194,7 +194,7 @@ class FollowingResults extends React.Component {
           <Row>
             <Col xs={12} className="">
               <Row>
-                <Col xs={6} className="mx-auto mt-4">
+                <Col xs={12} sm={10} md={8} lg={6} className="mx-auto mt-4">
                   <h3>
                     {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
                   </h3>
