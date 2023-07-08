@@ -118,6 +118,9 @@ export default class Followers extends React.Component {
   }
 
   render() {
+    if (this.state.authError) {
+      return <Redirect to="/sign-out"/>
+    }
     return (
       <>
         <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Find users by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>

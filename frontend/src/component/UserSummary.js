@@ -244,13 +244,92 @@ class FollowerStat extends React.Component {
 }
 
 class UserDropDown extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      authError: false
+    }
+
+    this.handleUnfollow = this.handleUnfollow.bind(this)
+    this.handleFollow = this.handleFollow.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
+  }
+
+  handleUnfollow(e) {
+    api.UnfollowUser(this.props.user.id)
+    .then(response => {
+      if (response.ok) {
+        window.location.reload(false); // refresh
+      }
+      
+      if (response.status == 401) {
+        this.setState({authError: true})
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+  }
+
+  handleFollow(e) {
+    api.FollowUser(this.props.user.id)
+    .then(response => {
+      if (response.ok) {
+        window.location.reload(false); // refresh
+      }
+      
+      if (response.status == 401) {
+        this.setState({authError: true})
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+  }
+
+  handleRemove(e) {
+    api.RemoveUser(this.props.user.id)
+    .then(response => {
+      if (response.ok) {
+        window.location.reload(false); // refresh
+      }
+      
+      if (response.status == 401) {
+        this.setState({authError: true})
+      }
+      console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+  }
+  
   render() {
+    if (this.state.authError) {
+      return <Redirect to="/sign-out"/>
+    }
+
+    if (this.props.user.self) {
+      return (
+        <Dropdown>
+          <Dropdown.Toggle className="userDropDown" variant="secondary">
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item href="/sign-out">Log out</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      )
+    }
+
     return (
       <Dropdown>
         <Dropdown.Toggle className="userDropDown" variant="secondary">
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item href="/sign-out">Log out</Dropdown.Item>
+          {
+            this.props.user.followed_by_you ? 
+              (<Dropdown.Item onClick={this.handleUnfollow}>Unfollow</Dropdown.Item>) :
+              (<Dropdown.Item onClick={this.handleFollow}>Follow</Dropdown.Item>)
+          }
+          {
+            this.props.user.follows_you && (
+              <Dropdown.Item onClick={this.handleRemove}>Remove follower</Dropdown.Item>
+            )
+          }
         </Dropdown.Menu>
       </Dropdown>
     )
@@ -264,7 +343,7 @@ class RightSummaryXS extends React.Component {
         <Col className="rightSummary-xs">
           <Row>
             <Col className="text-right">
-              <UserDropDown/>
+              <UserDropDown user={this.props.user}/>
             </Col>
           </Row>
           <Row className="justify-content-end mt-2">
@@ -286,7 +365,7 @@ class RightSummary extends React.Component {
         <div className="d-flex flex-row rightSummary justify-content-between">
           <FollowerStat count={this.props.user.follower_count} label="Followers"/>
           <FollowerStat count={this.props.user.following_count} label="Following"/>
-          <UserDropDown/>
+          <UserDropDown user={this.props.user}/>
         </div>
       // </Row>
     )
