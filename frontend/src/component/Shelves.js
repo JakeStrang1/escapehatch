@@ -20,7 +20,7 @@ export default class Shelves extends React.Component {
   render() {
     if (!this.props.user.shelves || this.props.user.shelves.length == 0) {
         return (
-            <Empty/>
+            <Empty user={this.props.user}/>
         )
     }
 
@@ -218,17 +218,23 @@ class Empty extends React.Component {
                 <Col xs={2}></Col>
               </Row>
               <Row className="d-flex align-items-center text-center pt-4">
-                <Col>
-                  <h4 className="orange">Your shelf is empty!</h4>
-                  <p>Your shelf is where you showcase the shows, movies, and books that you love to escape into.</p>
-                  <div className="d-inline-block mt-3">
-                    <a href="/search">
-                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
-                        <Image src={searchImage}/>
-                        <span style={{color: "white"}} className="d-block mt-2">Add to shelf</span>
-                      </div>
-                    </a>
-                  </div>
+                <Col md={10} lg={8} xl={6} className="mx-auto">
+                  <h4 className="orange">{this.props.user.self ? "Your shelf is empty!" : "There's nothing here! :("}</h4>
+                  <p>{this.props.user.self ? 
+                    "Your shelf is where you showcase the shows, movies, and books that you love to escape into." : 
+                    (<><em>Is your friend okay?</em> When someone doesn't have favourite shows and movies they may be spending unhealthy amounts of time in the real world.</>)
+                    }
+                  </p>
+                  { this.props.user.self &&
+                    (<div className="d-inline-block mt-3">
+                      <a href="/search">
+                        <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                          <Image src={searchImage}/>
+                          <span style={{color: "white"}} className="d-block mt-2">Add to shelf</span>
+                        </div>
+                      </a>
+                    </div>)
+                  }
                 </Col>
               </Row>
             </Col>
