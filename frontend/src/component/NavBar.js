@@ -48,7 +48,7 @@ export default class NavBar extends React.Component {
                 <Row id="nav-link-row">
                     <Col className="bare-column"><Nav.Link href="/" className={this.homeClass}></Nav.Link></Col>
                     <Col className="bare-column"><Nav.Link href="/search" className={this.searchClass}></Nav.Link></Col>
-                    <Col className="bare-column"><Nav.Link href="/followers" className={this.friendsClass}></Nav.Link></Col>
+                    <Col className="bare-column"><Nav.Link href="/following" className={this.friendsClass}></Nav.Link></Col>
                 </Row>
               </Col>
             </Row>
@@ -124,10 +124,10 @@ class FriendsBar extends React.Component {
                 <Col xs={12} md={10} lg={8} xl={6} className="mx-auto">
                   <Nav justify className="justify-content-center friend-tabs" variant="tabs" defaultActiveKey={window.location.pathname}>
                     <Nav.Item>
-                      <Nav.Link href="/followers" className="friend-tab">{this.props.followerCount + " Followers"}</Nav.Link>
+                      <Nav.Link href="/following" className="friend-tab">{this.props.followingCount + " Following"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link href="/following" className="friend-tab">{this.props.followingCount + " Following"}</Nav.Link>
+                      <Nav.Link href="/followers" className="friend-tab">{this.props.followerCount + " Followers"}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link href="/find-users" className="friend-tab">Discover</Nav.Link>

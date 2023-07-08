@@ -208,11 +208,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="-1200.875"
-     inkscape:cy="349.125"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="-1411.3851"
+     inkscape:cy="784.88853"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g2859-4"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
@@ -3691,24 +3691,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan4242"><tspan
+           id="tspan5342"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4240">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan5340">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan4246"><tspan
+           id="tspan5346"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4244">shows you're into so your </tspan></tspan><tspan
+             id="tspan5344">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan4250"><tspan
+           id="tspan5350"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4248">friends can see. This could </tspan></tspan><tspan
+             id="tspan5348">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan4254"><tspan
+           id="tspan5354"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4252">be big.&quot;</tspan></tspan></text>
+             id="tspan5352">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -3832,24 +3832,24 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect22282-2);display:inline;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.770709"><tspan
            x="-3812.7188"
            y="-1227.8134"
-           id="tspan4258"><tspan
+           id="tspan5358"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4256">&quot;So, basically you say what </tspan></tspan><tspan
+             id="tspan5356">&quot;So, basically you say what </tspan></tspan><tspan
            x="-3812.7188"
            y="-1177.3504"
-           id="tspan4262"><tspan
+           id="tspan5362"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4260">shows you're into so your </tspan></tspan><tspan
+             id="tspan5360">shows you're into so your </tspan></tspan><tspan
            x="-3812.7188"
            y="-1126.8874"
-           id="tspan4266"><tspan
+           id="tspan5366"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4264">friends can see. This could </tspan></tspan><tspan
+             id="tspan5364">friends can see. This could </tspan></tspan><tspan
            x="-3812.7188"
            y="-1076.4244"
-           id="tspan4270"><tspan
+           id="tspan5370"><tspan
              style="font-weight:600;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold'"
-             id="tspan4268">be big.&quot;</tspan></tspan></text>
+             id="tspan5368">be big.&quot;</tspan></tspan></text>
       <g
          id="g23574-7-6"
          transform="matrix(0.84251448,0,0,0.84251448,-168.65939,-34.774126)"
@@ -4929,6 +4929,129 @@
          inkscape:export-filename="frontend\src\assets\logo100.png"
          inkscape:export-xdpi="147.58173"
          inkscape:export-ydpi="147.58173" />
+    </g>
+    <rect
+       style="fill:#000000;fill-opacity:0.99711;stroke-width:7.46501;stroke-opacity:0.631373"
+       id="rect2005"
+       width="256.11667"
+       height="169.33333"
+       x="-509.05832"
+       y="274.10834" />
+    <g
+       id="g2859">
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -700.61666,514.87916 -7.40833,71.4375"
+         id="path2061"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:#ffffff;fill-opacity:0.99711;stroke:none;stroke-width:12.165;stroke-dasharray:none;stroke-opacity:0.631373"
+         id="path2789"
+         sodipodi:type="arc"
+         sodipodi:cx="-699.2937"
+         sodipodi:cy="486.03955"
+         sodipodi:rx="30.956247"
+         sodipodi:ry="30.956247"
+         sodipodi:start="0"
+         sodipodi:end="6.2800437"
+         sodipodi:arc-type="slice"
+         d="m -668.33745,486.03955 a 30.956247,30.956247 0 0 1 -30.93194,30.95624 30.956247,30.956247 0 0 1 -30.98052,-30.90761 30.956247,30.956247 0 0 1 30.88327,-31.00479 30.956247,30.956247 0 0 1 31.02903,30.85891 l -30.95609,0.0973 z" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -708.02499,579.43749 24.34166,30.1625 -1.5875,46.0375"
+         id="path2845" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -706.96666,578.37915 -17.4625,42.8625 -24.87083,28.04584"
+         id="path2847" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -700.08749,537.63333 65.87346,-21.96821"
+         id="path2849"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -704.32082,541.33749 38.57598,0.72633 40.79902,-7.26436"
+         id="path2851"
+         sodipodi:nodetypes="ccc" />
+    </g>
+    <g
+       id="g2859-4"
+       transform="translate(84.905384,1.8395059)">
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -700.61666,514.87916 -7.40833,71.4375"
+         id="path2061-8"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:#ffffff;fill-opacity:0.99711;stroke:none;stroke-width:12.165;stroke-dasharray:none;stroke-opacity:0.631373"
+         id="path2789-2"
+         sodipodi:type="arc"
+         sodipodi:cx="-699.2937"
+         sodipodi:cy="486.03955"
+         sodipodi:rx="30.956247"
+         sodipodi:ry="30.956247"
+         sodipodi:start="0"
+         sodipodi:end="6.2800437"
+         sodipodi:arc-type="slice"
+         d="m -668.33745,486.03955 a 30.956247,30.956247 0 0 1 -30.93194,30.95624 30.956247,30.956247 0 0 1 -30.98052,-30.90761 30.956247,30.956247 0 0 1 30.88327,-31.00479 30.956247,30.956247 0 0 1 31.02903,30.85891 l -30.95609,0.0973 z" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -704.28322,580.18584 28.08344,24.92402 28.34669,30.32206"
+         id="path2845-1"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -707.71501,581.37257 2.74307,30.88882 -12.1488,47.50306"
+         id="path2847-7"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -700.08749,537.63333 61.38333,-26.45834"
+         id="path2849-3" />
+      <path
+         style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m -704.32082,541.33749 33.3375,12.7 46.0375,-0.52917"
+         id="path2851-5"
+         sodipodi:nodetypes="ccc" />
+      <g
+         id="g2859-5"
+         transform="translate(97.043142,2.4660077)">
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m -700.61666,514.87916 -7.40833,71.4375"
+           id="path2061-1"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:#ffffff;fill-opacity:0.99711;stroke:none;stroke-width:12.165;stroke-dasharray:none;stroke-opacity:0.631373"
+           id="path2789-5"
+           sodipodi:type="arc"
+           sodipodi:cx="-699.2937"
+           sodipodi:cy="486.03955"
+           sodipodi:rx="30.956247"
+           sodipodi:ry="30.956247"
+           sodipodi:start="0"
+           sodipodi:end="6.2800437"
+           sodipodi:arc-type="slice"
+           d="m -668.33745,486.03955 a 30.956247,30.956247 0 0 1 -30.93194,30.95624 30.956247,30.956247 0 0 1 -30.98052,-30.90761 30.956247,30.956247 0 0 1 30.88327,-31.00479 30.956247,30.956247 0 0 1 31.02903,30.85891 l -30.95609,0.0973 z" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m -708.02499,579.43749 24.34166,30.1625 -1.5875,46.0375"
+           id="path2845-2" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m -706.96666,578.37915 -17.4625,42.8625 -24.87083,28.04584"
+           id="path2847-9" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m -700.08749,537.63333 61.38333,-26.45834"
+           id="path2849-4" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           d="m -704.32082,541.33749 33.3375,12.7 46.0375,-0.52917"
+           id="path2851-7"
+           sodipodi:nodetypes="ccc" />
+      </g>
     </g>
   </g>
 </svg>

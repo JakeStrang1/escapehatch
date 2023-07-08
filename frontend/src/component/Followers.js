@@ -5,10 +5,14 @@ import Shelves from "./Shelves"
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
+import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
+import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
+import emptyShelfImage from './../assets/empty_shelf.png'
+import searchImage from './../assets/search.png'
 import { Redirect, Link } from 'react-router-dom'
 import api, {
   ERR_UNEXPECTED,
@@ -28,6 +32,7 @@ export default class Followers extends React.Component {
       search: "",
       followerCount: 0,
       followingCount: 0,
+      loading: true,
     }
 
     this.GetDefaultResults = this.GetDefaultResults.bind(this)
@@ -38,7 +43,7 @@ export default class Followers extends React.Component {
   }
 
   GetDefaultResults() {
-    api.GetFollowers("me") // TODO: Fetch more than just the first page of results!
+    let followerPromise = api.GetFollowers("me") // TODO: Fetch more than just the first page of results!
     .then(response => {
       if (response.ok) {
         this.setState({
@@ -55,7 +60,7 @@ export default class Followers extends React.Component {
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
     })
 
-    api.GetFollowing("me") // TODO: Fetch more than just the first page of results!
+    let followingPromise = api.GetFollowing("me") // TODO: Fetch more than just the first page of results!
     .then(response => {
       if (response.ok) {
         this.setState({
@@ -72,7 +77,7 @@ export default class Followers extends React.Component {
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
     })
 
-    api.GetUsers() // TODO: Fetch more than just the first page of results!
+    let allUsersPromise = api.GetUsers() // TODO: Fetch more than just the first page of results!
     .then(response => {
       if (response.ok) {
         let filteredResults = response.body.data.filter(result => !result.followed_by_you && !result.self) // Only include users not already followed
@@ -87,6 +92,11 @@ export default class Followers extends React.Component {
         this.setState({authError: true})
       }
       console.log("Status: " + response.status + ", Code: " + response.errorCode + ", Message: " + response.errorMessage)
+    })
+
+    Promise.all([followerPromise, followingPromise, allUsersPromise])
+    .then(() => {
+      this.setState({loading: false})
     })
   }
 
@@ -128,11 +138,11 @@ export default class Followers extends React.Component {
           function () {
             switch(window.location.pathname) {
               case "/followers":
-                return <FollowerResults results={this.state.followers} showingSearchResult={this.state.showingSearchResult}/>
+                return <FollowerResults loading={this.state.loading} results={this.state.followers} showingSearchResult={this.state.showingSearchResult}/>
               case "/following":
-                return <FollowingResults results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
+                return <FollowingResults loading={this.state.loading} results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
               case "/find-users":
-                return <FindUsersResults results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
+                return <FindUsersResults loading={this.state.loading} results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
               default:
                 console.error("unknown url: " + window.location.pathname)
                 return (<></>)
@@ -155,7 +165,20 @@ class FindUsersResults extends React.Component {
                   <h3>
                     {this.props.showingSearchResult ? "Search results..." : "People You May Know"}
                   </h3>
-                  {this.props.results.map(result => {
+                  {
+                    this.props.loading && (
+                      <>
+                        <Row>
+                          <Col className="text-center mx-auto mt-5">
+                            <Spinner animation="border" role="status">
+                              <span className="sr-only">Loading...</span>
+                            </Spinner>
+                          </Col>
+                        </Row>
+                      </>
+                    )
+                  }
+                  {!this.props.loading && this.props.results.map(result => {
                     return <UserResult key={result.id} result={result}/>
                   })}
                 </Col>
@@ -178,9 +201,31 @@ class FollowerResults extends React.Component {
                   <h3>
                     {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
                   </h3>
-                  {this.props.results.map(result => {
-                    return <FollowerResult key={result.follower_user_id} result={result}/>
-                  })}
+                  {
+                    function () {
+                      if (this.props.loading) {
+                        return (
+                          <>
+                            <Row>
+                              <Col className="text-center mx-auto mt-5">
+                                <Spinner animation="border" role="status">
+                                  <span className="sr-only">Loading...</span>
+                                </Spinner>
+                              </Col>
+                            </Row>
+                          </>
+                        )
+                      }
+
+                      if (this.props.results.length == 0) {
+                        return (<></>)
+                      }
+                      
+                      return this.props.results.map(result => {
+                        return <FollowerResult key={result.follower_user_id} result={result}/>
+                      })
+                    }.bind(this)()
+                  }
                 </Col>
               </Row>
             </Col>
@@ -201,14 +246,74 @@ class FollowingResults extends React.Component {
                   <h3>
                     {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
                   </h3>
-                  {this.props.results.map(result => {
-                    return <FollowingResult key={result.target_user_id} result={result}/>
-                  })}
+                  {
+                    function () {
+                      if (this.props.loading) {
+                        return (
+                          <>
+                            <Row>
+                              <Col className="text-center mx-auto mt-5">
+                                <Spinner animation="border" role="status">
+                                  <span className="sr-only">Loading...</span>
+                                </Spinner>
+                              </Col>
+                            </Row>
+                          </>
+                        )
+                      }
+
+                      if (this.props.results.length == 0) {
+                        return (<><EmptyFollowing/></>)
+                      }
+                      
+                      return this.props.results.map(result => {
+                        return <FollowingResult key={result.target_user_id} result={result}/>
+                      })
+                    }.bind(this)()
+                  }
                 </Col>
               </Row>
             </Col>
           </Row>
         </Container>
+    )
+  }
+}
+
+class EmptyFollowing extends React.Component {
+  render() {
+    return (
+      <>
+        <Col className="align-items-center mt-5">
+          <Row className="d-flex">
+            <Col xs={1}></Col>
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-2">
+                <Col xs={2}></Col>
+                <Col>
+                  <Image src={emptyShelfImage} fluid/>
+                </Col>
+                <Col xs={2}></Col>
+              </Row>
+              <Row className="d-flex align-items-center text-center pt-4">
+                <Col className="mx-auto">
+                  <h4 className="orange">Hmm, you're not following anyone yet</h4>
+                  <p>Wasting time is more fun with friends, wouldn't you agree?</p>
+                  <div className="d-inline-block mt-3">
+                    <a href="/find-users">
+                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                        <Image src={searchImage}/>
+                        <span style={{color: "white"}} className="d-block mt-2">Find friends</span>
+                      </div>
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Col>
+      </>
     )
   }
 }
