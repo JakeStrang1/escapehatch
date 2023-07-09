@@ -71,7 +71,7 @@ func GetUsers(c *gin.Context) {
 		Search:  query.Search,
 	}
 
-	pageInfo, err := users.GetPage(filter, &results)
+	pageInfo, err := users.GetPage(userID, filter, &results)
 	if err != nil {
 		Error(c, err)
 		return

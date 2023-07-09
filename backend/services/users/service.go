@@ -3,15 +3,18 @@ package users
 import (
 	"fmt"
 	"math/rand"
+	"sort"
 	"strings"
 
 	"github.com/JakeStrang1/escapehatch/db"
+	"github.com/JakeStrang1/escapehatch/internal"
 	"github.com/JakeStrang1/escapehatch/internal/errors"
 	"github.com/JakeStrang1/escapehatch/internal/pages"
+	"github.com/samber/lo"
 )
 
 const userCountCollection = "users_count"
-const defaultPerPage = 25
+const defaultPerPage = 250 // Making this a high number since the frontend doesn't implement pagination yet...
 const maxPerPage = 250
 const defaultUsernamePrefix = "_" // All default usernames will start with '_' which is not an allowed username char otherwise
 
@@ -332,8 +335,14 @@ func RemoveItemFromAllUsers(itemID string) error {
 	return nil
 }
 
-func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
-	err := filter.Validate()
+func GetPage(userID string, filter Filter, results *[]User) (*pages.PageResult, error) {
+	caller := User{}
+	err := GetByID(userID, &caller)
+	if err != nil {
+		return nil, err
+	}
+
+	err = filter.Validate()
 	if err != nil {
 		return nil, err
 	}
@@ -348,20 +357,72 @@ func GetPage(filter Filter, results *[]User) (*pages.PageResult, error) {
 		pageSize = *filter.PerPage
 	}
 
-	total, err := db.GetPage(filter, &User{}, results, page, pageSize)
+	allResults := []User{}
+	total, err := db.GetPage(filter, &User{}, &allResults, page, pageSize)
 	if err != nil {
 		return nil, err
 	}
 
-	for i := range *results {
-		hydrate(&(*results)[i])
+	for i := range allResults {
+		hydrate(&(allResults)[i])
 	}
+
+	// Hack to filter out all users that aren't 2nd degree connections - this is bad because it doesn't respect the pagination
+	filteredResults := getSecondDegreeConnections(caller, allResults)
+	*results = filteredResults
 
 	return &pages.PageResult{
 		Page:       page,
 		PerPage:    pageSize,
 		TotalPages: total,
 	}, nil
+}
+
+type RankedUser struct {
+	Rank int
+	User *User
+}
+
+func getSecondDegreeConnections(caller User, users []User) []User {
+	firstDegree := []User{}
+	rankedUsers := []RankedUser{}
+
+	callerFollowerIDs := internal.Map(caller.Followers, func(f Follower) string {
+		return f.FollowerUserID
+	})
+	sort.Strings(callerFollowerIDs)
+
+	for i := range users {
+
+		// Detect first degree connections
+		if lo.ContainsBy(users[i].Following, func(f Follower) bool { return f.TargetUserID == caller.ID }) {
+			firstDegree = append(firstDegree, users[i])
+			continue
+		}
+
+		// Else look for second degree connections
+		followingIDs := internal.Map(users[i].Following, func(f Follower) string {
+			return f.TargetUserID
+		})
+		sort.Strings(followingIDs)
+
+		sharedConnections := lo.Intersect(callerFollowerIDs, followingIDs)
+		if len(sharedConnections) > 0 {
+			rankedUsers = append(rankedUsers, RankedUser{Rank: len(sharedConnections), User: &users[i]})
+		}
+	}
+
+	sort.Slice(rankedUsers, func(i, j int) bool {
+		return rankedUsers[i].Rank > rankedUsers[j].Rank // Sort in descending order of Rank
+	})
+
+	sortedUsers := internal.Map(rankedUsers, func(r RankedUser) User {
+		return *r.User
+	})
+
+	// Add first degree connections to beginning of list
+	sortedUsers = append(firstDegree, sortedUsers...)
+	return sortedUsers
 }
 
 // GetCount returns the count of results. Pagination filters are ignored.
