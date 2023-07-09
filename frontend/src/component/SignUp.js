@@ -86,7 +86,16 @@ export default class SignUp extends React.Component {
       validated: true,
       HelpTextComponent: FormFeedback
     })
-    api.SignUp(this.state.email)
+
+    let friendCode = new URLSearchParams(this.props.location.search).get("friendCode")
+    let signUpPromise
+    if (!friendCode) {
+      signUpPromise = api.SignUp(this.state.email)
+    } else {
+      signUpPromise = api.SignUp(this.state.email, {friend_code: friendCode}) // Include referal code as metadata
+    }
+
+    signUpPromise
     .then(res => {
       if (res.ok) {
         this.setState({apiInvalidClass: ""})

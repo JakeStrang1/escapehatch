@@ -36,12 +36,40 @@ func Verify(email, secret, emailHash string) (*session.Session, map[string]strin
 		return nil, nil, err
 	}
 
+	// Set up followers from invite
+	if ch.Metadata != nil && ch.Metadata["friend_code"] != "" {
+		err = setUpFriends(ch.Metadata["friend_code"], u.ID)
+		if err != nil {
+			return nil, nil, err
+		}
+	}
+
 	session, err := createSession(u.ID, ch.RememberMe)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	return session, ch.Metadata, nil
+}
+
+func setUpFriends(inviterShortID string, inviteeID string) error {
+	inviter := users.User{}
+	err := users.GetByID(inviterShortID, &inviter)
+	if err != nil {
+		return err
+	}
+
+	err = users.Follow(inviteeID, inviter.ID, &users.User{})
+	if err != nil {
+		return err
+	}
+
+	err = users.Follow(inviter.ID, inviteeID, &inviter)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func verifyChallenge(email, secret, emailHash string) (*challenge.Challenge, error) {

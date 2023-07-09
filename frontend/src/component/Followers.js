@@ -21,7 +21,7 @@ import api, {
 } from "../api"
 import { connect } from './../reducers'
 
-export default class Followers extends React.Component {
+class Followers extends React.Component {
   constructor(props){
     super(props);
 
@@ -156,7 +156,7 @@ export default class Followers extends React.Component {
                 return (
                   <>
                     <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Search all users by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
-                    <FindUsersResults loading={this.state.loading} results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
+                    <FindUsersResults user={this.props.user} loading={this.state.loading} results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
                   </>
                 )
               default:
@@ -198,11 +198,11 @@ class FindUsersResults extends React.Component {
                       }
 
                       if (this.props.results.length == 0 && !this.props.showingSearchResult) {
-                        return (<><EmptyNewUsers/></>)
+                        return (<><EmptyNewUsers user={this.props.user}/></>)
                       }
 
                       if (this.props.results.length == 0 && this.props.showingSearchResult) {
-                        return (<><EmptyUserSearch/></>)
+                        return (<><EmptyUserSearch user={this.props.user}/></>)
                       }
                       
                       return this.props.results.map(result => {
@@ -394,6 +394,19 @@ class EmptyFollowers extends React.Component {
 }
 
 class EmptyNewUsers extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {}
+
+    this.handleInvite = this.handleInvite.bind(this)
+  }
+
+  handleInvite(e) {
+    navigator.clipboard.writeText("https://escapehatch.ca/sign-up?friendCode=" + this.props.user.short_id)
+    return false // Override default
+  }
+
   render() {
     return (
       <>
@@ -411,7 +424,7 @@ class EmptyNewUsers extends React.Component {
                   <h4 className="orange">Actually, we're at a loss here</h4>
                   <p>Search by name or invite some friends to get the ball rolling!</p>
                   <div className="d-inline-block mt-3">
-                    <a href="">
+                    <a href="#" onClick={this.handleInvite}>
                       <div className="outline-link pt-3 pr-3 pl-3 pb-2">
                         <Image src={copyImage}/>
                         <span style={{color: "white"}} className="d-block mt-2">Copy invite link</span>
@@ -430,6 +443,19 @@ class EmptyNewUsers extends React.Component {
 }
 
 class EmptyUserSearch extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {}
+
+    this.handleInvite = this.handleInvite.bind(this)
+  }
+
+  handleInvite(e) {
+    navigator.clipboard.writeText("https://escapehatch.ca/sign-up?friendCode=" + this.props.user.short_id)
+    return false // Override default
+  }
+
   render() {
     return (
       <>
@@ -442,7 +468,7 @@ class EmptyUserSearch extends React.Component {
                   <h4 className="orange">Whoops! We can't find that person</h4>
                   <p>But you can send them an invite link so they can be like "thanks?"</p>
                   <div className="d-inline-block mt-3">
-                    <a href="">
+                    <a href="#" onClick={this.handleInvite}>
                       <div className="outline-link pt-3 pr-3 pl-3 pb-2">
                         <Image src={copyImage}/>
                         <span style={{color: "white"}} className="d-block mt-2">Copy invite link</span>
@@ -764,3 +790,5 @@ const ActionButton = connect(class ActionButton extends React.Component {
     return (<></>)
   }
 })
+
+export default connect(Followers);

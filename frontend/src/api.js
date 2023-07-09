@@ -23,14 +23,19 @@ export const ERR_SESSION_EXPIRED = "session_expired"
 export const ERR_SESSION_INVALID = "session_invalid"
 export const ERR_UNAUTHENTICATED = "unauthenticated"
 
-api.SignUp = email => {
+api.SignUp = (email, metadata) => {
+    let body = { email: email }
+    if (metadata) {
+        body.metadata = metadata
+    }
+    
     return fetch(host + '/auth/sign-up', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify({ email: email })
+        body: JSON.stringify(body)
     })
     .then(FormatResponse)
 }
