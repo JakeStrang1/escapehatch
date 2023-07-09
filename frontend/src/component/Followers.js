@@ -11,8 +11,10 @@ import Badge from 'react-bootstrap/Badge'
 import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
-import emptyShelfImage from './../assets/empty_shelf.png'
+import emptyFollowers from './../assets/cats.png'
+import thoughtBubble from './../assets/bubble.png'
 import searchImage from './../assets/search.png'
+import copyImage from './../assets/copy_icon.png'
 import { Redirect, Link } from 'react-router-dom'
 import api, {
   ERR_UNEXPECTED,
@@ -133,16 +135,30 @@ export default class Followers extends React.Component {
     }
     return (
       <>
-        <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Find users by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
         {
           function () {
             switch(window.location.pathname) {
               case "/followers":
-                return <FollowerResults loading={this.state.loading} results={this.state.followers} showingSearchResult={this.state.showingSearchResult}/>
+                return (
+                  <>
+                    <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Search followers by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
+                    <FollowerResults loading={this.state.loading} results={this.state.followers} showingSearchResult={this.state.showingSearchResult}/>
+                  </>
+                )
               case "/following":
-                return <FollowingResults loading={this.state.loading} results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
+                return (
+                  <>
+                    <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Search following by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
+                    <FollowingResults loading={this.state.loading} results={this.state.following} showingSearchResult={this.state.showingSearchResult}/>
+                  </>
+                )
               case "/find-users":
-                return <FindUsersResults loading={this.state.loading} results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
+                return (
+                  <>
+                    <NavBar followerCount={this.state.followerCount} followingCount={this.state.followingCount} friendsCurrent={true} searchText="Search all users by name" handleSearchSubmit={this.handleSearchSubmit} handleSearchChange={this.handleSearchChange}/>
+                    <FindUsersResults loading={this.state.loading} results={this.state.newUsers} showingSearchResult={this.state.showingSearchResult}/>
+                  </>
+                )
               default:
                 console.error("unknown url: " + window.location.pathname)
                 return (<></>)
@@ -166,21 +182,34 @@ class FindUsersResults extends React.Component {
                     {this.props.showingSearchResult ? "Search results..." : "People You May Know"}
                   </h3>
                   {
-                    this.props.loading && (
-                      <>
-                        <Row>
-                          <Col className="text-center mx-auto mt-5">
-                            <Spinner animation="border" role="status">
-                              <span className="sr-only">Loading...</span>
-                            </Spinner>
-                          </Col>
-                        </Row>
-                      </>
-                    )
+                    function () {
+                      if (this.props.loading) {
+                        return (
+                          <>
+                            <Row>
+                              <Col className="text-center mx-auto mt-5">
+                                <Spinner animation="border" role="status">
+                                  <span className="sr-only">Loading...</span>
+                                </Spinner>
+                              </Col>
+                            </Row>
+                          </>
+                        )
+                      }
+
+                      if (this.props.results.length == 0 && !this.props.showingSearchResult) {
+                        return (<><EmptyNewUsers/></>)
+                      }
+
+                      if (this.props.results.length == 0 && this.props.showingSearchResult) {
+                        return (<><EmptyUserSearch/></>)
+                      }
+                      
+                      return this.props.results.map(result => {
+                        return <UserResult key={result.target_user_id} result={result}/>
+                      })
+                    }.bind(this)()
                   }
-                  {!this.props.loading && this.props.results.map(result => {
-                    return <UserResult key={result.id} result={result}/>
-                  })}
                 </Col>
               </Row>
             </Col>
@@ -198,9 +227,11 @@ class FollowerResults extends React.Component {
             <Col xs={12} className="">
               <Row>
                 <Col xs={12} sm={10} md={8} lg={6} className="mx-auto mt-4">
-                  <h3>
-                    {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
-                  </h3>
+                  { this.props.results.length != 0 || this.props.showingSearchResult && (
+                    <h3>
+                      {this.props.showingSearchResult ? "Search results in followers..." : "All Followers"}
+                    </h3>
+                  )}
                   {
                     function () {
                       if (this.props.loading) {
@@ -217,12 +248,16 @@ class FollowerResults extends React.Component {
                         )
                       }
 
-                      if (this.props.results.length == 0) {
-                        return (<></>)
+                      if (this.props.results.length == 0 && !this.props.showingSearchResult) {
+                        return (<><EmptyFollowers/></>)
+                      }
+
+                      if (this.props.results.length == 0 && this.props.showingSearchResult) {
+                        return (<><EmptySearch/></>)
                       }
                       
                       return this.props.results.map(result => {
-                        return <FollowerResult key={result.follower_user_id} result={result}/>
+                        return <FollowerResult key={result.target_user_id} result={result}/>
                       })
                     }.bind(this)()
                   }
@@ -243,9 +278,11 @@ class FollowingResults extends React.Component {
             <Col xs={12} className="">
               <Row>
                 <Col xs={12} sm={10} md={8} lg={6} className="mx-auto mt-4">
-                  <h3>
-                    {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
-                  </h3>
+                  { this.props.results.length != 0 || this.props.showingSearchResult && (
+                    <h3>
+                      {this.props.showingSearchResult ? "Search results in following..." : "All Following"}
+                    </h3>
+                  )}
                   {
                     function () {
                       if (this.props.loading) {
@@ -262,8 +299,12 @@ class FollowingResults extends React.Component {
                         )
                       }
 
-                      if (this.props.results.length == 0) {
+                      if (this.props.results.length == 0 && !this.props.showingSearchResult) {
                         return (<><EmptyFollowing/></>)
+                      }
+
+                      if (this.props.results.length == 0 && this.props.showingSearchResult) {
+                        return (<><EmptySearch/></>)
                       }
                       
                       return this.props.results.map(result => {
@@ -284,21 +325,153 @@ class EmptyFollowing extends React.Component {
   render() {
     return (
       <>
-        <Col className="align-items-center mt-5">
+        <Col className="align-items-center">
           <Row className="d-flex">
             <Col xs={1}></Col>
             <Col>
               <Row className="d-flex align-items-center text-center pt-2">
-                <Col xs={2}></Col>
                 <Col>
-                  <Image src={emptyShelfImage} fluid/>
+                  <Image src={emptyFollowers} fluid/>
                 </Col>
-                <Col xs={2}></Col>
               </Row>
               <Row className="d-flex align-items-center text-center pt-4">
                 <Col className="mx-auto">
                   <h4 className="orange">Hmm, you're not following anyone yet</h4>
                   <p>Wasting time is more fun with friends, wouldn't you agree?</p>
+                  <div className="d-inline-block mt-3">
+                    <a href="/find-users">
+                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                        <Image src={searchImage}/>
+                        <span style={{color: "white"}} className="d-block mt-2">Find friends</span>
+                      </div>
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Col>
+      </>
+    )
+  }
+}
+
+class EmptyFollowers extends React.Component {
+  render() {
+    return (
+      <>
+        <Col className="align-items-center">
+          <Row className="d-flex">
+            <Col xs={1}></Col>
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-2">
+                <Col>
+                  <Image src={emptyFollowers} fluid/>
+                </Col>
+              </Row>
+              <Row className="d-flex align-items-center text-center pt-4">
+                <Col className="mx-auto">
+                  <h4 className="orange">Ouch, no one follows you yet</h4>
+                  <p>Does nobody even care about your latest binge sesh? Well, they will soon...</p>
+                  <div className="d-inline-block mt-3">
+                    <a href="/find-users">
+                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                        <Image src={searchImage}/>
+                        <span style={{color: "white"}} className="d-block mt-2">Find new friends</span>
+                      </div>
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Col>
+      </>
+    )
+  }
+}
+
+class EmptyNewUsers extends React.Component {
+  render() {
+    return (
+      <>
+        <Col className="align-items-center">
+          <Row className="d-flex">
+            <Col xs={1}></Col>
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-2">
+                <Col>
+                  <Image src={thoughtBubble} fluid/>
+                </Col>
+              </Row>
+              <Row className="d-flex align-items-center text-center pt-4">
+                <Col className="mx-auto">
+                  <h4 className="orange">Actually, we're at a loss here</h4>
+                  <p>Search by name or invite some friends to get the ball rolling!</p>
+                  <div className="d-inline-block mt-3">
+                    <a href="">
+                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                        <Image src={copyImage}/>
+                        <span style={{color: "white"}} className="d-block mt-2">Copy invite link</span>
+                      </div>
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Col>
+      </>
+    )
+  }
+}
+
+class EmptyUserSearch extends React.Component {
+  render() {
+    return (
+      <>
+        <Col className="align-items-center">
+          <Row className="d-flex">
+            <Col xs={1}></Col>
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-4">
+                <Col className="mx-auto">
+                  <h4 className="orange">Whoops! We can't find that person</h4>
+                  <p>But you can send them an invite link so they can be like "thanks?"</p>
+                  <div className="d-inline-block mt-3">
+                    <a href="">
+                      <div className="outline-link pt-3 pr-3 pl-3 pb-2">
+                        <Image src={copyImage}/>
+                        <span style={{color: "white"}} className="d-block mt-2">Copy invite link</span>
+                      </div>
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
+        </Col>
+      </>
+    )
+  }
+}
+
+class EmptySearch extends React.Component {
+  render() {
+    return (
+      <>
+        <Col className="align-items-center">
+          <Row className="d-flex">
+            <Col xs={1}></Col>
+            <Col>
+              <Row className="d-flex align-items-center text-center pt-4">
+                <Col className="mx-auto">
+                  <h4 className="orange">Whoops! There's no results for that</h4>
+                  <p>I'm not sure who you're looking for, but they ain't here.</p>
                   <div className="d-inline-block mt-3">
                     <a href="/find-users">
                       <div className="outline-link pt-3 pr-3 pl-3 pb-2">
