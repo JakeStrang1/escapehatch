@@ -368,8 +368,12 @@ func GetPage(userID string, filter Filter, results *[]User) (*pages.PageResult, 
 	}
 
 	// Hack to filter out all users that aren't 2nd degree connections - this is bad because it doesn't respect the pagination
-	filteredResults := getSecondDegreeConnections(caller, allResults)
-	*results = filteredResults
+	if filter.Search == nil {
+		filteredResults := getSecondDegreeConnections(caller, allResults)
+		*results = filteredResults
+	} else {
+		*results = allResults
+	}
 
 	return &pages.PageResult{
 		Page:       page,
