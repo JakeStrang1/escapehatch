@@ -1,8 +1,13 @@
 # escapehatch
 
-This is a platform where users track and share their favorite books and shows. The project is alive and well! Check it out at [escapehatch.ca](https://escapehatch.ca).
+### Try it
+The project is alive and well at [escapehatch.ca](https://escapehatch.ca)!
 
-**The ideal user**: You love reading, watching shows, and diving into the worlds that others have created. You feel a sense of achievement when you finish a new book or show. You feel like the content you consume says something about who you are and you want to showcase this to others. You can think of recent conversations where having a list of your favourites on hand would have come in handy. You want to see your achievements and progress laid out in front of you, especially if you can organize them. You like making lists and the time you spend organizing your hobbies feels like a hobby itself. You aren't daunted that most of your content needs to be added manually by you to the site, in fact you feel excited. You're a completionist and the goal of being the one to contribute entries that others will see and find useful is a thrill. You could sit for hours just filling in missing content on the site in order to be a top contributor.
+### 
+Escapehatch is a platform where users track and share their favorite books and shows. The site is built and operated by Jake Strang and launched for early users in June 2023, and is in active development towards our v1 milestone.
+
+### The Ideal User
+You love reading, watching shows, and diving into the worlds that others have created. You feel a sense of achievement when you finish a new book or show. You feel like the content you consume says something about who you are and you want to showcase this to others. You can think of recent conversations where having a list of your favourites on hand would have come in handy. You want to see your achievements and progress laid out in front of you, especially if you can organize them. You like making lists and the time you spend organizing your hobbies feels like a hobby itself. You aren't daunted that most of your content needs to be added manually by you to the site, in fact you feel excited. You're a completionist and the goal of being the one to contribute entries that others will see and find useful is a thrill. You could sit for hours just filling in missing content on the site in order to be a top contributor.
 
 ## Roadmap
 **Current phase**: Building v1
