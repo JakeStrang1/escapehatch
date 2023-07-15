@@ -1,5 +1,7 @@
 # escapehatch
 
+![image](https://github.com/JakeStrang1/escapehatch/assets/16689756/7f70f0ad-3d0a-4187-8856-86bf6a6d268d)
+
 ### Try it
 The project is alive and well at [escapehatch.ca](https://escapehatch.ca)!
 
