@@ -12,3 +12,7 @@ env_variables:
   GCS_BUCKET_NAME: 'escapehatch.appspot.com'
   STATIC_URL_ROOT: 'https://storage.googleapis.com/escapehatch.appspot.com'
   USE_ATLAS_SEARCH: 'false'
+automatic_scaling:
+  min_instances: 1
+inbound_services:
+  - warmup
