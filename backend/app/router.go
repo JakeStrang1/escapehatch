@@ -41,6 +41,10 @@ func Router(config Config) *gin.Engine {
 		r.StaticFS("/local-static", nethttp.FS(&storage.LocalFS{}))
 	}
 
+	// Health check
+	r.GET("/", http.HealthCheck)
+
+	// Auth
 	r.POST("/auth/sign-up", http.SignUp)
 	r.POST("/auth/sign-in", http.SignIn)
 	r.POST("/auth/verify", http.Verify)
